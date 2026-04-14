@@ -998,17 +998,18 @@ const SEED_RESTAURANTS = [
 
 const SEED_BUDGET = {
   exchangeRate: 9.5,    // 원/엔
-  usdRate: 1350,        // 원/$
+  usdRate: 1489,        // 원/$ (저장 당시 환율)
   rateUpdated: null,    // 마지막 실시간 업데이트 시각
   preset: [
-    {id:'b1',category:'항공',name:'WE511/WE512 항공권 (3인)',currency:'KRW',amountOrig:900000,amountKrw:900000,rateAtSave:null,notes:'왕복 3석',paid:true},
-    {id:'b2',category:'숙소',name:'난바 호텔 6박 (4/29~5/2, 5/3~5/6)',currency:'KRW',amountOrig:1200000,amountKrw:1200000,rateAtSave:null,notes:'조식 불포함',paid:true},
-    {id:'b3',category:'숙소',name:'카메노이 호텔 아리마 1박 (5/1~5/2)',currency:'KRW',amountOrig:450000,amountKrw:450000,rateAtSave:null,notes:'가이세키 조석식 포함',paid:false},
-    {id:'b4',category:'입장료',name:'USJ 입장권 2인 + 익스프레스 패스',currency:'KRW',amountOrig:400000,amountKrw:400000,rateAtSave:null,notes:'4세 무료. 클룩 사전 구매',paid:false},
-    {id:'b5',category:'교통',name:'난카이 라피트 왕복 2인',currency:'JPY',amountOrig:2980,amountKrw:28310,rateAtSave:9.5,notes:'α+β 각 1회 (성인 2인)'},
-    {id:'b6',category:'교통',name:'이코카 IC카드 충전 (3인)',currency:'JPY',amountOrig:15000,amountKrw:142500,rateAtSave:9.5,notes:'교통비 충분히 충전',paid:false},
-    {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:80000,amountKrw:80000,rateAtSave:null,notes:'출발 전 가입',paid:false},
-    {id:'b8',category:'기타',name:'일본 eSIM 2회선',currency:'KRW',amountOrig:30000,amountKrw:30000,rateAtSave:null,notes:'7박 8일 무제한',paid:false},
+    {id:'b1',category:'항공',name:'파리타 항공 WE511/WE512 항공권 (3인)',currency:'KRW',amountOrig:670200,amountKrw:670200,rateAtSave:null,notes:'왕복 3석',paid:true},
+    {id:'b2',category:'숙소',name:'소테츠 프레사 인 오사카-난바 호텔 2박 (4/29~5/1)',currency:'USD',amountOrig:154.44,amountKrw:229807,rateAtSave:1489,notes:'조식 불포함',paid:true},
+    {id:'b3',category:'숙소',name:'카메노이 호텔 아리마 1박 (5/1~5/2)',currency:'USD',amountOrig:301.60,amountKrw:448915,rateAtSave:1489,notes:'가이세키 조석식 포함',paid:true},
+    {id:'b4',category:'입장료',name:'USJ 입장권 2인 + 익스프레스 패스',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'4세 무료. 클룩 사전 구매',paid:false},
+    {id:'b5',category:'교통',name:'난카이 라피트 왕복 2인',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'α+β 각 1회 (성인 2인)'},
+    {id:'b6',category:'교통',name:'이코카 IC카드 충전 (3인)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'교통비 충분히 충전',paid:false},
+    {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'출발 전 가입',paid:false},
+    {id:'b8',category:'기타',name:'일본 eSIM 2회선',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'7박 8일 무제한',paid:false},
+    {id:'b9',category:'숙소',name:'에어비앤비 2박 (5/2 ~ 5/6)',currency:'KRW',amountOrig:455612,amountKrw:455612,rateAtSave:null,notes:'',paid:false},
   ],
   daily: []
 };
