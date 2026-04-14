@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오사카 가족여행 2026</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg: #f7f6f3;
+  --card: #ffffff;
+  --border: #e5e3dc;
+  --border-light: #eeece6;
+  --text: #1a1a18;
+  --text2: #5a5850;
+  --text3: #9a9890;
+  --accent: #2563eb;
+  --accent-bg: #eff6ff;
+  --red: #dc2626; --red-bg: #fef2f2;
+  --green: #16a34a; --green-bg: #f0fdf4;
+  --amber: #d97706; --amber-bg: #fffbeb;
+  --purple: #7c3aed; --purple-bg: #f5f3ff;
+  --pink: #db2777; --pink-bg: #fdf2f8;
+  --teal: #0d9488; --teal-bg: #f0fdfa;
+  --font: -apple-system,'Pretendard','Apple SD Gothic Neo',sans-serif;
+  --radius: 14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-tap-highlight-color:transparent;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,246,243,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;padding:10px 16px;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nb{flex-shrink:0;padding:6px 13px;border-radius:20px;border:1px solid var(--border);font-size:12px;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;white-space:nowrap;font-family:var(--font);}
+.nb.on{background:var(--text);color:#fff;border-color:var(--text);}
+.nb:hover:not(.on){background:var(--border-light);}
+
+/* HERO */
+.hero{background:var(--text);color:#fff;padding:40px 16px 32px;}
+.hero-inner{max-width:960px;margin:0 auto;}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px;}
+.hero p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px;}
+.flight-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fc{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:13px 15px;}
+.fc-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.fc-route{font-size:15px;font-weight:600;margin-bottom:3px;}
+.fc-time{font-size:12px;color:rgba(255,255,255,.6);}
+.fc-no{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:20px 16px 80px;}
+.panel{display:none;}
+.panel.on{display:block;}
+
+/* SECTION */
+.sec{margin-bottom:22px;}
+.sec-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:11px;padding-left:2px;}
+
+/* DAY HEADER */
+.day-hd{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);}
+.day-num{font-size:30px;font-weight:700;line-height:1;flex-shrink:0;}
+.day-info{flex:1;}
+.day-title{font-size:16px;font-weight:600;line-height:1.3;margin-bottom:4px;}
+.day-sub{font-size:12px;color:var(--text2);margin-bottom:8px;}
+.day-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500;}
+.b-usj{background:#fef3c7;color:#92400e;}
+.b-osaka{background:#dbeafe;color:#1e40af;}
+.b-shop{background:#f3e8ff;color:#6b21a8;}
+.b-ryokan{background:#dcfce7;color:#166534;}
+.b-nara{background:#fef9c3;color:#854d0e;}
+.b-transit{background:#f1f5f9;color:#475569;}
+.b-new{background:#fce7f3;color:#9d174d;}
+.b-shinsekai{background:#fff7ed;color:#9a3412;}
+
+/* TIMELINE */
+.timeline{position:relative;}
+.timeline::before{content:'';position:absolute;left:56px;top:0;bottom:0;width:1px;background:var(--border);}
+.tl-item{display:flex;position:relative;}
+.tl-time{width:48px;text-align:right;font-size:11px;color:var(--text3);padding-top:15px;flex-shrink:0;padding-right:8px;line-height:1.3;}
+.tl-dot-wrap{width:18px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:9px;height:9px;border-radius:50%;margin-top:19px;z-index:1;}
+.dot-move{background:#94a3b8;} .dot-food{background:#f59e0b;} .dot-sight{background:#3b82f6;} .dot-hotel{background:#22c55e;} .dot-shop{background:#a855f7;} .dot-tip{background:#ec4899;}
+.tl-content{flex:1;padding:10px 0 13px 12px;border-bottom:1px solid var(--border-light);}
+.tl-item:last-child .tl-content{border-bottom:none;}
+.tl-head{display:flex;align-items:flex-start;gap:8px;}
+.tl-title{font-size:14px;font-weight:500;line-height:1.4;flex:1;}
+.tl-actions{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:opacity .15s;}
+.tl-item:hover .tl-actions{opacity:1;}
+.tl-desc{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6;}
+.tl-tip{font-size:11px;color:#92400e;background:#fef3c7;border-radius:6px;padding:4px 8px;margin-top:5px;display:inline-block;line-height:1.5;}
+.add-row{display:flex;justify-content:center;margin-top:10px;}
+.btn-add-item{font-size:12px;color:var(--accent);border:1px dashed #bfdbfe;background:var(--accent-bg);padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font);transition:all .15s;}
+.btn-add-item:hover{background:#dbeafe;}
+
+/* RESTAURANT CARDS */
+.r-grid{display:grid;gap:11px;}
+.r-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 15px;}
+.r-card.featured{border-color:#f59e0b;}
+.r-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;}
+.r-emoji{font-size:22px;line-height:1;flex-shrink:0;}
+.r-info{flex:1;}
+.r-name{font-size:14px;font-weight:600;margin-bottom:3px;}
+.r-tags{display:flex;gap:4px;flex-wrap:wrap;}
+.r-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;}
+.tag-menu{background:var(--accent-bg);color:var(--accent);}
+.tag-wait{background:var(--red-bg);color:var(--red);}
+.tag-nowait{background:var(--green-bg);color:var(--green);}
+.tag-res{background:var(--teal-bg);color:var(--teal);}
+.tag-nores{background:var(--amber-bg);color:var(--amber);}
+.tag-michelin{background:#fdf2f8;color:#9d174d;}
+.tag-insta{background:var(--purple-bg);color:var(--purple);}
+.r-menu-txt{font-size:13px;font-weight:500;margin:6px 0 3px;}
+.r-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:7px;}
+.r-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.r-map{font-size:11px;color:var(--accent);text-decoration:none;border:1px solid #bfdbfe;padding:3px 9px;border-radius:8px;}
+.r-hours{font-size:11px;color:var(--text3);}
+.r-review{margin-top:8px;padding:7px 10px;background:var(--bg);border-radius:8px;border-left:2px solid var(--border);}
+.r-review-label{font-size:10px;color:var(--text3);margin-bottom:2px;font-weight:500;}
+.r-review-text{font-size:12px;color:var(--text2);line-height:1.6;font-style:italic;}
+.reel-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--pink);background:var(--pink-bg);padding:2px 7px;border-radius:8px;margin-left:4px;font-weight:500;}
+.r-visited-badge{font-size:10px;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:10px;font-weight:500;}
+
+/* OVERVIEW */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;margin-bottom:20px;}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;cursor:pointer;transition:all .15s;}
+.ov-card:hover{border-color:var(--accent);}
+.ov-day{font-size:10px;color:var(--text3);margin-bottom:1px;font-weight:500;text-transform:uppercase;}
+.ov-date{font-size:13px;font-weight:600;margin-bottom:3px;}
+.ov-theme{font-size:11px;color:var(--text2);line-height:1.4;}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:10px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.stat-val{font-size:22px;font-weight:700;}
+.stat-label{font-size:11px;color:var(--text3);margin-top:2px;}
+
+/* BUDGET */
+.exr-bar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 15px;margin-bottom:16px;}
+.exr-bar-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.exr-live-badge{font-size:10px;padding:2px 7px;border-radius:6px;background:var(--green-bg);color:var(--green);font-weight:600;}
+.exr-fail-badge{font-size:10px;padding:2px 7px;border-radius:6px;background:var(--red-bg);color:var(--red);font-weight:500;}
+.exr-rows{display:flex;gap:12px;flex-wrap:wrap;}
+.exr-row{display:flex;align-items:center;gap:7px;}
+.exr-flag{font-size:16px;line-height:1;}
+.exr-label{font-size:12px;font-weight:500;}
+.exr-input{width:80px;border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;font-family:var(--font);}
+.exr-unit{font-size:12px;color:var(--text3);white-space:nowrap;}
+.exr-actions{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.exr-refresh{font-size:12px;padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:var(--font);color:var(--accent);display:flex;align-items:center;gap:4px;transition:all .15s;}
+.exr-refresh:hover{background:var(--accent-bg);}
+.exr-refresh.loading{opacity:.6;pointer-events:none;}
+.exr-status{font-size:11px;color:var(--text3);}
+.amt-preview{font-size:12px;color:var(--accent);margin-top:4px;min-height:16px;font-weight:500;}
+.budget-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin-bottom:18px;}
+.bs-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.bs-val{font-size:20px;font-weight:700;}
+.bs-label{font-size:11px;color:var(--text3);margin-top:2px;}
+.bs-card.highlight{background:var(--accent);color:#fff;border-color:var(--accent);}
+.bs-card.highlight .bs-label{color:rgba(255,255,255,.6);}
+.expense-table{width:100%;border-collapse:collapse;font-size:13px;}
+.expense-table th{background:var(--bg);font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);}
+.expense-table td{padding:9px 10px;border-bottom:1px solid var(--border-light);vertical-align:middle;}
+.expense-table tr:last-child td{border-bottom:none;}
+.expense-table tr:hover td{background:#fafaf8;}
+.cat-pill{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap;}
+.cat-항공{background:#dbeafe;color:#1e40af;} .cat-숙소{background:#dcfce7;color:#166534;} .cat-교통{background:#f1f5f9;color:#475569;} .cat-식비{background:#fef3c7;color:#92400e;} .cat-입장료{background:#f5f3ff;color:#6b21a8;} .cat-쇼핑{background:#fdf2f8;color:#9d174d;} .cat-기타{background:#f7f6f3;color:#5a5850;}
+.paid-toggle{cursor:pointer;user-select:none;font-size:18px;}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto;margin-bottom:18px;}
+.tbl-header{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 0;}
+.tbl-title{font-size:13px;font-weight:600;}
+.del-btn{background:none;border:none;cursor:pointer;font-size:16px;color:var(--text3);padding:2px;line-height:1;}
+.del-btn:hover{color:var(--red);}
+.edit-btn{background:none;border:none;cursor:pointer;font-size:14px;color:var(--text3);padding:2px;line-height:1;}
+.edit-btn:hover{color:var(--accent);}
+
+/* CHECKLIST */
+.ck-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;}
+.ck-header{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid var(--border-light);cursor:pointer;}
+.ck-cat{font-size:13px;font-weight:600;}
+.ck-progress{font-size:11px;color:var(--text3);}
+.ck-progress-bar{height:3px;background:var(--border);border-radius:2px;margin:0 15px 12px;}
+.ck-progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s;}
+.ck-item{display:flex;align-items:center;gap:10px;padding:10px 15px;border-bottom:1px solid var(--border-light);}
+.ck-item:last-of-type{border-bottom:none;}
+.ck-cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.ck-cb.done{background:var(--green);border-color:var(--green);}
+.ck-cb.done::after{content:'✓';color:#fff;font-size:11px;font-weight:700;}
+.ck-text{flex:1;font-size:13px;transition:all .15s;}
+.ck-text.done{color:var(--text3);text-decoration:line-through;}
+.ck-priority{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:500;flex-shrink:0;}
+.pri-필수{background:var(--red-bg);color:var(--red);}
+.pri-권장{background:var(--amber-bg);color:var(--amber);}
+.pri-선택{background:var(--green-bg);color:var(--green);}
+.ck-add-row{padding:10px 15px;display:flex;gap:8px;}
+.ck-add-input{flex:1;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;font-family:var(--font);}
+.ck-add-btn{padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-family:var(--font);}
+
+/* RESTAURANT LIST */
+.r-search-bar{display:flex;gap:8px;margin-bottom:12px;}
+.r-search-input{flex:1;border:1px solid var(--border);border-radius:24px;padding:9px 16px;font-size:13px;font-family:var(--font);background:var(--card);}
+.r-search-input:focus{outline:none;border-color:var(--accent);}
+.r-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.r-filter{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-family:var(--font);transition:all .15s;}
+.r-filter.on{background:var(--text);color:#fff;border-color:var(--text);}
+.r-filter:hover:not(.on){background:var(--border-light);}
+.r-card-actions{display:flex;gap:5px;margin-top:8px;}
+.visit-btn{font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--font);color:var(--text2);transition:all .15s;}
+.visit-btn.visited{background:var(--green-bg);color:var(--green);border-color:#86efac;}
+.visit-btn:hover:not(.visited){background:var(--border-light);}
+.r-del-btn{font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--font);color:var(--text3);transition:all .15s;}
+.r-del-btn:hover{color:var(--red);border-color:var(--red);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.on{display:flex;}
+.modal{background:#fff;border-radius:20px;padding:22px 20px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
+.modal-title{font-size:16px;font-weight:600;margin-bottom:16px;}
+.form-row{margin-bottom:13px;}
+.form-label{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px;display:block;}
+.form-input,.form-select,.form-textarea{width:100%;border:1px solid var(--border);border-radius:9px;padding:8px 11px;font-size:13px;font-family:var(--font);background:#fff;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--accent);}
+.form-textarea{resize:vertical;min-height:70px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;}
+.modal-actions{display:flex;gap:8px;margin-top:4px;}
+.btn-primary{flex:1;padding:10px;background:var(--text);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font);}
+.btn-secondary{padding:10px 16px;background:transparent;color:var(--text2);border:1px solid var(--border);border-radius:10px;font-size:14px;cursor:pointer;font-family:var(--font);}
+.btn-primary:hover{background:#333;}
+.btn-secondary:hover{background:var(--border-light);}
+
+/* FAB */
+.fab{position:fixed;bottom:24px;right:20px;z-index:200;background:var(--text);color:#fff;border:none;border-radius:28px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.18);font-family:var(--font);display:flex;align-items:center;gap:6px;}
+.fab:hover{background:#333;}
+.fab-hidden{display:none;}
+
+/* TRANSPORT GUIDE */
+.tg-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:0;}
+.tg-steps{margin:12px 0 8px;}
+.tg-step{display:flex;gap:0;}
+.tg-spine{display:flex;flex-direction:column;align-items:center;width:22px;flex-shrink:0;}
+.tg-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--border);background:#fff;flex-shrink:0;z-index:1;margin-top:3px;}
+.tg-dot.first{background:var(--green);border-color:var(--green);}
+.tg-dot.last{background:var(--red);border-color:var(--red);}
+.tg-vline{width:2px;background:var(--border);flex:1;min-height:16px;margin:2px 0;}
+.tg-body{flex:1;padding-bottom:0;}
+.tg-place{font-size:13px;font-weight:600;color:var(--text);padding-top:1px;line-height:1.4;}
+.tg-place-note{font-size:11px;color:var(--text3);margin-top:1px;margin-bottom:2px;}
+.tg-transit{display:flex;align-items:flex-start;gap:8px;padding:7px 0;}
+.tg-line-pill{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;color:#fff;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;line-height:1.4;}
+.tg-transit-detail{flex:1;}
+.tg-transit-meta{font-size:11px;color:var(--text2);line-height:1.5;}
+.tg-transit-tip{font-size:11px;color:#92400e;background:#fef3c7;border-radius:5px;padding:2px 7px;margin-top:3px;display:inline-block;line-height:1.5;}
+.tg-tips-box{margin-top:10px;padding:10px 12px;background:var(--accent-bg);border-radius:9px;border-left:3px solid var(--accent);}
+.tg-tips-title{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.tg-tips-li{font-size:12px;color:var(--text2);line-height:1.65;display:flex;gap:5px;margin-bottom:2px;}
+.tg-tips-li::before{content:'•';color:var(--accent);flex-shrink:0;}
+.tg-total-bar{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;padding:9px 12px;background:var(--bg);border-radius:9px;font-size:11px;color:var(--text2);}
+.tg-total-item{display:flex;align-items:center;gap:4px;}
+.tg-total-label{font-weight:600;color:var(--text);}
+
+/* MAP */
+.day-map-wrap{border-radius:var(--radius);overflow:hidden;margin-bottom:18px;border:1px solid var(--border);position:relative;}
+.day-map-wrap .leaflet-container{font-family:var(--font);}
+.map-legend{position:absolute;bottom:10px;left:10px;z-index:500;background:rgba(255,255,255,.93);border-radius:10px;padding:7px 10px;font-size:11px;display:flex;flex-direction:column;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.map-legend-item{display:flex;align-items:center;gap:5px;}
+.map-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* TIMELINE MAP LINK */
+.tl-map-link{font-size:11px;color:var(--accent);text-decoration:none;white-space:nowrap;flex-shrink:0;padding:1px 6px;border:1px solid #bfdbfe;border-radius:6px;background:var(--accent-bg);line-height:1.6;}
+.tl-map-link:hover{background:#dbeafe;}
+
+/* RESTAURANT LINK BUTTONS */
+.r-link-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;padding-top:9px;border-top:1px solid var(--border-light);}
+.r-link-btn{font-size:11px;padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:var(--font);color:var(--text2);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:all .15s;line-height:1;}
+.r-link-btn:hover{background:var(--border-light);}
+.r-link-btn.review{border-color:#03c75a;color:#03c75a;}
+.r-link-btn.review:hover{background:#f0fff6;}
+.r-link-btn.reserve{border-color:var(--accent);color:var(--accent);}
+.r-link-btn.reserve:hover{background:var(--accent-bg);}
+.r-link-btn.map{border-color:#ea4335;color:#ea4335;}
+.r-link-btn.map:hover{background:#fff5f5;}
+
+/* UTIL */
+.btn-icon{background:none;border:none;cursor:pointer;font-size:15px;color:var(--text3);padding:3px;line-height:1;border-radius:5px;}
+.btn-icon:hover{color:var(--text);background:var(--border-light);}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px;}
+.separator{height:1px;background:var(--border);margin:20px 0;}
+.hint{font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:16px;}
+.tag-day{background:var(--accent-bg);color:var(--accent);font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;}
+
+/* INLINE TRANSIT BADGE */
+.tl-transit-badge{display:flex;align-items:flex-start;gap:8px;margin-top:8px;padding:8px 10px;background:var(--bg);border-radius:9px;border-left:3px solid var(--border);}
+.tl-transit-pill{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;color:#fff;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;line-height:1.4;}
+.tl-transit-meta{font-size:11px;color:var(--text2);line-height:1.5;}
+.tl-transit-tip{font-size:11px;color:#92400e;background:#fef3c7;border-radius:5px;padding:2px 7px;margin-top:3px;display:inline-block;line-height:1.5;}
+
+/* MEAL ACCORDION */
+.meal-acc{margin-top:8px;}
+.meal-acc summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);padding:6px 12px;background:var(--accent-bg);border-radius:9px;border:1px solid #bfdbfe;list-style:none;display:flex;align-items:center;gap:5px;transition:all .15s;}
+.meal-acc summary::-webkit-details-marker{display:none;}
+.meal-acc summary::before{content:'▶';font-size:9px;transition:transform .2s;}
+.meal-acc[open] summary::before{transform:rotate(90deg);}
+.meal-acc[open] summary{border-radius:9px 9px 0 0;border-bottom:none;}
+.meal-acc-body{border:1px solid #bfdbfe;border-top:none;border-radius:0 0 9px 9px;overflow:hidden;}
+.meal-rec{padding:11px 13px;border-bottom:1px solid var(--border-light);background:#fff;}
+.meal-rec:last-child{border-bottom:none;}
+.meal-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+.meal-rec-name{font-size:13px;font-weight:600;flex:1;}
+.meal-rec-rating{font-size:12px;color:var(--amber);font-weight:600;white-space:nowrap;margin-left:8px;}
+.meal-rec-reviews{font-size:11px;color:var(--text3);font-weight:400;}
+.meal-rec-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;}
+.meal-rec-menu{font-size:12px;color:var(--text);margin-bottom:2px;font-weight:500;}
+.meal-rec-meta{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.meal-rec-links{display:flex;gap:6px;flex-wrap:wrap;}
+.meal-rec-link{font-size:11px;padding:4px 10px;border-radius:7px;border:1px solid var(--border);background:#fff;text-decoration:none;color:var(--text2);transition:all .15s;display:inline-flex;align-items:center;gap:3px;}
+.meal-rec-link:hover{background:var(--border-light);}
+.meal-rec-link.map{border-color:#ea4335;color:#ea4335;}
+.meal-rec-link.map:hover{background:#fff5f5;}
+.meal-rec-link.review{border-color:#03c75a;color:#03c75a;}
+.meal-rec-link.review:hover{background:#f0fff6;}
+
+@media(max-width:600px){
+  .hero h1{font-size:21px;}
+  .flight-grid{grid-template-columns:1fr;}
+  .day-hd{flex-wrap:wrap;}
+  .tl-actions{opacity:1;}
+  .form-row-2{grid-template-columns:1fr;}
+  .stat-cards,.budget-summary{grid-template-columns:1fr 1fr;}
+  .day-map-wrap{height:220px !important;}
+  .map-legend{font-size:10px;padding:5px 8px;gap:3px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner" id="navInner"></div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>오사카 가족여행 2026</h1>
+    <p>성인 2명 + 4세 남아 · 7박 8일 · 오사카 집중형</p>
+    <div class="flight-grid">
+      <div class="fc">
+        <div class="fc-label">출국</div>
+        <div class="fc-route">ICN → KIX</div>
+        <div class="fc-time">04/29(수) 11:10 → 12:55</div>
+        <div class="fc-no">WE511 · 좌석 3석 확보</div>
+      </div>
+      <div class="fc">
+        <div class="fc-label">귀국</div>
+        <div class="fc-route">KIX → ICN</div>
+        <div class="fc-time">05/06(수) 15:05 → 17:05</div>
+        <div class="fc-no">WE512 · 린쿠 아울렛 경유 가능</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="main"></div>
+
+<!-- FAB -->
+<button class="fab fab-hidden" id="fab" onclick="handleFab()">+ 추가</button>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modalTitle">항목 추가</div>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="hideModal()">취소</button>
+      <button class="btn-primary" id="modalSave" onclick="saveModal()">저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// 지도 데이터 (소테츠 프레사 인 오사카-난바 기준)
+// ──────────────────────────────────────────────
+const HOTEL = {coords:[34.6617,135.4993], name:'소테츠 프레사 인 오사카-난바'};
+
+const DAY_MAP_DATA = {
+  d1:{
+    locs:[
+      {n:'간사이 공항 (KIX) 도착',        c:[34.4344,135.2440], t:'move',  time:'12:55'},
+      {n:'난카이 라피트 → 난바역',          c:[34.6647,135.5002], t:'move',  time:'14:15'},
+      {n:'소테츠 프레사 인 체크인',         c:[34.6617,135.4993], t:'hotel', time:'14:30'},
+      {n:'도톤보리 · 에비스바시 산책',      c:[34.6687,135.5013], t:'sight', time:'16:00'},
+      {n:'저녁 식사 (도톤보리)',            c:[34.6680,135.5010], t:'food',  time:'18:00'},
+    ]
+  },
+  d2:{
+    locs:[
+      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'07:30'},
+      {n:'JR 유니버설시티역',              c:[34.6644,135.4330], t:'move',  time:'08:00'},
+      {n:'슈퍼 닌텐도월드',               c:[34.6666,135.4329], t:'sight', time:'09:00'},
+      {n:'미니언 파크',                   c:[34.6643,135.4340], t:'sight', time:'13:30'},
+      {n:'유니버설 시티워크 기념품',        c:[34.6633,135.4319], t:'shop',  time:'17:30'},
+      {n:'소테츠 프레사 인 복귀',           c:[34.6617,135.4993], t:'hotel', time:'19:30'},
+    ]
+  },
+  d3:{
+    locs:[
+      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'10:00'},
+      {n:'신사이바시스지 상점가',           c:[34.6722,135.5009], t:'shop',  time:'10:00'},
+      {n:'돈키호테 난바 도톤보리점',        c:[34.6685,135.5007], t:'shop',  time:'13:30'},
+      {n:'우메다 한큐 버스터미널',          c:[34.7024,135.4959], t:'move',  time:'14:30'},
+      {n:'카메노이 호텔 아리마',           c:[34.7988,135.2469], t:'hotel', time:'16:15'},
+    ]
+  },
+  d4:{
+    locs:[
+      {n:'카메노이 호텔 아리마 체크아웃',   c:[34.7988,135.2469], t:'hotel', time:'08:30'},
+      {n:'가이유칸 수족관',               c:[34.6546,135.4284], t:'sight', time:'10:00'},
+      {n:'덴포잔 마켓플레이스 점심',        c:[34.6551,135.4302], t:'food',  time:'12:30'},
+      {n:'소테츠 프레사 인 귀숙',          c:[34.6617,135.4993], t:'hotel', time:'18:30'},
+    ]
+  },
+  d5:{
+    locs:[
+      {n:'텐노지 동물원',                 c:[34.6500,135.5136], t:'sight', time:'10:00'},
+      {n:'신세카이 쿠시카츠 점심',         c:[34.6519,135.5072], t:'food',  time:'12:00'},
+      {n:'스파월드',                      c:[34.6524,135.5060], t:'sight', time:'14:30'},
+      {n:'츠텐카쿠 타워',                 c:[34.6527,135.5063], t:'sight', time:'17:00'},
+      {n:'저녁 · 텐노지 미오',            c:[34.6478,135.5137], t:'food',  time:'18:30'},
+    ]
+  },
+  d6:{
+    locs:[
+      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'09:30'},
+      {n:'오사카성 · 천수각',             c:[34.6873,135.5259], t:'sight', time:'09:30'},
+      {n:'오사카성 공원 내 점심',          c:[34.6870,135.5230], t:'food',  time:'11:30'},
+      {n:'덴포잔 대관람차',               c:[34.6556,135.4296], t:'sight', time:'13:30'},
+      {n:'레고랜드 디스커버리 센터',        c:[34.6551,135.4285], t:'sight', time:'14:30'},
+      {n:'소테츠 프레사 인 복귀 · 도톤보리',c:[34.6680,135.5010], t:'food',  time:'18:30'},
+    ]
+  },
+  d7:{
+    locs:[
+      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'08:30'},
+      {n:'킨테츠 나라역 도착',             c:[34.6851,135.8325], t:'move',  time:'09:30'},
+      {n:'나라 사슴공원 · 사슴 먹이 체험', c:[34.6889,135.8434], t:'sight', time:'09:30'},
+      {n:'도다이지 대불전',               c:[34.6887,135.8398], t:'sight', time:'10:30'},
+      {n:'카키노하 스시 점심',            c:[34.6810,135.8290], t:'food',  time:'12:00'},
+      {n:'나라마치 전통 거리',             c:[34.6803,135.8294], t:'sight', time:'14:00'},
+      {n:'우메다 · HEP FIVE',            c:[34.7056,135.4983], t:'shop',  time:'16:30'},
+      {n:'우메다 저녁 후 귀숙',           c:[34.6617,135.4993], t:'food',  time:'18:30'},
+    ]
+  },
+  d8:{
+    locs:[
+      {n:'소테츠 프레사 인 체크아웃',       c:[34.6617,135.4993], t:'hotel', time:'09:00'},
+      {n:'린쿠타운역 하차',               c:[34.4396,135.2967], t:'move',  time:'09:34'},
+      {n:'린쿠 프리미엄 아울렛',           c:[34.4380,135.2975], t:'shop',  time:'10:00'},
+      {n:'간사이 공항 (KIX) 탑승',        c:[34.4344,135.2440], t:'move',  time:'11:45'},
+    ]
+  },
+};
+
+const TYPE_COLORS = {
+  move:'#94a3b8', food:'#f59e0b', sight:'#3b82f6',
+  hotel:'#22c55e', shop:'#a855f7', tip:'#ec4899'
+};
+
+// 노선 색상
+const LC = {
+  nankai:'#003894', midosuji:'#e4002b', chuo:'#007a3d',
+  tanimachi:'#522785', yotsubashi:'#0066b3', sennichimae:'#e85298',
+  jr_loop:'#f68b1e', jr_yumesaki:'#0099cc', jr_yamato:'#8b5cf6',
+  kintetsu:'#b71c1c', kobe_subway:'#0055a2',
+  walk:'#16a34a', bus:'#d97706',
+};
+// 노선 아이콘
+const LI = { metro:'🚇', jr:'🚆', kintetsu:'🚃', bus:'🚌', walk:'🚶', nankai:'🚄' };
+
+const TRANSPORT_GUIDE = {
+  d1:{
+    title:'간사이 공항 → 난바 → 도톤보리',
+    total:{time:'약 55분', cost:'성인 1,490엔 / 소아 무료'},
+    steps:[
+      {place:'간사이 공항 (KIX) 제1터미널'},
+      {transit:{line:'난카이 라피트α',color:LC.nankai,icon:LI.nankai,detail:'난바역 직통 · 34분 · 성인 1,490엔 · 4세 무료',tip:'사전 QR 예약 권장 (클룩/KKday ≈11,000원) — α는 직통, β는 린쿠타운 정차'}},
+      {place:'난카이 난바역 도착', note:'9번 승강장 하차'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'숙소까지 도보 약 10분 (약 800m 남쪽)',tip:'난바역 남쪽 출구 → 나니와스지 따라 직진'}},
+      {place:'소테츠 프레사 인 오사카-난바 체크인'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'도톤보리까지 도보 약 5분',tip:'숙소 북쪽으로 걸으면 도톤보리 강변'}},
+      {place:'도톤보리 · 에비스바시'},
+    ],
+    tips:[
+      '공항 제2터미널 도착 시 → 무료 셔틀버스로 제1터미널 이동 (15분) 후 난카이 탑승',
+      'IC카드(이코카·트래블로그) 탑승 2일차부터 적극 활용 — 라피트는 별도 예약',
+      '짐이 많으면 난바역 코인로커 (500~700엔) 맡기고 가볍게 이동',
+    ]
+  },
+  d2:{
+    title:'난바 → USJ → 난바 (왕복)',
+    total:{time:'편도 약 20분', cost:'편도 약 400엔 (IC카드)'},
+    steps:[
+      {place:'소테츠 프레사 인 → 지하철 난바역', note:'숙소에서 도보 10분'},
+      {transit:{line:'오사카메트로 요츠바시선',color:LC.yotsubashi,icon:LI.metro,detail:'난바(Y15) → 벤텐초(Y12) · 3정거장 · 약 6분 · 230엔',tip:'요츠바시선은 난바역 4번 출구 쪽에서 탑승'}},
+      {place:'벤텐초역 하차 → JR 환승', note:'지하 → 지상으로 올라와 JR 벤텐초역 환승 (도보 1분)'},
+      {transit:{line:'JR 오사카순환선',color:LC.jr_loop,icon:LI.jr,detail:'벤텐초 → 니시쿠조 · 1정거장 · 약 3분 · 170엔',tip:'오사카순환선 내선(内回り) 탑승 — 유니버설시티 방향 표시 확인'}},
+      {place:'니시쿠조역 환승', note:'홈에서 바로 JR 유메사키선 환승 가능'},
+      {transit:{line:'JR 유메사키선 (USJ선)',color:LC.jr_yumesaki,icon:LI.jr,detail:'니시쿠조 → 유니버설시티 · 1정거장 · 약 4분 · 요금 JR 구간 통합',tip:'유니버설시티행 종착역 — 내리면 바로 USJ 게이트 방향'}},
+      {place:'유니버설시티역 → USJ 입장', note:'역에서 USJ 게이트까지 도보 약 3분'},
+    ],
+    tips:[
+      '귀로도 동일 루트 역방향 이용 (유니버설시티 → 니시쿠조 → 벤텐초 → 난바)',
+      'IC카드(이코카) 사용 시 환승 자동 처리 — 별도 티켓 구매 불필요',
+      '아이 4세는 지하철·JR 모두 무료 탑승 가능 (보호자 동반)',
+      '오전 7:30 출발 시 8:00~8:10 USJ 도착 — 오픈런에 충분한 시간',
+    ]
+  },
+  d3:{
+    title:'숙소 → 신사이바시 → 돈키호테 → 우메다 버스터미널 → 카메노이 호텔 아리마',
+    total:{time:'총 이동 약 100분', cost:'지하철 230엔 + 한큐 버스 1,500엔'},
+    steps:[
+      {place:'소테츠 프레사 인'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'신사이바시스지까지 도보 약 8분 (약 650m 북쪽)',tip:'숙소 → 나니와스지 → 미도스지 합류 → 신사이바시스지 남단 입구'}},
+      {place:'신사이바시스지 상점가', note:'600m 아케이드 쇼핑'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'돈키호테 난바점까지 도보 약 10분 (상점가 통과)',tip:'신사이바시스지 남쪽 끝 → 도톤보리 방향'}},
+      {place:'돈키호테 난바 도톤보리점', note:'면세 쇼핑 후 신사이바시역으로 이동 (14:30 버스 목표)'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'신사이바시(M18) → 우메다(M16) · 2정거장 · 약 5분 · 230엔',tip:'미도스지선 빨간 노선 — 배차 2~3분. 우메다역 지상으로 나와 한큐 버스터미널 방향'}},
+      {place:'우메다 한큐 버스터미널 1층 3번 승강장', note:'시간표 사전 확인 — 하루 수 회 운행'},
+      {transit:{line:'한큐 버스 (아리마 온천 직행)',color:LC.bus,icon:LI.bus,detail:'우메다 → 아리마 온천 · 약 65~70분 · 성인 1,500엔 · 4세 무료',tip:'고속도로 정체 시 지연 가능. 버스 내 짐칸 있음. 사전 예약 or 현장 구매'}},
+      {place:'아리마 온천 버스정류장 → 카메노이 호텔 아리마', note:'도보 5~10분 또는 호텔 픽업 서비스 확인'},
+    ],
+    tips:[
+      '돈키호테 쇼핑은 14:00 전 마무리 목표 — 버스 여유 시간 확보',
+      '아리마 온천 버스는 현금 or IC카드 모두 이용 가능',
+      '카메노이 호텔 아리마 체크인 15:00~16:00 — 버스 시간에 맞게 출발 조정',
+    ]
+  },
+  d4:{
+    title:'카메노이 호텔 아리마 체크아웃 → 난바 → 가이유칸 수족관',
+    total:{time:'아리마→난바 약 90분 + 가이유칸 이동 약 15분', cost:'버스 1,500엔 + 지하철 510엔'},
+    steps:[
+      {place:'카메노이 호텔 아리마 체크아웃', note:'짐은 호텔 클로크룸에 맡기거나 버스에 실음'},
+      {transit:{line:'한큐 버스 (아리마→오사카)',color:LC.bus,icon:LI.bus,detail:'아리마 온천 → JR 오사카역(우메다) · 약 65~70분 · 1,500엔',tip:'귀로 버스도 사전 시간 확인 필수 — 고속도로 정체 시 지연 가능'}},
+      {place:'우메다(JR 오사카역) 도착'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'우메다(M16) → 난바(M20) · 3정거장 · 7분 · 230엔',tip:'난바역 도착 후 숙소에 짐 보관'}},
+      {place:'난바역 → 숙소 짐 보관', note:'체크인 전이면 프런트에 맡기고 출발'},
+      {transit:{line:'오사카메트로 미도스지선→주오선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 혼마치(M18) 환승 → 주오선 → 오사카코(C11) · 약 13분 · 280엔',tip:'오사카코역 1번 출구 → 가이유칸 도보 5분'}},
+      {place:'가이유칸 수족관 관람', note:'2~2.5시간 관람'},
+      {transit:{line:'오사카메트로 주오선→미도스지선',color:LC.chuo,icon:LI.metro,detail:'오사카코 → 혼마치 → 미도스지선 → 난바 · 약 20분',tip:''}},
+      {place:'난바 귀숙'},
+    ],
+    tips:[
+      '아리마 버스 출발 시간 기준으로 역산 — 가이유칸 입장 시간 조정',
+      '가이유칸 온라인 사전 구매 시 입장 줄 없음 — 체크아웃 전날 밤 구매 권장',
+      '이 날 이동이 많으므로 아이 낮잠 시간 확보 (버스 이동 중 OK)',
+    ]
+  },
+  d5:{
+    title:'난바 → 텐노지 동물원 → 신세카이 · 스파월드',
+    total:{time:'이동 최소화 (지하철 총 약 10분)', cost:'지하철 약 460엔'},
+    steps:[
+      {place:'소테츠 프레사 인 → 지하철 난바역', note:'숙소에서 도보 10분'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 도부츠엔마에(M22) · 2정거장 · 4분 · 230엔',tip:'도부츠엔마에역 1번 출구 → 텐노지 동물원 정문까지 도보 3분'}},
+      {place:'텐노지 동물원 관람'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'텐노지 동물원 남문 → 신세카이 쟌쟌요코초 · 도보 약 8분',tip:'동물원 남문으로 나오면 바로 신세카이 방향 표지판'}},
+      {place:'신세카이 · 스파월드 · 츠텐카쿠'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'도부츠엔마에(M22) → 난바(M20) · 2정거장 · 4분 · 230엔',tip:'텐노지 미오 저녁 후 귀숙'}},
+      {place:'난바 귀숙'},
+    ],
+    tips:[
+      '텐노지~신세카이~스파월드~츠텐카쿠 모두 도보 10분 이내 — 이 날은 이동 최소화',
+      '도부츠엔마에역은 미도스지선(M)과 사카이스지선(K) 환승역 — 미도스지선 이용',
+      '황금연휴 5/3 — 오전 10시 동물원 개장 직후 입장 권장 (11시 이후 급격히 혼잡)',
+    ]
+  },
+  d6:{
+    title:'숙소 → 오사카성 → 덴포잔 → 도톤보리',
+    total:{time:'총 이동 약 40분', cost:'약 560엔'},
+    steps:[
+      {place:'소테츠 프레사 인 → 지하철 난바역'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 혼마치(M18) · 2정거장 · 4분 · 230엔',tip:'혼마치에서 주오선으로 환승'}},
+      {place:'혼마치역 환승 (미도스지→주오선)', note:'홈 이동 약 2분'},
+      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'혼마치(C16) → 모리노미야(C19) · 3정거장 · 7분 · 280엔 통합',tip:'모리노미야 1·2번 출구 → 오사카성 동쪽 해자 → 도보 약 8분'}},
+      {place:'오사카성 공원 · 천수각 관람', note:'관람 후 주오선으로 덴포잔 이동'},
+      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'모리노미야(C19) → 오사카코(C11) · 4정거장 · 8분 · 280엔',tip:'주오선이 오사카성(모리노미야)에서 덴포잔(오사카코)까지 직통 — 환승 없음!'}},
+      {place:'오사카코역 → 덴포잔 대관람차', note:'1번 출구 → 도보 5분'},
+      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'오사카코(C11) → 혼마치(C16) · 4정거장 · 9분',tip:''},},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'혼마치(M18) → 난바(M20) · 2정거장 · 4분 · 통합 280엔',tip:'저녁은 도톤보리에서'}},
+      {place:'난바 · 도톤보리 저녁'},
+    ],
+    tips:[
+      '주오선(녹색) 하나로 오사카성(모리노미야) ↔ 덴포잔(오사카코) 직통 — 핵심 노선',
+      '오사카성 입장 전 공원 외곽 석벽·해자 산책은 무료 — 아이와 걷기 좋음',
+      '덴포잔 대관람차 → 레고랜드는 도보 3분 이내로 연계 쉬움',
+    ]
+  },
+  d7:{
+    title:'난바 → 나라 → 우메다 → 난바',
+    total:{time:'편도 나라까지 약 40분', cost:'편도 680엔 (급행) / 1,200엔 (특급)'},
+    steps:[
+      {place:'소테츠 프레사 인 → 킨테츠 난바역', note:'지하철 난바역에서 도보 3분 — 킨테츠 난바역(近鉄難波)은 별도 건물'},
+      {transit:{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 난바 → 킨테츠 나라역 · 약 39분 · 680엔 (4세 무료)',tip:'급행은 무료 좌석 — 혼잡 예상 시 특급권(520엔 추가) 구매해 지정석 이용 권장'}},
+      {place:'킨테츠 나라역 도착', note:'역에서 나라공원까지 도보 약 10분'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'나라역 → 사슴공원 → 도다이지 → 나라마치 · 전 코스 도보',tip:'나라 핵심 관광지는 모두 1.5km 반경 내 — 유모차 이동 가능한 포장도로'}},
+      {place:'나라 사슴공원 · 도다이지 · 나라마치 관광'},
+      {transit:{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 나라 → 킨테츠 우메다역 · 약 40분 · 680엔',tip:'나라에서 우메다 직통 — 오사카 난바 경유 안 해도 됨'}},
+      {place:'킨테츠 우메다역(오사카우메다역) → HEP FIVE · 루쿠아', note:'쇼핑 후 난바로 귀숙'},
+      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'우메다(M16) → 난바(M20) · 3정거장 · 7분 · 230엔',tip:''}},
+      {place:'난바역 → 도보 → 숙소'},
+    ],
+    tips:[
+      '킨테츠 난바역은 지하철 난바역과 다른 역 — 오사카메트로 난바역 서쪽 방향 도보 3분',
+      '어린이날(5/5) 나라공원 혼잡 — 사슴 먹이(200엔) 재고 조기 소진될 수 있음',
+      '나라 사슴은 가방·음식 낚아채기로 유명 — 가방 지퍼 꼭 잠그기',
+      '도다이지 기둥 구멍(약 37cm×37cm) 통과 체험 — 아이 인기 코스',
+      'JR 야마토지선도 이용 가능 (JR 난바 → 나라 직통 50분, 860엔) — 킨테츠가 더 빠름',
+    ]
+  },
+  d8:{
+    title:'숙소 → 린쿠 아울렛 → 간사이 공항',
+    total:{time:'숙소→공항 총 약 65분', cost:'약 1,430엔'},
+    steps:[
+      {place:'소테츠 프레사 인 체크아웃 → 난카이 난바역', note:'숙소에서 도보 10분 — 캐리어 끌고 이동'},
+      {transit:{line:'난카이 공항선 라피트β',color:LC.nankai,icon:LI.nankai,detail:'난바 → 린쿠타운역 · 약 29분 · 성인 1,100엔 (라피트 요금)',tip:'반드시 라피트β 탑승 — α는 린쿠타운 통과. 9번 승강장에서 탑승 전 행선지 확인'}},
+      {place:'린쿠타운역 하차', note:'코인로커(500~600엔)에 캐리어 맡기고 아울렛 쇼핑'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'린쿠타운역 → 린쿠 프리미엄 아울렛 · 도보 약 5분',tip:''}},
+      {place:'린쿠 프리미엄 아울렛 쇼핑', note:'10:00 오픈 · 11:30까지 쇼핑 후 공항 이동'},
+      {transit:{line:'난카이 공항선',color:LC.nankai,icon:LI.nankai,detail:'린쿠타운 → 간사이공항역 · 1정거장 · 약 6분 · 330엔',tip:'라피트 or 공항급행 모두 1정거장 — 급행으로도 충분'}},
+      {place:'간사이 공항 제1터미널 도착', note:'체크인 카운터 · 수하물 · 면세점 · 탑승구 이동'},
+    ],
+    tips:[
+      '15:05 출발 기준 3시간 전인 12:05까지 공항 도착 목표 (LCC 체크인 마감 60분 전)',
+      '아울렛 → 공항은 딱 1정거장 — 11:30 출발해도 여유 있음',
+      '캐리어는 아울렛 내 로커(500엔) 또는 린쿠타운역 로커(500~600엔) 이용',
+      '웨이브항공(WE512) LCC → 제2터미널 사용 가능성 있음. 탑승 전날 앱으로 재확인',
+      '면세 한도 총 800달러(한국) — 아울렛 영수증 보관',
+    ]
+  },
+};
+
+// ──────────────────────────────────────────────
+// 이동 항목별 교통 배지 (dayId_time 키)
+// ──────────────────────────────────────────────
+const ITEM_TRANSIT = {
+  'd1_13:40':{line:'난카이 라피트α',color:LC.nankai,icon:LI.nankai,detail:'간사이공항 → 난바역 · 34분 · 성인 1,490엔 · 4세 무료',tip:'α는 직통 34분. 사전 QR 예약 권장 (클룩/KKday ≈11,000원)'},
+  'd2_07:30':{line:'요츠바시선 → JR유메사키선',color:LC.yotsubashi,icon:LI.metro,detail:'난바(Y15) → 벤텐초 → 니시쿠조 → 유니버설시티 · 총 약 20분 · IC카드 약 400엔',tip:'IC카드(이코카) 사용 시 환승 자동 처리 — 아이 4세 무료'},
+  'd3_14:30':{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'신사이바시(M18) → 우메다(M16) · 2정거장 · 약 5분 · 230엔',tip:'미도스지선 빨간 노선 — 우메다역 지상으로 나와 한큐 버스터미널 방향으로 이동'},
+  'd3_15:00':{line:'한큐 버스 (아리마 온천 직행)',color:LC.bus,icon:LI.bus,detail:'우메다 → 아리마 온천 · 약 65~70분 · 성인 1,500엔 · 4세 무료',tip:'한큐버스터미널 1층 3번 승강장. 하루 수 회 운행 — 사전 시간표 확인 필수'},
+  'd4_08:30':{line:'한큐 버스 (아리마→오사카)',color:LC.bus,icon:LI.bus,detail:'아리마 온천 → JR 오사카역(우메다) · 약 65~70분 · 1,500엔 → 미도스지선 230엔',tip:'귀로 버스도 사전 시간 확인 필수 — 고속도로 정체 시 지연 가능'},
+  'd6_13:00':{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'모리노미야(C19) → 오사카코(C11) · 4정거장 · 약 8분 · 280엔',tip:'주오선이 오사카성↔덴포잔 직통 — 환승 없음!'},
+  'd7_08:30':{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 난바 → 킨테츠 나라역 · 약 39분 · 680엔 · 4세 무료',tip:'킨테츠 난바역은 지하철 난바역과 다른 역 — 도보 3분 서쪽 이동 필요'},
+  'd7_15:30':{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 나라 → 오사카우메다역 · 약 40분 · 680엔',tip:'나라에서 우메다 직통 — 오사카 난바 경유 불필요'},
+  'd8_09:00':{line:'난카이 라피트β',color:LC.nankai,icon:LI.nankai,detail:'난바역 9번 승강장 → 린쿠타운역 · 약 29분 · 성인 1,100엔',tip:'반드시 β 탑승 — α는 린쿠타운 통과. 예약 시 β 확인 필수'},
+  'd8_11:30':{line:'난카이 공항선',color:LC.nankai,icon:LI.nankai,detail:'린쿠타운 → 간사이공항역 · 1정거장 · 약 6분 · 330엔',tip:'라피트 or 공항급행 모두 1정거장 — 급행으로 충분'},
+};
+
+// ──────────────────────────────────────────────
+// 식사 항목별 맛집 추천 (dayId → mealType → 3곳)
+// ──────────────────────────────────────────────
+const MEAL_RECS = {
+  d1:{
+    breakfast:[
+      {name:'인천공항 스타벅스 (출국장 내)',area:'인천공항',rating:'4.5★',reviews:'800+',tags:['커피','샌드위치','빠름'],menu:'모닝 커피 + 샌드위치 세트 — 탑승 전 게이트 내 픽업',hours:'05:30~22:00',mapUrl:'https://www.google.com/maps/search/?q=스타벅스+인천공항+출국장'},
+      {name:'CU / GS25 편의점 (출국장)',area:'인천공항',rating:'4.5★',reviews:'600+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·삼각김밥·커피 — 빠른 아침 준비',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=CU+인천공항+출국장'},
+      {name:'파리바게뜨 인천공항점',area:'인천공항',rating:'4.5★',reviews:'500+',tags:['베이커리','다양'],menu:'크루아상·샌드위치·커피 세트 — 아이와 함께 여유 있게',hours:'06:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=파리바게뜨+인천공항'},
+    ],
+    lunch:[
+      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['돈코츠 라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 오사카 첫 끼니로 가볍게',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
+      {name:'난바 워크 푸드코트 (なんばWALK)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['다양한 선택','지하상가','빠름'],menu:'라멘·우동·스시·돈카츠 등 다양 — 공항 이동 피로 후 빠른 점심',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=なんばウォーク+フードコート+大阪'},
+      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간','칸막이석'],menu:'특제 돈코츠 라멘 · 개인 칸막이석 — 첫날 간단하게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+    ],
+    dinner:[
+      {name:'Shanghai cuisine RONTAN',area:'도톤보리',rating:'4.7★',reviews:'1,200+',tags:['샤오롱바오','예약 가능'],menu:'구운 샤오롱바오 — 育汁 폭발. 카운터 19석.',hours:'11:30~22:00 · 수 휴무',mapUrl:'https://www.google.com/maps/search/?q=Shanghai+cuisine+RONTAN+大阪道頓堀'},
+      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 야키소바',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
+      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['돈코츠 라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 1그릇 700엔 — 빠르고 확실',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
+    ]
+  },
+  d2:{
+    breakfast:[
+      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK'],menu:'찐만두 12개 720엔 · 슈마이 — 이른 아침 포장 픽업',hours:'10:00~21:00 (테이크아웃 빠름)',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+      {name:'Komeda\'s Coffee 난바점',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 8:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
+      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
+    ],
+    lunch:[
+      {name:'키노피오 카페 (닌텐도월드)',area:'USJ',rating:'4.6★',reviews:'2,000+',tags:['닌텐도 콜라보','예약 권장'],menu:'마리오 버섯 버거 · 피치 파르페 · 쿠파 크레이프',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=キノピオカフェ+USJ+ユニバーサルスタジオジャパン'},
+      {name:'미니언 파크 버블 그릴',area:'USJ',rating:'4.5★',reviews:'1,000+',tags:['미니언 콜라보','아이 인기'],menu:'바나나 소프트크림 · 미니언 박스 런치',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=ミニオンパーク+レストラン+USJ'},
+      {name:'TAKOPA 타코야키 파크 (시티워크)',area:'유니버설시티워크',rating:'4.5★',reviews:'800+',tags:['타코야키','오사카 명물'],menu:'오사카 6개 명점 타코야키를 한자리에서 비교 체험',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=たこぱーく+ユニバーサルシティウォーク大阪'},
+    ],
+    dinner:[
+      {name:'OSAKA Kiichi',area:'도톤보리',rating:'4.7★',reviews:'1,000+',tags:['와규 야키니쿠','예약 권장','SNS 인기'],menu:'A5 쿠로게 와규 — 철판 위에서 늘어나는 비주얼로 화제',hours:'17:00~23:30',mapUrl:'https://www.google.com/maps/search/?q=OSAKA+Kiichi+道頓堀'},
+      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간','칸막이석'],menu:'특제 돈코츠 라멘 · USJ 피로 회복에 딱',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 철판석',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
+    ]
+  },
+  d3:{
+    breakfast:[
+      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페','여유'],menu:'토스트+삶은달걀+커피 모닝 세트 — 8:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
+      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안','아이 인기'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트 — 쇼핑 전 든든하게',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
+      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK','빠름'],menu:'찐만두 포장 픽업 — 빠른 아침 해결',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+    ],
+    lunch:[
+      {name:'규카츠 모토무라 신사이바시점 (牛かつもと村)',area:'신사이바시',rating:'4.6★',reviews:'1,500+',tags:['규카츠','줄 짧음'],menu:'규카츠 정식 1,580엔 — 직접 돌판에 구워 먹기',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=牛かつもと村+心斎橋'},
+      {name:'난바 파크스 레스토랑 층 (なんばパークス)',area:'난바',rating:'4.5★',reviews:'600+',tags:['다양한 선택','쾌적'],menu:'라멘·스시·이탈리안·스테이크 등 10여 개 레스토랑',hours:'11:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=なんばパークス+レストラン+大阪'},
+      {name:'이치란 라멘 신사이바시점 (一蘭)',area:'신사이바시',rating:'4.5★',reviews:'900+',tags:['돈코츠 라멘','개인 칸막이'],menu:'특제 돈코츠 라멘 · 농도·마늘·양 개인 맞춤 주문',hours:'10:00~02:00',mapUrl:'https://www.google.com/maps/search/?q=一蘭+心斎橋'},
+    ]
+  },
+  d4:{
+    dinner:[
+      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 아리마 귀환 후 가볍게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
+      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 철판석',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
+      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 칸막이 1인석 — 피로 회복에 딱',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+    ],
+    lunch:[
+      {name:'나니와 쿠이신보 요코초 (なにわ食いしんぼ横丁)',area:'덴포잔',rating:'4.5★',reviews:'800+',tags:['오사카 명물 집합','레트로'],menu:'오코노미야키·타코야키·쿠시카츠·라멘 등 오사카 명물 총집합',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=なにわ食いしんぼ横丁+天保山マーケットプレース'},
+      {name:'모스버거 오사카코역 인근 (MOS BURGER)',area:'덴포잔',rating:'4.5★',reviews:'500+',tags:['버거','빠름','아이 친화'],menu:'밥버거·테리야키 버거·세트 — 빠른 점심으로 적합',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=モスバーガー+大阪港+海遊館'},
+      {name:'덴포잔 마켓플레이스 푸드코트',area:'덴포잔',rating:'4.5★',reviews:'600+',tags:['다양한 선택','가볍게'],menu:'오사카 명물 포함 다양한 메뉴 — 아이와 무난하게',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=天保山マーケットプレース+フードコート+大阪'},
+    ]
+  },
+  d5:{
+    breakfast:[
+      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 08:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
+      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트 — 황금연휴 활동 전 에너지 충전',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
+      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK','빠름'],menu:'찐만두 포장 픽업 — 텐노지 이동 전 빠르게',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+    ],
+    lunch:[
+      {name:'쿠시카츠 다루마 신세카이 본점 (串カツだるま)',area:'신세카이',rating:'4.5★',reviews:'5,000+',tags:['쿠시카츠','1929년 창업','소스 더블딥 금지'],menu:'소고기·새우·아스파라거스·치즈 꼬치 1개 100~220엔',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+新世界本店'},
+      {name:'텐구 신세카이점 (てんぐ)',area:'신세카이',rating:'4.5★',reviews:'1,200+',tags:['쿠시카츠'],menu:'다루마와 쌍벽을 이루는 쿠시카츠 명점 — 소스 항아리 공유 방식',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=てんぐ+新世界+串カツ'},
+      {name:'양식당 쟌쟌요코초 (じゃんじゃん横丁 정식)',area:'신세카이',rating:'4.5★',reviews:'700+',tags:['정식','부담 없음'],menu:'쟌쟌요코초 골목 내 정식집 — 생선구이·카레 등 500~800엔',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=じゃんじゃん横丁+新世界+食堂'},
+    ],
+    dinner:[
+      {name:'텐노지 미오 B1 레스토랑가 (天王寺MIO)',area:'텐노지',rating:'4.5★',reviews:'800+',tags:['다양한 선택','황금연휴 비교적 여유'],menu:'라멘·야키니쿠·이탈리안 등 10여 개 레스토랑 한자리에',hours:'11:00~21:30',mapUrl:'https://www.google.com/maps/search/?q=天王寺MIO+レストラン'},
+      {name:'아베노 하루카스 다이닝 (あべのハルカス)',area:'텐노지',rating:'4.6★',reviews:'600+',tags:['60층 뷰 레스토랑','특별한 날'],menu:'60층 전망 레스토랑 — 오사카 야경 감상하며 식사',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=あべのハルカス+ダイニング+天王寺'},
+      {name:'쿠시야키 텐노지점 (串焼き)',area:'텐노지',rating:'4.5★',reviews:'500+',tags:['쿠시야키','이자카야'],menu:'야키토리·쿠시야키 저녁 코스 2,000엔~ — 텐노지역 도보 5분',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=串焼き+天王寺+居酒屋'},
+    ]
+  },
+  d6:{
+    breakfast:[
+      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 오사카성 이동 전 여유롭게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
+      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
+      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 약 500엔 — 07:00부터 바로 가능',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
+    ],
+    lunch:[
+      {name:'MIRAIZA OSAKA-JO 레스토랑',area:'오사카성',rating:'4.6★',reviews:'900+',tags:['오사카성 내부','역사 건물'],menu:'1930년대 역사 건물 내 카페 · 파스타·카레·스테이크',hours:'09:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=MIRAIZA+OSAKA-JO+大阪城'},
+      {name:'오사카성 공원 푸드트럭 (NHK 홀 앞)',area:'오사카성공원',rating:'4.5★',reviews:'600+',tags:['야외','피크닉'],menu:'샌드위치·핫도그·오니기리 — 공원 잔디밭 피크닉 스타일',hours:'10:00~18:00 (날씨에 따라 변동)',mapUrl:'https://www.google.com/maps/search/?q=大阪城公園+フードトラック'},
+      {name:'모리노미야 키테 레스토랑 (MORINOMIYA KITE)',area:'모리노미야',rating:'4.5★',reviews:'700+',tags:['복합몰','다양'],menu:'모리노미야역 인근 복합시설 — 라멘·스시·카페 등',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=もりのみやキューズモール+レストラン'},
+    ],
+    dinner:[
+      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 도톤보리 야경과 함께',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
+      {name:'오사카 오쇼 도톤보리점 (大阪王将)',area:'도톤보리',rating:'4.5★',reviews:'1,500+',tags:['교자','볶음밥','아이 OK'],menu:'파리파리 군만두·볶음밥 세트 — 아이도 좋아하는 맛',hours:'10:00~01:00',mapUrl:'https://www.google.com/maps/search/?q=大阪王将+道頓堀'},
+      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 칸막이 1인석 — 아이 동반도 편함',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+    ]
+  },
+  d7:{
+    breakfast:[
+      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 약 500엔 — 나라 이동 전 빠르게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
+      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 어린이날 나라 출발 전 충전',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
+      {name:'Starbucks 난바 시티점',area:'난바',rating:'4.5★',reviews:'600+',tags:['커피','빠름'],menu:'모닝 커피 + 샌드위치 세트 — 출발 전 가볍게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=スターバックス+なんばシティ+大阪'},
+    ],
+    lunch:[
+      {name:'카키노하 스시 총본점 (柿の葉すし)',area:'나라',rating:'4.5★',reviews:'1,000+',tags:['나라 명물','전통 스시'],menu:'감잎 스시 — 연어·고등어·도미 · 1인 세트 1,200엔~',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=柿の葉すし+総本家+奈良'},
+      {name:'가마메시 사토 나라점 (釜めし里)',area:'나라',rating:'4.5★',reviews:'600+',tags:['솥밥','나라 명물'],menu:'나라 명물 솥밥 (마쓰타케·게·채소) · 1,500엔~',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=釜めし里+奈良'},
+      {name:'쿠라스시 나라역점 (くら寿司)',area:'나라',rating:'4.5★',reviews:'800+',tags:['회전초밥','아이 인기'],menu:'회전초밥 1접시 115엔~ · 가이챠! 비슬롯 이벤트',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=くら寿司+近鉄奈良'},
+    ],
+    dinner:[
+      {name:'무기토멘스케 나카츠 (麦と麺助)',area:'나카츠/우메다',rating:'4.8★',reviews:'1,500+',tags:['라멘','2024 미쉐린 빕 구르망','웨이팅'],menu:'교지도리 닭육수 쇼유 라멘 + 와규 완탕 · 현금만',hours:'월·수~금 11~15:30 · 토일 ~16:00 · 화 휴무',mapUrl:'https://www.google.com/maps/search/?q=麦と麺助+中津+大阪'},
+      {name:'루쿠아 이올레 11F 다이닝 (LUCUA 1100)',area:'우메다',rating:'4.5★',reviews:'700+',tags:['우메다 역결','뷰 레스토랑'],menu:'스시·야키니쿠·이탈리안 등 다양 — 마지막 저녁 기념식사',hours:'11:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=ルクア1100+ダイニング+梅田'},
+      {name:'오사카 에키마에빌딩 이자카야 (駅前ビル)',area:'우메다',rating:'4.5★',reviews:'800+',tags:['이자카야','가성비','해산물'],menu:'우메다 역전 빌딩 지하 — 신선한 해산물·꼬치·사시미',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=大阪駅前ビル+居酒屋+梅田'},
+    ]
+  },
+  d8:{
+    breakfast:[
+      {name:'551 蓬莱 난바본점 (포장)',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','귀국 선물 가능'],menu:'찐만두·슈마이 포장 — 귀국 당일 공항·기내 간식으로',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 · 약 500엔 — 07:00부터',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
+      {name:'Starbucks 난바 시티점',area:'난바',rating:'4.5★',reviews:'600+',tags:['커피','빠름'],menu:'모닝 커피 + 샌드위치 세트 — 체크아웃 후 가볍게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=スターバックス+なんばシティ+大阪'},
+    ],
+    lunch:[
+      {name:'쿠시카츠 다루마 간사이공항점 (串カツだるま)',area:'간사이공항',rating:'4.5★',reviews:'500+',tags:['쿠시카츠','공항 내','마지막 일본 음식'],menu:'오사카 명물 쿠시카츠 꼬치튀김 — 귀국 전 마지막 한 꼬치',hours:'09:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+関西空港'},
+      {name:'간사이공항 2F 레스토랑가',area:'간사이공항',rating:'4.5★',reviews:'600+',tags:['다양한 선택','면세구역'],menu:'라멘·초밥·우동·카레 등 — 면세 구역 내 다양한 선택',hours:'06:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=関西空港+レストラン+2F'},
+      {name:'마이도오오키니 식당 공항점 (まいどおおきに)',area:'간사이공항',rating:'4.5★',reviews:'500+',tags:['일본 가정식','정식','저렴'],menu:'일본 가정식 정식 800엔~ — 아이와 함께 편안하게',hours:'08:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=まいどおおきに食堂+関西空港'},
+    ]
+  },
+};
+
+function renderTransportGuide(dayId) {
+  const g = TRANSPORT_GUIDE[dayId];
+  if (!g) return '';
+  let num = 0;
+  const totalSteps = g.steps.length;
+  const stepsHtml = g.steps.map((s, i) => {
+    const isLast = i === totalSteps - 1;
+    if (s.place !== undefined) {
+      num++;
+      const isFirst = num === 1;
+      const dotCls = isFirst ? 'first' : isLast ? 'last' : '';
+      return `
+      <div class="tg-step">
+        <div class="tg-spine">
+          <div class="tg-dot ${dotCls}"></div>
+          ${!isLast ? '<div class="tg-vline"></div>' : ''}
+        </div>
+        <div class="tg-body" style="padding-bottom:${isLast?'0':'10px'};">
+          <div class="tg-place">${s.place}</div>
+          ${s.note ? `<div class="tg-place-note">${s.note}</div>` : ''}
+        </div>
+      </div>`;
+    } else if (s.transit) {
+      const t = s.transit;
+      return `
+      <div class="tg-step">
+        <div class="tg-spine" style="padding-top:4px;">
+          <div class="tg-vline" style="min-height:12px;"></div>
+          <div class="tg-vline" style="min-height:12px;"></div>
+        </div>
+        <div class="tg-transit">
+          <span class="tg-line-pill" style="background:${t.color};">${t.icon} ${t.line}</span>
+          <div class="tg-transit-detail">
+            <div class="tg-transit-meta">${t.detail}</div>
+            ${t.tip ? `<div class="tg-transit-tip">💡 ${t.tip}</div>` : ''}
+          </div>
+        </div>
+      </div>`;
+    }
+    return '';
+  }).join('');
+  const tipsHtml = g.tips?.length ? `
+  <div class="tg-tips-box">
+    <div class="tg-tips-title">교통 꿀팁</div>
+    ${g.tips.map(t=>`<div class="tg-tips-li">${t}</div>`).join('')}
+  </div>` : '';
+  const totalHtml = g.total ? `
+  <div class="tg-total-bar">
+    <div class="tg-total-item">⏱ <span class="tg-total-label">총 이동시간</span> ${g.total.time}</div>
+    <div class="tg-total-item">💴 <span class="tg-total-label">교통비</span> ${g.total.cost}</div>
+  </div>` : '';
+  return `
+  <div class="sec">
+    <div class="sec-title">교통 안내</div>
+    <div class="tg-wrap">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">${g.title}</div>
+      ${totalHtml}
+      <div class="tg-steps">${stepsHtml}</div>
+      ${tipsHtml}
+    </div>
+  </div>`;
+}
+
+// ──────────────────────────────────────────────
+// SEED DATA
+// ──────────────────────────────────────────────
+const SEED_SCHEDULE = {
+  d1:{
+    title:'4월 29일(수) · 입국 → 난바 → 도톤보리',
+    sub:'12:55 KIX 도착 · 난카이 라피트 → 숙소 체크인 → 저녁 탐방',
+    badges:[{cls:'b-transit',txt:'이동일'}],
+    items:[
+      {time:'07:00',type:'hotel',title:'인천공항 집결 · WE511 탑승 준비',desc:'캐리어 최종 점검. 여권·항공권·WE511 탑승권 확인. 아이 간식·물 배낭에 챙기기',tip:''},
+      {time:'08:00',type:'food',title:'조식 — 인천공항 간편 조식',desc:'출국 게이트 내 편의점 CU/GS25 or 스타벅스. 기내 탑승 후 기내식 제공 여부 확인',tip:''},
+      {time:'09:55',type:'move',title:'WE511 인천 출발',desc:'인천국제공항 (ICN) 출발. 비행시간 약 2시간. 일본 현지 시각 12:55 KIX 도착',tip:''},
+      {time:'12:55',type:'move',title:'간사이 공항 도착 · 입국 수속',desc:'Visit Japan Web 사전 등록 필수. 제2터미널 도착 시 무료 셔틀 → 제1터미널 (15분)',tip:''},
+      {time:'13:40',type:'move',title:'난카이 라피트 탑승 → 난바역 (34분)',desc:'성인 1,490엔 · 4세 무료. 사전 QR 예약 권장 (클룩/KKday 약 11,000원). 짐 보관칸 있어 편함. 14:15경 난바 도착',tip:'라피트 α(직통 34분) vs β(38분) — 입국 시 α 탑승 권장'},
+      {time:'14:00',type:'food',title:'중식 — 난바 도착 후 첫 점심',desc:'라피트 하차 후 난바역 인근. 가볍게 라멘·우동·오니기리. 이동 피로 회복 우선',tip:''},
+      {time:'14:30',type:'hotel',title:'숙소 체크인 (난바/도톤보리 권역)',desc:'난바역 도보 5~10분 이내 숙소. 짐 정리 + 4세 낮잠 30분 여유 확보',tip:''},
+      {time:'16:00',type:'sight',title:'도톤보리 · 에비스바시 첫 산책',desc:'글리코상 인증샷 · 강변 산책 · 네온사인 구경. 평지 중심 루트 — 유모차 이동 가능',tip:''},
+      {time:'18:00',type:'food',title:'석식 — 도톤보리 저녁 식사',desc:'입국 첫날은 가볍게 — 21:00 이전 귀숙. 다음날 USJ 오픈런 대비',tip:''},
+    ]
+  },
+  d2:{
+    title:'4월 30일(목) · USJ 하루 종일',
+    sub:'닌텐도월드 오픈런 + 미니언 파크 · 황금연휴 직전 평일 — 최고의 날',
+    badges:[{cls:'b-usj',txt:'USJ'}],
+    items:[
+      {time:'06:30',type:'hotel',title:'소테츠 프레사 인 기상 · USJ 출발 준비',desc:'아이 간식·물·우비 배낭에 챙기기. IC카드·USJ QR 확인. 조기 출발로 오픈런 준비',tip:''},
+      {time:'07:00',type:'food',title:'조식 — 편의점 간편 조식',desc:'아이 간식·물·우비 필수. 편의점 조식 권장. 오니기리·샌드위치·음료 세트',tip:''},
+      {time:'07:30',type:'move',title:'난바 → JR 니시쿠조 환승 → 유니버설시티역 (약 30분)',desc:'IC카드 사용 가능. 오픈 30분 전 도착 목표',tip:''},
+      {time:'08:30',type:'sight',title:'USJ 입장 오픈런',desc:'공식 앱 오픈 시각 사전 확인 필수. 입장 즉시 닌텐도월드 직행',tip:'4/30은 황금연휴 전 평일 — 5/3~5 대비 훨씬 쾌적. 오픈런 효과 극대화'},
+      {time:'09:00',type:'sight',title:'슈퍼 닌텐도월드',desc:'요시 어드벤처 (4세 OK) · 마리오 카트 (107cm 이상. 성인만 탑승 시 차일드 스위치 활용). 확약권 필수',tip:''},
+      {time:'12:00',type:'food',title:'중식 — USJ 내 식사',desc:'닌텐도월드 레스토랑 / 미니언 카페. 11:45 or 13:30 이후 방문이 대기 짧음',tip:''},
+      {time:'13:30',type:'sight',title:'미니언 파크 + 퍼레이드',desc:'미니언 메이헴 (4세 탑승 가능) · 캐릭터 포토 · 퍼레이드 시간 앱 확인',tip:''},
+      {time:'17:30',type:'shop',title:'유니버설 시티워크 기념품 + 타코야키',desc:'4층 TAKOPA — 오사카 타코야키 6개 점포. 마리오 캡·미니언 굿즈 구매',tip:''},
+      {time:'19:30',type:'hotel',title:'숙소 복귀',desc:'역방향 동일 루트. 아이 입욕 후 21:00 취침',tip:''},
+      {time:'20:00',type:'food',title:'석식 — 난바 귀환 후 저녁',desc:'USJ 복귀 후 숙소 인근 저녁. 피곤하면 편의점 or 인근 라멘 간단히',tip:''},
+    ]
+  },
+  d3:{
+    title:'5월 1일(금) · 신사이바시 쇼핑 → 카메노이 호텔 아리마 1박',
+    sub:'신사이바시스지 → 돈키호테 → 우메다 버스 → 아리마 온천 · 가이세키',
+    badges:[{cls:'b-shop',txt:'쇼핑'},{cls:'b-ryokan',txt:'료칸'}],
+    items:[
+      {time:'08:30',type:'hotel',title:'소테츠 프레사 인 기상 · 아리마 이동 준비',desc:'료칸 이동일. 1박 짐을 미리 정리. 귀중품·세면도구 별도 챙기기. 체크아웃은 당일',tip:''},
+      {time:'09:00',type:'food',title:'조식 — 신사이바시 이동 전 카페',desc:'Komeda\'s Coffee or Eggs\'n Things 신사이바시점. 쇼핑 전 여유 있게',tip:''},
+      {time:'10:00',type:'shop',title:'신사이바시스지 상점가',desc:'난바역 도보 5분. 600m 아케이드. 유니클로·GAP·무인양품·로프트·키디랜드',tip:''},
+      {time:'12:00',type:'food',title:'중식 — 신사이바시 인근',desc:'다이마루 백화점 지하 B2 or 난바 파크스 레스토랑가',tip:''},
+      {time:'13:30',type:'shop',title:'돈키호테 난바 도톤보리점',desc:'24시간. 과자·화장품·약·완구. 5,000엔 이상 세금환급 8%. 여권 필수',tip:'계산대 상시 혼잡 — 14:00 전 마무리 목표. 면세 영수증 따로 보관'},
+      {time:'14:30',type:'move',title:'난바 → 우메다 한큐 버스터미널 (미도스지선 5분)',desc:'신사이바시역 승차 → 우메다역 하차. 지상 출구로 나와 한큐 버스터미널 방향 이동',tip:''},
+      {time:'15:00',type:'move',title:'한큐 버스 탑승 → 아리마 온천 직행 (약 65분)',desc:'우메다 한큐 버스터미널 1층 3번 승강장. 성인 1,500엔 · 4세 무료',tip:'출발 전 시간표 확인 필수 — 하루 수 회 운행. 버스 내 짐칸 있음'},
+      {time:'16:15',type:'hotel',title:'카메노이 호텔 아리마 체크인 · 유카타 착용',desc:'다다미방 체험. 가족탕 예약 시간 확인 후 입욕. 아리마 긴센(金泉)·긴센(銀泉) 탐방',tip:''},
+      {time:'18:00',type:'food',title:'료칸 가이세키 저녁 식사',desc:'다다미방 개별 서빙 or 식당. 아이 어린이 식사 플랜 별도 확인. 계절 재료 코스 요리',tip:''},
+      {time:'20:00',type:'hotel',title:'온천 재입욕 · 취침',desc:'가족 모두 리프레시. 다음날 가이유칸 및 난바 이동 에너지 충전',tip:''},
+    ]
+  },
+  d4:{
+    title:'5월 2일(토) · 아리마 체크아웃 → 가이유칸 수족관',
+    sub:'카메노이 호텔 아리마 체크아웃 → 한큐 버스 → 난바 → 가이유칸 → 귀숙',
+    badges:[{cls:'b-osaka',txt:'오사카'}],
+    items:[
+      {time:'07:00',type:'hotel',title:'카메노이 호텔 아리마 기상',desc:'료칸 마지막 아침. 노천탕 아침 입욕 or 객실 준비. 체크아웃 전 짐 정리 완료',tip:''},
+      {time:'07:30',type:'food',title:'조식 — 료칸 가이세키 조식',desc:'카메노이 호텔 아리마 조식 포함 플랜 확인. 다다미방 or 식당에서 일본식 조식. 아이 어린이 식사 플랜 확인',tip:''},
+      {time:'08:30',type:'move',title:'카메노이 호텔 아리마 체크아웃 · 난바 복귀',desc:'한큐 버스 우메다행 → 미도스지선 난바역. 짐은 숙소 프런트에 보관 or 수하물 배송',tip:'버스 출발 시간 전날 재확인 — 혼잡 시 30분 일찍 출발'},
+      {time:'10:00',type:'sight',title:'가이유칸 수족관 입장',desc:'난바역 → 주오선(혼마치 환승) → 오사카코역 도보 5분. 성인 2,700엔 · 4세 600엔. 고래상어 수조 · 해달 · 펭귄존. 2~2.5시간 소요',tip:'온라인 사전 구매 권장 — 줄 없이 바로 입장'},
+      {time:'12:30',type:'food',title:'중식 — 덴포잔 마켓플레이스',desc:'수족관 옆 나니와 쿠이신보요코초. 오사카 명물 한자리에',tip:''},
+      {time:'14:30',type:'move',title:'가이유칸 → 난바 복귀 (주오선)',desc:'오사카코 → 혼마치 → 미도스지선 난바역. 약 20분 · 280엔',tip:''},
+      {time:'15:00',type:'hotel',title:'숙소 짐 찾기 · 휴식',desc:'아리마 온천 피로 풀기. 아이 낮잠 시간 확보',tip:''},
+      {time:'18:30',type:'food',title:'석식 — 도톤보리',desc:'도톤보리 야경 + 저녁 식사. 아이가 좋아하는 네온사인 거리',tip:''},
+    ]
+  },
+  d5:{
+    title:'5월 3일(일) · 텐노지 동물원 · 신세카이 · 스파월드',
+    sub:'황금연휴 시작 · 텐노지~신세카이 권역 집중 — 이동 최소화',
+    badges:[{cls:'b-shinsekai',txt:'신세카이'},{cls:'b-new',txt:'신규 코스'}],
+    items:[
+      {time:'08:00',type:'hotel',title:'소테츠 프레사 인 기상 · 텐노지 출발 준비',desc:'황금연휴 5/3 — 텐노지 동물원 개장(10:00) 맞춰 일찍 출발. 물·선크림 필수',tip:''},
+      {time:'08:30',type:'food',title:'조식 — 호텔 인근 카페',desc:'텐노지 이동 전 가볍게. Komeda\'s Coffee or 편의점 모닝 세트. 아이 도시락 준비 가능',tip:''},
+      {time:'10:00',type:'sight',title:'텐노지 동물원',desc:'난바 → 미도스지선 → 도부츠엔마에역 (약 7분). 성인 500엔 · 4세 무료. 기린·사자·코끼리 등 200종',tip:'황금연휴 5/3 — 개장 직후(10:00) 입장 권장. 11시 이후 급격히 혼잡'},
+      {time:'12:00',type:'food',title:'중식 — 신세카이 쿠시카츠',desc:'텐노지 남문 → 도보 10분 → 신세카이. 다루마 본점 / 쟌쟌요코초',tip:''},
+      {time:'13:30',type:'sight',title:'신세카이 시장 거리 탐방',desc:'빌리켄 동상 · 레트로 상점가 · 쟌쟌요코초 골목. 아이 솜사탕·타코야키 간식',tip:''},
+      {time:'14:30',type:'sight',title:'스파월드',desc:'신세카이 도보 5분. 세계 각국 테마 온천. 성인 1,000엔 (16:00 이후 야간권 더 저렴)',tip:'수영복 현장 렌탈 가능. 스파가든 4세 이용 가능 여부 사전 전화 확인'},
+      {time:'17:00',type:'sight',title:'츠텐카쿠 타워 (선택)',desc:'성인 1,000엔. 높이 103m. 신세카이 상징. 체력 여유 있으면 추가',tip:''},
+      {time:'18:30',type:'food',title:'석식 — 텐노지 인근',desc:'황금연휴 도톤보리 극혼잡 예상 — 텐노지 미오 쇼핑센터 레스토랑가 권장',tip:''},
+    ]
+  },
+  d6:{
+    title:'5월 4일(월) · 오사카성 · 덴포잔',
+    sub:'오사카성 공원 산책 → 덴포잔 대관람차 → 저녁 도톤보리',
+    badges:[{cls:'b-osaka',txt:'오사카성'}],
+    items:[
+      {time:'08:30',type:'hotel',title:'소테츠 프레사 인 기상 · 오사카성 출발 준비',desc:'황금연휴 5/4 — 오사카성 공원 일찍 출발. 물·모자·선크림 필수 챙기기',tip:''},
+      {time:'09:00',type:'food',title:'조식 — 호텔 인근 카페',desc:'오사카성 이동 전 가볍게. Komeda\'s Coffee or Eggs\'n Things. 아이와 느긋하게',tip:''},
+      {time:'09:30',type:'sight',title:'오사카성 공원 · 천수각 입장',desc:'JR 오사카죠코엔역 도보 5분. 천수각 입장 600엔. 공원은 무료. 해자·석벽 산책 아이 좋아함',tip:'황금연휴 황금 날씨 예상 — 물·모자 필수'},
+      {time:'11:30',type:'food',title:'중식 — 오사카성 공원 인근',desc:'NHK홀 앞 푸드트럭 or 오사카성 공원 내 카페',tip:''},
+      {time:'13:00',type:'move',title:'오사카성 → 덴포잔 이동',desc:'주오선 약 20분. 오사카코역 하차',tip:''},
+      {time:'13:30',type:'sight',title:'덴포잔 대관람차',desc:'탑승 800엔 (4세 400엔). 높이 112.5m. 맑은 날 아카시 대교까지. 투명 캡슐칸 추가 요금',tip:''},
+      {time:'14:30',type:'sight',title:'레고랜드 디스커버리 센터 오사카 (선택)',desc:'덴포잔 내 위치. 5세 이상 추천이나 4세도 입장 가능. 성인 2,400엔 · 4세 1,800엔',tip:''},
+      {time:'16:30',type:'move',title:'숙소 복귀 · 휴식',desc:'',tip:''},
+      {time:'18:30',type:'food',title:'석식 — 도톤보리 탐방',desc:'아이가 가장 좋아하는 거리. 네온사인 야경 + 저녁 식사',tip:''},
+    ]
+  },
+  d7:{
+    title:'5월 5일(화) · 나라 당일치기 + 우메다',
+    sub:'어린이날 — 나라 사슴공원 → 도다이지 → 우메다 귀환',
+    badges:[{cls:'b-nara',txt:'나라'}],
+    items:[
+      {time:'07:30',type:'hotel',title:'소테츠 프레사 인 기상 · 나라 출발 준비',desc:'어린이날 나라 당일치기. 킨테츠 나라역까지 약 39분 — 08:30 출발 목표. 사슴 센베이 현금 준비',tip:''},
+      {time:'08:00',type:'food',title:'조식 — 편의점 간편 조식',desc:'나라 이동 전 가볍게. 오니기리·샌드위치·음료. 아이 간식 배낭에 여분 챙기기',tip:''},
+      {time:'08:30',type:'move',title:'난바 → 킨테츠 나라역 (약 39분)',desc:'킨테츠 특급 (추가 520엔) or 급행 무료. 나라까지 약 39~45분',tip:'어린이날 혼잡 — 킨테츠 특급 사전 예약 권장'},
+      {time:'09:30',type:'sight',title:'나라 사슴공원 · 사슴 먹이 체험',desc:'사슴 센베이 200엔. 사슴 약 1,000마리 자유 방목. 4세 아이 인생 경험. 뿔 있는 수컷 주의',tip:'가방 열어놓으면 사슴이 뺏어감! 음식은 가방 안에'},
+      {time:'10:30',type:'sight',title:'도다이지 대불전 입장',desc:'입장 600엔. 세계 최대 목조 건축. 높이 15m 청동 대불. 아이와 함께 기둥 구멍 통과 체험',tip:''},
+      {time:'12:00',type:'food',title:'중식 — 나라 상점가',desc:'카키노하 스시 or 나라 명물 솥밥 (가마메시)',tip:''},
+      {time:'14:00',type:'sight',title:'나라마치 전통 거리 산책',desc:'에도시대 상인 주택가. 기념품점 · 카페 · 전통 공예품',tip:''},
+      {time:'15:30',type:'move',title:'나라 → 우메다 이동',desc:'킨테츠 나라 → 오사카우메다역 직통 약 40분',tip:''},
+      {time:'16:30',type:'shop',title:'우메다 루쿠아 · HEP FIVE',desc:'HEP FIVE 관람차 탑승 (성인 600엔 · 어린이 300엔). 아이 장난감 최종 구매',tip:''},
+      {time:'18:30',type:'food',title:'석식 — 우메다 권역',desc:'아래 맛집 참고. 나라 당일치기 후 우메다서 마무리',tip:''},
+    ]
+  },
+  d8:{
+    title:'5월 6일(수) · 귀국 — 린쿠 아울렛 경유',
+    sub:'폴로 랄프로렌 팩토리 스토어 → 간사이 공항 15:05 출발 WE512',
+    badges:[{cls:'b-transit',txt:'귀국일'},{cls:'b-shop',txt:'아울렛'}],
+    items:[
+      {time:'07:00',type:'hotel',title:'기상 · 체크아웃 준비',desc:'캐리어 최종 확인. 전날 밤 완전히 싸두기. 여권·항공권·WE512 체크',tip:''},
+      {time:'08:00',type:'food',title:'조식 — 편의점 간편식',desc:'onigiri·샌드위치. 아이 음료·간식 챙기기',tip:''},
+      {time:'09:00',type:'move',title:'난바역 → 난카이 라피트β 탑승',desc:'귀국편 라피트β (린쿠타운 정차편) 사전 예약 필수. 난카이 난바역 9번 승강장',tip:'라피트α는 린쿠타운 통과 — 반드시 β 탑승. 예약 시 확인'},
+      {time:'09:34',type:'shop',title:'린쿠타운역 하차 → 린쿠 프리미엄 아울렛',desc:'캐리어는 역 코인로커 or 아울렛 내 로커 보관 (500~600엔). 아울렛 오픈 10:00',tip:''},
+      {time:'10:00',type:'shop',title:'폴로 랄프로렌 팩토리 스토어 쇼핑',desc:'영업 10:00~20:00. 폴로 외 GAP · 바나나리퍼블릭 · G-STAR 동일 구역. 세금환급 카운터 확인',tip:'출발 3시간 전 공항 도착 = 12:05까지. 아울렛 → 공항 라피트 5분. 11:30 출발이 안전'},
+      {time:'11:30',type:'move',title:'린쿠타운역 → 간사이 공항역 (약 5분)',desc:'',tip:''},
+      {time:'11:45',type:'move',title:'간사이 공항 도착 · 탑승 수속',desc:'WE512 = 웨이브항공 (LCC) → 제2터미널 가능성 있음. 사전 확인 필수',tip:'15:05 출발 → 3시간 전 12:05 공항 도착 목표'},
+      {time:'12:30',type:'food',title:'중식 — 간사이 공항 레스토랑',desc:'탑승 수속 완료 후 면세구역 내 레스토랑. 마지막 일본 음식. 시간 여유 반드시 확인',tip:'WE512 출발 15:05 — 탑승구 이동 시간 고려 13:30 이전 식사 완료'},
+      {time:'15:05',type:'move',title:'WE512 탑승 → 인천 출발',desc:'17:05 ICN 도착. 7박 8일 오사카 가족여행 완료 🎉',tip:''},
+    ]
+  }
+};
+
+const SEED_RESTAURANTS = [
+  {id:'r1',name:'Shanghai cuisine RONTAN',emoji:'🥟',day:'D1',area:'도톤보리/난바',tags:['샤오롱바오','예약 가능','현장 웨이팅'],menu:'육즙이 물풍선처럼 터지는 그릴 샤오롱바오 (생젠만터우)',desc:'상하이식 구운 소롱포 전문. 카운터 19석. 돼지고기+젤라틴 육즙이 핵심. 국물 먼저 빨아먹고 먹는 법 있음.',hours:'11:30~22:00 · 수요일 휴무',mapUrl:'https://www.google.com/maps/search/?q=Shanghai+cuisine+RONTAN+%E5%A4%A7%E9%98%AA',review:'겉은 바삭 안은 육즙 폭발. 한입 베어물면 뜨거운 국물이 팡 터져나와 화상주의 😂',reel:true,featured:true,visited:false},
+  {id:'r2',name:'후쿠타로 (福太郎) 난바점',emoji:'🍜',day:'D1',area:'도톤보리/난바',tags:['오코노미야키','웨이팅 있음'],menu:'오코노미야키 · 야키소바 · 네기야키',desc:'도톤보리 골목의 오코노미야키 명점. 아이 친화적. 한국어 메뉴 있음. 넓은 철판 테이블석.',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%A6%8F%E5%A4%AA%E9%83%8E+%E9%9B%A3%E6%B3%A2',review:'첫날 저녁으로 딱! 철판 앞에 앉아서 직접 보며 먹는 오코노미야키 맛이 진짜였어요.',reel:false,featured:false,visited:false},
+  {id:'r3',name:'Amato Maeda Namba-Walk',emoji:'🎋',day:'D1',area:'도톤보리/난바',tags:['디저트','줄 없음'],menu:'단짠 쫀득한 미타라시 당고',desc:'난바워크 지하상가. 쫄깃한 당고에 달콤 짭짤한 미타라시 소스. 아이 간식으로 최적.',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=Amato+Maeda+%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF',review:'',reel:true,featured:false,visited:false},
+  {id:'r4',name:'OSAKA Kiichi',emoji:'🍖',day:'D2',area:'도톤보리/난바',tags:['와규 야키니쿠','예약 권장','인기 맛집'],menu:'아코디언처럼 늘어나는 A5 와규 스테이크',desc:'도톤보리 강변 인근. A5 쿠로게 와규 전문. 얇게 썰어 철판 위에서 구우면 늘어나는 비주얼로 SNS 화제.',hours:'17:00~23:30',mapUrl:'https://www.google.com/maps/search/?q=OSAKA+Kiichi+%E9%81%93%E9%A0%93%E5%A0%80',review:'와규가 진짜 늘어납니다 😱 철판에 올려놓으면 아코디언처럼 쭉 늘어나는 게 신기해서 영상 계속 찍었어요.',reel:true,featured:true,visited:false},
+  {id:'r5',name:'카모진 (鴨人)',emoji:'🦆',day:'D2',area:'도톤보리/난바',tags:['야키토리','웨이팅'],menu:'오리 야키토리 · 오리 껍질 꼬치 강추',desc:'오리 전문 야키토리. 오리 껍질 꼬치가 시그니처 — 기름지지 않고 바삭.',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=%E9%B4%A8%E4%BA%BA+%E5%A4%A7%E9%98%AA',review:'오리 껍질 꼬치가 진짜 생각지도 못한 맛. 느끼하지 않고 고소하게 바삭 구워져서 하이볼이랑 무한 조합.',reel:true,featured:false,visited:false},
+  {id:'r6',name:'이치란 라멘 도톤보리점',emoji:'🍜',day:'D2',area:'도톤보리/난바',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 개인 칸막이석',desc:'USJ 지친 날 — 빠르고 확실한 선택. 칸막이 1인석 구조라 아이 동반도 편함. 24시간 영업.',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=%E4%B8%80%E8%98%AD+%E9%81%93%E9%A0%93%E5%A0%80',review:'',reel:false,featured:false,visited:false},
+  {id:'r7',name:'Gion Tsujiri · Daimaru Shinsaibashi',emoji:'🍵',day:'D3',area:'신사이바시',tags:['말차 파르페','웨이팅'],menu:'말차 러버를 위한 궁극의 파르페 — 오사카 지점 한정 메뉴',desc:'교토 기온 츠지리의 오사카 지점. 다이마루 신사이바시 내 위치. 진한 말차 소프트아이스크림 + 말차 젤리 + 팥 + 양갱 층층이.',hours:'10:00~20:00 (백화점 영업시간 따름)',mapUrl:'https://www.google.com/maps/search/?q=%E7%A5%87%E5%9C%92%E8%BE%BB%E5%88%A9+%E5%A4%A7%E4%B8%B8%E5%BF%83%E6%96%8B%E6%A9%8B',review:'오사카 한정 메뉴가 진짜 레전드. 말차 쓴맛이 확실하게 살아있어서 달달한 팥이랑 밸런스가 완벽해요.',reel:true,featured:true,visited:false},
+  {id:'r8',name:'居酒屋 月盗',emoji:'🥚',day:'D3',area:'신사이바시',tags:['이자카야','예약 권장'],menu:'점심 한정 1,000엔 계란말이 정식 — 주황색 노른자가 흘러나오는 비주얼',desc:'점심 한정 타마고야키 정식이 SNS 폭발. 황금빛 노른자가 반숙으로 흘러나오는 비주얼이 핵심.',hours:'점심: 11:30~14:00 · 저녁: 17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%B1%85%E9%85%92%E5%B1%8B+%E6%9C%88%E7%9B%97+%E5%BF%83%E6%96%8B%E6%A9%8B',review:'1000엔에 이 비주얼이 말이 돼? 계란말이 잘라보면 노른자가 주르르륵...',reel:true,featured:true,visited:false},
+  {id:'r9',name:'아마노자쿠 (甘の雫)',emoji:'🍦',day:'D3',area:'신사이바시',tags:['크레페 디저트','SNS 핫플'],menu:'쫀득한 크레페 반죽에 커스터드 브륄레를 올린 반칙 맛',desc:'얇고 쫀득한 크레페 위에 토치로 구운 커스터드 크림. 캐러멜화된 겉면의 바삭함 + 크림의 부드러움.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%94%98%E3%81%AE%E9%9B%AB+%E5%BF%83%E6%96%8B%E6%A9%8B',review:'크레페라고 쉽게 봤다가 한입 먹고 눈이 번쩍 😳 브륄레 부분이 바삭하고 안은 커스터드가 진해요.',reel:true,featured:false,visited:false},
+  {id:'r10',name:'쿠시카츠 다루마 신세카이 본점',emoji:'🍢',day:'D5',area:'신세카이/텐노지',tags:['쿠시카츠','웨이팅'],menu:'오사카 명물 쿠시카츠 꼬치튀김 · 소스 더블딥 금지!',desc:'1929년 창업 신세카이 본점. 쿠시카츠 1꼬치 100~200엔대. 소고기·새우·아스파라거스·치즈 등 30종 이상.',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=%E4%B8%B2%E3%82%AB%E3%83%84%E3%81%A0%E3%82%8B%E3%81%BE+%E6%96%B0%E4%B8%96%E7%95%8C+%E6%9C%AC%E5%BA%97',review:'아이한테 미리 소스 두 번 찍으면 안 된다고 알려주니까 규칙 잘 지키면서 맛있게 먹었어요.',reel:false,featured:false,visited:false},
+  {id:'r11',name:'무기토멘스케 (麦と麺助)',emoji:'🍜',day:'D7',area:'우메다/나카츠',tags:['라멘','미쉐린 빕 구르망','예약 불가','웨이팅 필수'],menu:'특제 쇼유 라멘 · 교지도리 치킨 브로스 · 와규 완탕',desc:'2024 미쉐린 빕 구르망. 나카츠역 도보 4분. 교지도리 닭육수 + 와규 완탕 조합. 13석 카운터. 오픈 1시간 전 40명 줄.',hours:'월·수~금 11:00~15:30 · 토일 11:00~16:00 · 화 휴무 · 현금만',mapUrl:'https://www.google.com/maps/search/?q=%E9%BA%A6%E3%81%A8%E9%BA%BA%E5%8A%A9+%E4%B8%AD%E6%B4%A5',review:'줄 서서 먹은 보람이 10000% 있는 곳. 닭국물인데 이렇게 깊은 맛이 날 수 있나 싶을 정도.',reel:true,featured:true,visited:false},
+  {id:'r12',name:'나라 카키노하 스시 총본점',emoji:'🍱',day:'D7',area:'나라',tags:['나라 향토 스시','예약 없이 가능'],menu:'감잎에 싼 전통 초밥 · 나라 명물',desc:'나라의 전통 초밥. 감잎으로 싸서 1~2일 숙성. 연어·고등어·도미. 아이도 먹기 좋은 깔끔한 맛.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=%E6%9F%BF%E3%81%AE%E8%91%89%E3%81%9A%E3%81%97+%E7%B7%8F%E6%9C%AC%E5%AE%B6+%E5%A5%88%E8%89%AF',review:'나라 오면 꼭 먹어야 하는 것. 감잎 향이 은은하게 배어있어 독특해요.',reel:false,featured:false,visited:false},
+  {id:'r13',name:'오코노미야키 미즈노 도톤보리',emoji:'🍡',day:'D7',area:'도톤보리/난바',tags:['오코노미야키','웨이팅'],menu:'마지막 날 특별 오코노미야키 · 야마이모 야키',desc:'70년 이상 노포. 미쉐린 가이드 수록. 밀가루 없이 100% 참마만 사용한 야마이모 야키 시그니처.',hours:'11:00~21:30 · 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=%E7%BE%8E%E6%B4%A5%E3%81%AE+%E9%81%93%E9%A0%93%E5%A0%80',review:'70년 노포의 맛이 뭔지 알았어요. 야마이모 야키는 밀가루 없는데 이렇게 촉촉하고 구수할 수가.',reel:false,featured:false,visited:false},
+];
+
+const SEED_BUDGET = {
+  exchangeRate: 9.5,    // 원/엔
+  usdRate: 1350,        // 원/$
+  rateUpdated: null,    // 마지막 실시간 업데이트 시각
+  preset: [
+    {id:'b1',category:'항공',name:'WE511/WE512 항공권 (3인)',currency:'KRW',amountOrig:900000,amountKrw:900000,rateAtSave:null,notes:'왕복 3석',paid:true},
+    {id:'b2',category:'숙소',name:'난바 호텔 6박 (4/29~5/2, 5/3~5/6)',currency:'KRW',amountOrig:1200000,amountKrw:1200000,rateAtSave:null,notes:'조식 불포함',paid:true},
+    {id:'b3',category:'숙소',name:'카메노이 호텔 아리마 1박 (5/1~5/2)',currency:'KRW',amountOrig:450000,amountKrw:450000,rateAtSave:null,notes:'가이세키 조석식 포함',paid:false},
+    {id:'b4',category:'입장료',name:'USJ 입장권 2인 + 익스프레스 패스',currency:'KRW',amountOrig:400000,amountKrw:400000,rateAtSave:null,notes:'4세 무료. 클룩 사전 구매',paid:false},
+    {id:'b5',category:'교통',name:'난카이 라피트 왕복 2인',currency:'JPY',amountOrig:2980,amountKrw:28310,rateAtSave:9.5,notes:'α+β 각 1회 (성인 2인)'},
+    {id:'b6',category:'교통',name:'이코카 IC카드 충전 (3인)',currency:'JPY',amountOrig:15000,amountKrw:142500,rateAtSave:9.5,notes:'교통비 충분히 충전',paid:false},
+    {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:80000,amountKrw:80000,rateAtSave:null,notes:'출발 전 가입',paid:false},
+    {id:'b8',category:'기타',name:'일본 eSIM 2회선',currency:'KRW',amountOrig:30000,amountKrw:30000,rateAtSave:null,notes:'7박 8일 무제한',paid:false},
+  ],
+  daily: []
+};
+
+const SEED_CHECKLIST = [
+  {cat:'여행 서류 (필수)',items:[
+    {text:'여권 3인 유효기간 확인 (6개월 이상)',checked:false,priority:'필수'},
+    {text:'Visit Japan Web 가족 전원 등록',checked:false,priority:'필수'},
+    {text:'항공권 모바일 체크인',checked:false,priority:'필수'},
+    {text:'숙소·료칸 예약 확인서 출력/저장',checked:false,priority:'필수'},
+    {text:'USJ 입장권·익스프레스 패스 QR 저장',checked:false,priority:'필수'},
+    {text:'해외여행자보험 증권 저장',checked:false,priority:'필수'},
+  ]},
+  {cat:'교통 · 결제 수단',items:[
+    {text:'이코카 IC카드 구매 또는 충전',checked:false,priority:'필수'},
+    {text:'트래블로그/트래블월렛 카드 발급',checked:false,priority:'권장'},
+    {text:'난카이 라피트 예약 (입국·귀국)',checked:false,priority:'필수'},
+    {text:'일본 eSIM 구매 및 설치',checked:false,priority:'필수'},
+    {text:'현금 환전 (200,000엔 권장)',checked:false,priority:'필수'},
+  ]},
+  {cat:'아이 용품 (4세)',items:[
+    {text:'힙시트 or 접이식 유모차',checked:false,priority:'필수'},
+    {text:'해열제·지사제·연고 상비약',checked:false,priority:'필수'},
+    {text:'아이 간식 충분량 (과자·음료)',checked:false,priority:'필수'},
+    {text:'수영복 (스파월드)',checked:false,priority:'필수'},
+    {text:'아이 슬리퍼',checked:false,priority:'권장'},
+    {text:'우비 or 우산 (5월 소나기 대비)',checked:false,priority:'권장'},
+    {text:'선크림 SPF50+',checked:false,priority:'권장'},
+    {text:'아이 마스크 여분',checked:false,priority:'선택'},
+  ]},
+  {cat:'의류 · 짐',items:[
+    {text:'편한 운동화 (걷기 많음)',checked:false,priority:'필수'},
+    {text:'얇은 겉옷 (5월 일교차)',checked:false,priority:'권장'},
+    {text:'캐리어 자물쇠',checked:false,priority:'권장'},
+    {text:'보조가방/백팩',checked:false,priority:'권장'},
+    {text:'멀티 어댑터 (220V→110V)',checked:false,priority:'권장'},
+    {text:'보조배터리 (항공사 규정 확인)',checked:false,priority:'권장'},
+  ]},
+  {cat:'쇼핑 · 구매 예정',items:[
+    {text:'드럭스토어 구매 리스트 작성',checked:false,priority:'권장'},
+    {text:'돈키호테 세금환급용 여권 소지',checked:false,priority:'필수'},
+    {text:'카베진·이브·로이히츠보코 목록',checked:false,priority:'선택'},
+    {text:'아이 USJ 굿즈 예산 설정',checked:false,priority:'선택'},
+  ]},
+  {cat:'사전 예약 완료 체크',items:[
+    {text:'USJ 티켓 예약 완료',checked:false,priority:'필수'},
+    {text:'료칸 예약 완료 (가족탕 확인)',checked:false,priority:'필수'},
+    {text:'숙소 예약 완료',checked:false,priority:'필수'},
+    {text:'라피트 예약 완료',checked:false,priority:'필수'},
+    {text:'인기 식당 예약 (RONTAN, 키이치 등)',checked:false,priority:'권장'},
+  ]},
+];
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+let state = {};
+
+const DATA_VERSION = 6; // 모든 일정 호텔 출발 + 조식/중식/석식 완비
+
+// 구글 지도 URL에서 좌표 추출 (@lat,lng 패턴)
+function extractCoordsFromUrl(url) {
+  if (!url) return null;
+  const m = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (m) return [parseFloat(m[1]), parseFloat(m[2])];
+  const q = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (q) return [parseFloat(q[1]), parseFloat(q[2])];
+  return null;
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('osaka2026');
+    if (saved) {
+      state = JSON.parse(saved);
+      if (!state.version || state.version < DATA_VERSION) {
+        migrateRestaurantUrls();
+        migrateBudgetV5();
+        if (!state.version || state.version < 6) {
+          // 일정 대폭 변경 (호텔 출발 + 조식/중식/석식 완비) — 일정만 시드 초기화
+          state.schedule = JSON.parse(JSON.stringify(SEED_SCHEDULE));
+        }
+        state.version = DATA_VERSION;
+        saveState();
+      }
+    } else {
+      resetToSeed();
+    }
+  } catch(e) { resetToSeed(); }
+}
+
+function migrateRestaurantUrls() {
+  if (!state.restaurants) return;
+  state.restaurants = state.restaurants.map(r => {
+    const seed = SEED_RESTAURANTS.find(s => s.id === r.id);
+    if (seed && seed.mapUrl) return {...r, mapUrl: seed.mapUrl};
+    return r;
+  });
+}
+
+function migrateBudgetV5() {
+  if (!state.budget) return;
+  if (!state.budget.usdRate) state.budget.usdRate = 1350;
+  if (!state.budget.rateUpdated) state.budget.rateUpdated = null;
+  const jpy = state.budget.exchangeRate || 9.5;
+  // 사전 예약 항목 마이그레이션
+  if (state.budget.preset) {
+    state.budget.preset = state.budget.preset.map(e => {
+      if (e.currency) return e; // 이미 변환됨
+      // 구버전: amountKrw만 있음 → KRW 항목으로 처리
+      return {...e, currency:'KRW', amountOrig: e.amountKrw||0, rateAtSave: null};
+    });
+  }
+  // 현지 지출 항목 마이그레이션
+  if (state.budget.daily) {
+    state.budget.daily = state.budget.daily.map(e => {
+      if (e.currency) return e;
+      // 구버전: amountJpy만 있음 → JPY 항목으로 처리
+      const orig = parseFloat(e.amountJpy) || 0;
+      return {...e, currency:'JPY', amountOrig: orig, rateAtSave: jpy, amountKrw: Math.round(orig * jpy)};
+    });
+  }
+}
+
+function resetToSeed() {
+  state = {
+    version: DATA_VERSION,
+    schedule: JSON.parse(JSON.stringify(SEED_SCHEDULE)),
+    restaurants: JSON.parse(JSON.stringify(SEED_RESTAURANTS)),
+    budget: JSON.parse(JSON.stringify(SEED_BUDGET)),
+    checklist: JSON.parse(JSON.stringify(SEED_CHECKLIST)),
+  };
+  saveState();
+}
+
+function saveState() {
+  localStorage.setItem('osaka2026', JSON.stringify(state));
+}
+
+// ──────────────────────────────────────────────
+// NAV
+// ──────────────────────────────────────────────
+const TABS = [
+  {id:'overview',label:'전체'},
+  {id:'d1',label:'D1 4/29'},
+  {id:'d2',label:'D2 4/30 USJ'},
+  {id:'d3',label:'D3 5/1 쇼핑'},
+  {id:'d4',label:'D4 5/2 료칸'},
+  {id:'d5',label:'D5 5/3 신세카이'},
+  {id:'d6',label:'D6 5/4 오사카성'},
+  {id:'d7',label:'D7 5/5 나라'},
+  {id:'d8',label:'D8 5/6 귀국'},
+  {id:'budget',label:'💰 경비'},
+  {id:'checklist',label:'✅ 준비물'},
+  {id:'restaurants',label:'🍽 식당'},
+];
+let activeTab = 'overview';
+
+function buildNav() {
+  const nav = document.getElementById('navInner');
+  nav.innerHTML = TABS.map(t =>
+    `<button class="nb ${t.id===activeTab?'on':''}" onclick="switchTab('${t.id}')">${t.label}</button>`
+  ).join('');
+}
+
+function switchTab(id) {
+  activeTab = id;
+  buildNav();
+  renderMain();
+  updateFab(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateFab(id) {
+  const fab = document.getElementById('fab');
+  const fabMap = {
+    d1:'+ 일정 추가', d2:'+ 일정 추가', d3:'+ 일정 추가',
+    d4:'+ 일정 추가', d5:'+ 일정 추가', d6:'+ 일정 추가',
+    d7:'+ 일정 추가', d8:'+ 일정 추가',
+    budget:'+ 경비 추가', restaurants:'+ 식당 추가',
+  };
+  if (fabMap[id]) { fab.textContent = fabMap[id]; fab.classList.remove('fab-hidden'); }
+  else fab.classList.add('fab-hidden');
+}
+
+function handleFab() {
+  if (activeTab.startsWith('d')) showAddTimelineModal(activeTab);
+  else if (activeTab === 'budget') showAddExpenseModal();
+  else if (activeTab === 'restaurants') showAddRestaurantModal();
+}
+
+// ──────────────────────────────────────────────
+// RENDER MAIN
+// ──────────────────────────────────────────────
+function renderMain() {
+  const main = document.getElementById('main');
+  // 지도 정리
+  if (currentMap) { try { currentMap.remove(); } catch(e){} currentMap = null; }
+
+  if (activeTab === 'overview') { main.innerHTML = renderOverview(); return; }
+  if (activeTab.startsWith('d')) {
+    main.innerHTML = renderDay(activeTab);
+    // DOM 반영 후 지도 초기화
+    requestAnimationFrame(() => initDayMap(activeTab));
+    return;
+  }
+  if (activeTab === 'budget') { main.innerHTML = renderBudget(); return; }
+  if (activeTab === 'checklist') { main.innerHTML = renderChecklist(); return; }
+  if (activeTab === 'restaurants') { main.innerHTML = renderRestaurantList(); return; }
+}
+
+// ──────────────────────────────────────────────
+// OVERVIEW
+// ──────────────────────────────────────────────
+function renderOverview() {
+  const dayKeys = ['d1','d2','d3','d4','d5','d6','d7','d8'];
+  const dayDates = ['4/29 수','4/30 목','5/1 금','5/2 토','5/3 일','5/4 월','5/5 화','5/6 수'];
+  const dayNums = ['D1','D2','D3','D4','D5','D6','D7','D8'];
+
+  const totalAll = [...(state.budget.preset||[]), ...(state.budget.daily||[])].reduce((s,e) => s+(e.amountKrw||0), 0);
+  const ckTotal = state.checklist.reduce((s,c) => s+c.items.length, 0);
+  const ckDone = state.checklist.reduce((s,c) => s+c.items.filter(i=>i.checked).length, 0);
+  const visitedR = state.restaurants.filter(r=>r.visited).length;
+
+  return `
+  <div class="stat-cards">
+    <div class="stat-card"><div class="stat-val">7박 8일</div><div class="stat-label">여행 기간</div></div>
+    <div class="stat-card"><div class="stat-val">3명</div><div class="stat-label">여행 인원</div></div>
+    <div class="stat-card"><div class="stat-val">${Math.round(totalAll/10000)}만원</div><div class="stat-label">총 예상 경비</div></div>
+    <div class="stat-card"><div class="stat-val">${ckDone}/${ckTotal}</div><div class="stat-label">준비물 체크</div></div>
+    <div class="stat-card"><div class="stat-val">${visitedR}/${state.restaurants.length}</div><div class="stat-label">식당 방문</div></div>
+  </div>
+  <div class="ov-grid">
+    ${dayKeys.map((k,i) => `
+    <div class="ov-card" onclick="switchTab('${k}')">
+      <div class="ov-day">${dayNums[i]}</div>
+      <div class="ov-date">${dayDates[i]}</div>
+      <div class="ov-theme">${state.schedule[k].title.replace(/^\d+월 \d+일\([가-힣]\) · /,'')}</div>
+    </div>`).join('')}
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>이동</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>식사</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>관광</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>숙소</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>쇼핑</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div>꿀팁</div>
+  </div>
+  <p class="hint">탭을 클릭하면 일별 상세 일정 확인 가능. 💰 경비에서 예산을 관리하고, ✅ 준비물에서 체크리스트를, 🍽 식당에서 전체 맛집 목록을 확인·편집할 수 있습니다.</p>
+  `;
+}
+
+// ──────────────────────────────────────────────
+// MAP
+// ──────────────────────────────────────────────
+let currentMap = null;
+
+function initDayMap(dayId) {
+  if (currentMap) { try { currentMap.remove(); } catch(e){} currentMap = null; }
+  const el = document.getElementById('day-map');
+  if (!el) return;
+
+  // ── 좌표 소스: state.schedule 우선, 없으면 DAY_MAP_DATA로 보완 ──
+  const items = (state.schedule[dayId] || {}).items || [];
+  const seedLocs = (DAY_MAP_DATA[dayId] || {}).locs || [];
+
+  const locs = items.map(item => {
+    // 항목에 직접 저장된 좌표가 있으면 사용
+    if (item.lat && item.lng) {
+      return { n:item.title, c:[item.lat, item.lng], t:item.type, time:item.time, mapUrl:item.mapUrl };
+    }
+    // 없으면 DAY_MAP_DATA에서 같은 시간대 항목으로 보완
+    const seed = seedLocs.find(s => s.time === item.time);
+    if (seed) return { ...seed, mapUrl:item.mapUrl };
+    return null;
+  }).filter(Boolean);
+
+  if (locs.length === 0) return;
+
+  const map = L.map('day-map', {zoomControl:true, scrollWheelZoom:false, attributionControl:false});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:'abcd', maxZoom:20
+  }).addTo(map);
+
+  const allCoords = [];
+  const nameGmUrl = name => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
+  const popupBtn = url =>
+    `<a href="${url}" target="_blank" style="display:inline-block;margin-top:6px;padding:4px 10px;background:#2563eb;color:#fff;border-radius:6px;font-size:11px;text-decoration:none;font-weight:500;">📍 구글 지도 열기</a>`;
+
+  // 호텔 마커
+  L.marker(HOTEL.coords, {icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#22c55e;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);">🏨</div>`,
+    iconSize:[30,30], iconAnchor:[15,15]
+  })}).bindPopup(`<b>${HOTEL.name}</b><br><small>숙소</small>${popupBtn(nameGmUrl(HOTEL.name))}`).addTo(map);
+
+  // 일정 마커 (state.schedule 기반)
+  locs.forEach((loc, i) => {
+    const col = TYPE_COLORS[loc.t] || '#3b82f6';
+    L.marker(loc.c, {icon: L.divIcon({
+      className:'',
+      html:`<div style="background:${col};color:#fff;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);">${i+1}</div>`,
+      iconSize:[27,27], iconAnchor:[13,13]
+    })}).bindPopup(
+      `<b>${i+1}. ${loc.n}</b>${loc.time?'<br><small style="color:#888">'+loc.time+'</small>':''}` +
+      popupBtn(loc.mapUrl || nameGmUrl(loc.n))
+    ).addTo(map);
+    allCoords.push(loc.c);
+  });
+
+  // 경로선 + 방향 화살표
+  if (allCoords.length > 1) {
+    L.polyline(allCoords, {color:'#2563eb', weight:3, opacity:.75, dashArray:'8,5'}).addTo(map);
+    for (let i = 0; i < allCoords.length - 1; i++) {
+      const mid = [(allCoords[i][0]+allCoords[i+1][0])/2, (allCoords[i][1]+allCoords[i+1][1])/2];
+      const angle = Math.atan2(allCoords[i+1][1]-allCoords[i][1], allCoords[i+1][0]-allCoords[i][0]) * 180 / Math.PI - 90;
+      L.marker(mid, {icon: L.divIcon({
+        className:'',
+        html:`<div style="transform:rotate(${angle}deg);color:#2563eb;font-size:14px;line-height:1;">▲</div>`,
+        iconSize:[14,14], iconAnchor:[7,7]
+      }), interactive:false}).addTo(map);
+    }
+  }
+
+  const bounds = L.latLngBounds([HOTEL.coords, ...allCoords]);
+  map.fitBounds(bounds, {padding:[36,36]});
+  currentMap = map;
+}
+
+// ──────────────────────────────────────────────
+// DAY
+// ──────────────────────────────────────────────
+function renderDay(dayId) {
+  const d = state.schedule[dayId];
+  if (!d) return '<p>데이터 없음</p>';
+  const mapHeight = '300px';
+  return `
+  <div class="day-map-wrap" style="height:${mapHeight};">
+    <div id="day-map" style="height:100%;"></div>
+    <div class="map-legend">
+      <div class="map-legend-item"><div class="map-legend-dot" style="background:#22c55e"></div>숙소</div>
+      <div class="map-legend-item"><div class="map-legend-dot" style="background:#94a3b8"></div>이동</div>
+      <div class="map-legend-item"><div class="map-legend-dot" style="background:#3b82f6"></div>관광</div>
+      <div class="map-legend-item"><div class="map-legend-dot" style="background:#f59e0b"></div>식사</div>
+      <div class="map-legend-item"><div class="map-legend-dot" style="background:#a855f7"></div>쇼핑</div>
+    </div>
+  </div>
+  <div class="day-hd">
+    <div class="day-num">${dayId.toUpperCase()}</div>
+    <div class="day-info">
+      <div class="day-title">${d.title}</div>
+      <div class="day-sub">${d.sub}</div>
+      <div class="day-badges">${(d.badges||[]).map(b=>`<span class="badge ${b.cls}">${b.txt}</span>`).join('')}</div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-title">일정</div>
+    <div class="timeline" id="tl-${dayId}">
+      ${d.items.map((item,idx) => renderTimelineItem(dayId, item, idx)).join('')}
+    </div>
+    <div class="add-row">
+      <button class="btn-add-item" onclick="showAddTimelineModal('${dayId}')">+ 일정 항목 추가</button>
+    </div>
+  </div>
+  `;
+}
+
+function getMealType(timeStr) {
+  if (!timeStr) return null;
+  const h = parseInt(timeStr.split(':')[0], 10);
+  if (h < 10) return 'breakfast';
+  if (h < 15) return 'lunch';
+  return 'dinner';
+}
+
+const MEAL_LABELS = {breakfast:'🌅 아침 식사 추천 3곳', lunch:'☀️ 점심 식사 추천 3곳', dinner:'🌙 저녁 식사 추천 3곳'};
+
+function renderMealAccordion(recs, mealType) {
+  if (!recs || !recs.length) return '';
+  const label = MEAL_LABELS[mealType] || '맛집 추천';
+  const recsHtml = recs.map(r => `
+    <div class="meal-rec">
+      <div class="meal-rec-header">
+        <div class="meal-rec-name">${r.name}</div>
+        <div class="meal-rec-rating">${r.rating} <span class="meal-rec-reviews">(${r.reviews})</span></div>
+      </div>
+      <div class="meal-rec-tags">${r.tags.map(t=>`<span class="r-tag tag-menu">${t}</span>`).join('')}</div>
+      <div class="meal-rec-menu">${r.menu}</div>
+      <div class="meal-rec-meta">⏰ ${r.hours} · 📍 ${r.area}</div>
+      <div class="meal-rec-links">
+        <a class="meal-rec-link map" href="${r.mapUrl}" target="_blank">📍 구글 지도</a>
+        <a class="meal-rec-link review" href="https://search.naver.com/search.naver?query=${encodeURIComponent(r.name)}&nso=so:r,p:1y" target="_blank">📝 네이버 후기</a>
+      </div>
+    </div>`).join('');
+  return `
+  <details class="meal-acc">
+    <summary>${label}</summary>
+    <div class="meal-acc-body">${recsHtml}</div>
+  </details>`;
+}
+
+function renderTimelineItem(dayId, item, idx) {
+  const typeMap = {move:'dot-move',food:'dot-food',sight:'dot-sight',hotel:'dot-hotel',shop:'dot-shop',tip:'dot-tip'};
+  const placeName = item.title.split(/[·→(]/)[0].trim();
+  const mapSearchUrl = item.mapUrl ||
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeName + ' 오사카')}`;
+  const noMap = !placeName || (item.type === 'hotel' && placeName.includes('복귀'));
+
+  // 이동 항목: 교통 배지
+  let transitBadge = '';
+  if (item.type === 'move') {
+    const tr = ITEM_TRANSIT[`${dayId}_${item.time}`];
+    if (tr) {
+      transitBadge = `
+      <div class="tl-transit-badge">
+        <span class="tl-transit-pill" style="background:${tr.color};">${tr.icon} ${tr.line}</span>
+        <div>
+          <div class="tl-transit-meta">${tr.detail}</div>
+          ${tr.tip ? `<div class="tl-transit-tip">💡 ${tr.tip}</div>` : ''}
+        </div>
+      </div>`;
+    }
+  }
+
+  // 식사 항목: 맛집 아코디언
+  let mealAccordion = '';
+  if (item.type === 'food') {
+    const mt = getMealType(item.time);
+    const recs = mt && MEAL_RECS[dayId] && MEAL_RECS[dayId][mt];
+    if (recs) mealAccordion = renderMealAccordion(recs, mt);
+  }
+
+  return `
+  <div class="tl-item" id="tl-${dayId}-${idx}">
+    <div class="tl-time">${item.time||''}</div>
+    <div class="tl-dot-wrap"><div class="tl-dot ${typeMap[item.type]||'dot-sight'}"></div></div>
+    <div class="tl-content">
+      <div class="tl-head">
+        <div class="tl-title">${item.title}${!noMap ? ` <a class="tl-map-link" href="${mapSearchUrl}" target="_blank">📍 지도</a>` : ''}</div>
+        <div class="tl-actions">
+          <button class="btn-icon" onclick="showEditTimelineModal('${dayId}',${idx})" title="편집">✏️</button>
+          <button class="btn-icon" onclick="deleteTimelineItem('${dayId}',${idx})" title="삭제">🗑️</button>
+        </div>
+      </div>
+      ${item.desc ? `<div class="tl-desc">${item.desc}</div>` : ''}
+      ${item.tip ? `<div class="tl-tip">💡 ${item.tip}</div>` : ''}
+      ${transitBadge}
+      ${mealAccordion}
+    </div>
+  </div>`;
+}
+
+function deleteTimelineItem(dayId, idx) {
+  if (!confirm('이 일정 항목을 삭제할까요?')) return;
+  state.schedule[dayId].items.splice(idx, 1);
+  saveState();
+  renderMain();
+}
+
+// ──────────────────────────────────────────────
+// BUDGET
+// ──────────────────────────────────────────────
+function renderBudget() {
+  const jpy = state.budget.exchangeRate;
+  const usd = state.budget.usdRate;
+  const preset = state.budget.preset;
+  const daily = state.budget.daily;
+  const presetTotal = preset.reduce((s,e) => s+(e.amountKrw||0), 0);
+  const dailyTotal = daily.reduce((s,e) => s+(e.amountKrw||0), 0);
+  const grandTotal = presetTotal + dailyTotal;
+
+  const catTotals = {};
+  preset.forEach(e => { catTotals[e.category] = (catTotals[e.category]||0) + (e.amountKrw||0); });
+
+  // 마지막 업데이트 표시
+  let rateStatusHtml = '';
+  if (state.budget.rateUpdated) {
+    const d = new Date(state.budget.rateUpdated);
+    const label = d.toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    rateStatusHtml = `<span class="exr-live-badge">● 실시간</span> <span class="exr-status">마지막 업데이트 ${label}</span>`;
+  } else {
+    rateStatusHtml = `<span class="exr-fail-badge">수동 입력</span> <span class="exr-status">아래 버튼으로 실시간 업데이트</span>`;
+  }
+
+  return `
+  <div class="exr-bar">
+    <div class="exr-bar-title">
+      <span>환율 설정</span>
+      ${rateStatusHtml}
+    </div>
+    <div class="exr-rows">
+      <div class="exr-row">
+        <span class="exr-flag">🇯🇵</span>
+        <span class="exr-label">엔화</span>
+        <input class="exr-input" type="number" step="0.01" value="${jpy}" onchange="updateJpyRate(this.value)" />
+        <span class="exr-unit">원 / 엔</span>
+      </div>
+      <div class="exr-row">
+        <span class="exr-flag">🇺🇸</span>
+        <span class="exr-label">달러</span>
+        <input class="exr-input" type="number" step="1" value="${usd}" onchange="updateUsdRate(this.value)" />
+        <span class="exr-unit">원 / $</span>
+      </div>
+    </div>
+    <div class="exr-actions">
+      <button class="exr-refresh" id="exr-refresh-btn" onclick="fetchRates()">🔄 실시간 업데이트</button>
+      <span class="exr-status">입력 항목별 저장 시점 환율 고정 적용</span>
+    </div>
+  </div>
+
+  <div class="budget-summary">
+    <div class="bs-card highlight">
+      <div class="bs-val">${Math.round(grandTotal/10000)}만원</div>
+      <div class="bs-label">총 예상 경비</div>
+    </div>
+    <div class="bs-card">
+      <div class="bs-val">${Math.round(presetTotal/10000)}만원</div>
+      <div class="bs-label">사전 예약 비용</div>
+    </div>
+    <div class="bs-card">
+      <div class="bs-val">${Math.round(dailyTotal/10000)}만원</div>
+      <div class="bs-label">현지 지출 (원화)</div>
+    </div>
+    <div class="bs-card">
+      <div class="bs-val">${preset.filter(e=>e.paid).length}/${preset.length}</div>
+      <div class="bs-label">납부 완료</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="tbl-header">
+      <div class="tbl-title">사전 예약 경비</div>
+      <button class="btn-add-item" style="margin:0 0 0 auto;" onclick="showAddExpenseModal()">+ 추가</button>
+    </div>
+    <table class="expense-table">
+      <thead><tr><th>카테고리</th><th>내용</th><th>금액</th><th>납부</th><th></th></tr></thead>
+      <tbody>
+        ${preset.map((e,i) => `
+        <tr>
+          <td><span class="cat-pill cat-${e.category}">${e.category}</span></td>
+          <td>${e.name}${e.notes?`<br><span style="font-size:11px;color:var(--text3)">${e.notes}</span>`:''}</td>
+          <td>${fmtAmountCell(e)}</td>
+          <td><span class="paid-toggle" onclick="togglePaid(${i})">${e.paid?'✅':'⬜'}</span></td>
+          <td>
+            <button class="edit-btn" onclick="showEditExpenseModal(${i})">✏️</button>
+            <button class="del-btn" onclick="deleteExpense(${i})">🗑</button>
+          </td>
+        </tr>`).join('')}
+        <tr style="font-weight:600;background:var(--bg)">
+          <td colspan="2" style="font-size:13px">합계</td>
+          <td style="font-weight:600">${presetTotal.toLocaleString()}원</td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-wrap">
+    <div class="tbl-header">
+      <div class="tbl-title">현지 일별 지출</div>
+      <button class="btn-add-item" style="margin:0 0 0 auto;" onclick="showAddDailyModal()">+ 추가</button>
+    </div>
+    ${daily.length === 0 ? `<div class="empty-state">아직 현지 지출 내역이 없어요.<br>여행 중 추가해보세요!</div>` : `
+    <table class="expense-table">
+      <thead><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>금액</th><th>원화</th><th></th></tr></thead>
+      <tbody>
+        ${daily.map((e,i) => {
+          const sym = e.currency==='USD' ? '$' : '¥';
+          const orig = (parseFloat(e.amountOrig)||0).toLocaleString();
+          const krw = (e.amountKrw||0).toLocaleString();
+          const rateTip = e.rateAtSave ? `<div style="font-size:10px;color:var(--text3)">${e.currency==='USD'?e.rateAtSave+'원/$':e.rateAtSave+'원/엔'}</div>` : '';
+          return `
+        <tr>
+          <td style="white-space:nowrap;font-size:12px">${e.day||''}</td>
+          <td><span class="cat-pill cat-${e.category}">${e.category}</span></td>
+          <td>${e.name}${e.notes?`<br><span style="font-size:11px;color:var(--text3)">${e.notes}</span>`:''}</td>
+          <td>${sym}${orig}${rateTip}</td>
+          <td style="font-weight:500">${krw}원</td>
+          <td>
+            <button class="edit-btn" onclick="showEditDailyModal(${i})">✏️</button>
+            <button class="del-btn" onclick="deleteDailyExpense(${i})">🗑</button>
+          </td>
+        </tr>`;}).join('')}
+        <tr style="font-weight:600;background:var(--bg)">
+          <td colspan="3">합계</td>
+          <td></td>
+          <td>${dailyTotal.toLocaleString()}원</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>`}
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">카테고리별 사전 예약 경비</div>
+    <div class="stat-cards">
+      ${Object.entries(catTotals).map(([cat,amt]) => `
+      <div class="stat-card">
+        <div class="stat-val">${Math.round(amt/10000)}만원</div>
+        <div class="stat-label">${cat}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+  `;
+}
+
+function updateJpyRate(val) {
+  state.budget.exchangeRate = parseFloat(val) || 9.5;
+  saveState();
+  renderMain();
+}
+function updateUsdRate(val) {
+  state.budget.usdRate = parseFloat(val) || 1350;
+  saveState();
+  renderMain();
+}
+
+async function fetchRates() {
+  const btn = document.getElementById('exr-refresh-btn');
+  const statusEl = document.querySelector('.exr-bar-title');
+  if (btn) { btn.classList.add('loading'); btn.textContent = '⏳ 조회 중...'; }
+  // file:// 호환 CDN API 시도 (1차 → 2차 fallback)
+  const URLS = [
+    'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/krw.json',
+    'https://latest.currency-api.pages.dev/v1/currencies/krw.json',
+  ];
+  for (const url of URLS) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const rates = data.krw;
+      if (!rates || !rates.jpy || !rates.usd) continue;
+      // 원/엔 = 1 / (엔/원 = rates.jpy)  →  rates.jpy 는 1원당 엔화
+      state.budget.exchangeRate = Math.round((1 / rates.jpy) * 100) / 100;
+      state.budget.usdRate = Math.round(1 / rates.usd);
+      state.budget.rateUpdated = new Date().toISOString();
+      saveState();
+      renderMain();
+      return;
+    } catch(e) { /* 다음 URL 시도 */ }
+  }
+  // 모든 URL 실패
+  if (btn) { btn.classList.remove('loading'); btn.textContent = '🔄 실시간 업데이트'; }
+  if (statusEl) {
+    const errSpan = statusEl.querySelector('.exr-err');
+    if (!errSpan) {
+      const s = document.createElement('span');
+      s.className = 'exr-fail-badge exr-err';
+      s.textContent = '조회 실패 — 수동 입력 사용';
+      statusEl.appendChild(s);
+    }
+  }
+}
+
+function fmtAmountCell(e) {
+  const krw = e.amountKrw || 0;
+  if (!e.currency || e.currency === 'KRW') {
+    return `<span style="font-weight:500">${krw.toLocaleString()}원</span>`;
+  }
+  const sym = e.currency === 'JPY' ? '¥' : '$';
+  const orig = (parseFloat(e.amountOrig)||0).toLocaleString();
+  const rate = e.rateAtSave;
+  const rateTip = rate ? `<div style="font-size:10px;color:var(--text3);margin-top:1px">${e.currency==='JPY'?rate+'원/엔':rate+'원/$'} 기준</div>` : '';
+  return `<div style="font-weight:500">${sym}${orig} → ${krw.toLocaleString()}원</div>${rateTip}`;
+}
+
+function updateAmtPreview() {
+  const cur = document.getElementById('f-currency')?.value || 'KRW';
+  const amt = parseFloat(document.getElementById('f-amtval')?.value) || 0;
+  const el = document.getElementById('f-amt-preview');
+  if (!el) return;
+  if (!amt || cur === 'KRW') { el.textContent = ''; return; }
+  let rate, sym, krw;
+  if (cur === 'JPY') { rate = state.budget.exchangeRate; sym = '엔'; krw = Math.round(amt * rate); }
+  else { rate = state.budget.usdRate; sym = '달러'; krw = Math.round(amt * rate); }
+  el.textContent = `≈ ${krw.toLocaleString()}원  (1${sym} = ${rate}원 기준 · 저장 시점 환율로 확정)`;
+}
+function togglePaid(i) {
+  state.budget.preset[i].paid = !state.budget.preset[i].paid;
+  saveState();
+  renderMain();
+}
+function deleteExpense(i) {
+  if (!confirm('삭제할까요?')) return;
+  state.budget.preset.splice(i,1);
+  saveState();
+  renderMain();
+}
+function deleteDailyExpense(i) {
+  if (!confirm('삭제할까요?')) return;
+  state.budget.daily.splice(i,1);
+  saveState();
+  renderMain();
+}
+
+// ──────────────────────────────────────────────
+// CHECKLIST
+// ──────────────────────────────────────────────
+function renderChecklist() {
+  const total = state.checklist.reduce((s,c) => s+c.items.length, 0);
+  const done = state.checklist.reduce((s,c) => s+c.items.filter(i=>i.checked).length, 0);
+  const pct = total ? Math.round(done/total*100) : 0;
+
+  return `
+  <div class="stat-cards" style="margin-bottom:16px;">
+    <div class="stat-card highlight" style="background:var(--accent);color:#fff;border-color:var(--accent);">
+      <div class="stat-val" style="color:#fff">${pct}%</div>
+      <div class="stat-label" style="color:rgba(255,255,255,.6)">준비 완료</div>
+    </div>
+    <div class="stat-card"><div class="stat-val">${done}/${total}</div><div class="stat-label">항목 체크</div></div>
+  </div>
+  <div style="background:var(--border);border-radius:4px;height:6px;margin-bottom:20px;overflow:hidden;">
+    <div style="height:100%;background:var(--green);border-radius:4px;width:${pct}%;transition:width .3s;"></div>
+  </div>
+
+  ${state.checklist.map((cat,ci) => {
+    const catDone = cat.items.filter(i=>i.checked).length;
+    const catPct = cat.items.length ? Math.round(catDone/cat.items.length*100) : 0;
+    return `
+    <div class="ck-section">
+      <div class="ck-header" onclick="toggleCkSection(${ci})">
+        <span class="ck-cat">${cat.cat}</span>
+        <span class="ck-progress">${catDone}/${cat.items.length} · ${catPct}%</span>
+      </div>
+      <div class="ck-progress-bar"><div class="ck-progress-fill" style="width:${catPct}%"></div></div>
+      ${cat.items.map((item,ii) => `
+      <div class="ck-item">
+        <div class="ck-cb ${item.checked?'done':''}" onclick="toggleCheck(${ci},${ii})"></div>
+        <span class="ck-text ${item.checked?'done':''}">${item.text}</span>
+        <span class="ck-priority pri-${item.priority}">${item.priority}</span>
+        <button class="btn-icon" style="font-size:13px" onclick="deleteCheckItem(${ci},${ii})">🗑️</button>
+      </div>`).join('')}
+      <div class="ck-add-row">
+        <input class="ck-add-input" placeholder="항목 추가..." id="ck-input-${ci}" onkeydown="if(event.key==='Enter')addCheckItem(${ci})" />
+        <button class="ck-add-btn" onclick="addCheckItem(${ci})">추가</button>
+      </div>
+    </div>`;
+  }).join('')}
+  <div style="margin-top:12px;">
+    <button class="btn-add-item" onclick="showAddCategoryModal()">+ 카테고리 추가</button>
+  </div>
+  `;
+}
+
+function toggleCheck(ci, ii) {
+  state.checklist[ci].items[ii].checked = !state.checklist[ci].items[ii].checked;
+  saveState();
+  renderMain();
+}
+function addCheckItem(ci) {
+  const input = document.getElementById(`ck-input-${ci}`);
+  const text = input.value.trim();
+  if (!text) return;
+  state.checklist[ci].items.push({text, checked:false, priority:'선택'});
+  saveState();
+  renderMain();
+}
+function deleteCheckItem(ci, ii) {
+  state.checklist[ci].items.splice(ii,1);
+  saveState();
+  renderMain();
+}
+function toggleCkSection(ci) { /* optional collapse */ }
+
+// ──────────────────────────────────────────────
+// RESTAURANT LIST
+// ──────────────────────────────────────────────
+let rSearch = '';
+let rFilterDay = 'all';
+let rFilterArea = 'all';
+
+function renderRestaurantList() {
+  const areas = [...new Set(state.restaurants.map(r=>r.area))];
+  const days = [...new Set(state.restaurants.map(r=>r.day))].sort();
+  const filtered = state.restaurants.filter(r => {
+    const matchSearch = !rSearch || r.name.toLowerCase().includes(rSearch.toLowerCase()) || r.menu.toLowerCase().includes(rSearch.toLowerCase()) || r.tags.join(' ').toLowerCase().includes(rSearch.toLowerCase());
+    const matchDay = rFilterDay==='all' || r.day===rFilterDay;
+    const matchArea = rFilterArea==='all' || r.area===rFilterArea;
+    return matchSearch && matchDay && matchArea;
+  });
+  const visited = state.restaurants.filter(r=>r.visited).length;
+
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div style="font-size:13px;color:var(--text2)">총 ${state.restaurants.length}곳 · 방문 ${visited}곳</div>
+  </div>
+  <div class="r-search-bar">
+    <input class="r-search-input" placeholder="🔍 식당 이름, 메뉴, 태그 검색..." value="${rSearch}" oninput="rSearch=this.value;renderMain()" />
+  </div>
+  <div class="r-filters">
+    <span class="r-filter ${rFilterDay==='all'?'on':''}" onclick="rFilterDay='all';renderMain()">전체 날짜</span>
+    ${days.map(d=>`<span class="r-filter ${rFilterDay===d?'on':''}" onclick="rFilterDay='${d}';renderMain()">${d}</span>`).join('')}
+  </div>
+  <div class="r-filters">
+    <span class="r-filter ${rFilterArea==='all'?'on':''}" onclick="rFilterArea='all';renderMain()">전체 지역</span>
+    ${areas.map(a=>`<span class="r-filter ${rFilterArea===a?'on':''}" onclick="rFilterArea='${a}';renderMain()">${a}</span>`).join('')}
+  </div>
+  ${filtered.length===0 ? `<div class="empty-state">검색 결과가 없어요</div>` : `
+  <div class="r-grid">
+    ${filtered.map(r => renderRestaurantCard(r, false)).join('')}
+  </div>`}
+  `;
+}
+
+function renderRestaurantCard(r, inDay) {
+  const tagHtml = r.tags.map(t => {
+    const cls = t.includes('웨이팅') ? 'tag-wait' : t.includes('예약') && !t.includes('불가') ? 'tag-res' : t.includes('불가') ? 'tag-nores' : t.includes('줄 없음') ? 'tag-nowait' : t.includes('미쉐린') ? 'tag-michelin' : t.includes('SNS') || t.includes('인기') ? 'tag-insta' : 'tag-menu';
+    return `<span class="r-tag ${cls}">${t}</span>`;
+  }).join('');
+
+  // 네이버 블로그 후기 (최근 1년)
+  const naverReviewUrl = `https://search.naver.com/search.naver?where=blog&query=${encodeURIComponent(r.name + ' 오사카')}&nso=so:r,p:1y`;
+  // 예약 가능 여부
+  const canReserve = r.tags.some(t => t.includes('예약 가능') || t.includes('예약 권장'));
+  // 타베로그 예약 검색
+  const reserveUrl = `https://tabelog.com/rstLst/?vs=2&sa=${encodeURIComponent(r.name)}`;
+  // 구글 지도 URL (mapUrl 없으면 이름 검색으로 대체)
+  const mapLink = r.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + r.area)}`;
+
+  return `
+  <div class="r-card ${r.featured?'featured':''}" id="rcard-${r.id}">
+    <div class="r-head">
+      <div class="r-emoji">${r.emoji||'🍴'}</div>
+      <div class="r-info">
+        <div class="r-name">${r.name}${r.reel?'<span class="reel-badge">릴스 추천</span>':''}</div>
+        <div class="r-tags">
+          ${!inDay ? `<span class="tag-day">${r.day} · ${r.area}</span>` : ''}
+          ${tagHtml}
+          ${r.visited ? '<span class="r-visited-badge">✓ 방문완료</span>' : ''}
+        </div>
+      </div>
+    </div>
+    ${r.menu ? `<div class="r-menu-txt">${r.menu}</div>` : ''}
+    ${r.desc ? `<div class="r-desc">${r.desc}</div>` : ''}
+    <div class="r-meta">
+      ${r.hours ? `<span class="r-hours">🕐 ${r.hours}</span>` : ''}
+    </div>
+    ${r.review ? `
+    <div class="r-review">
+      <div class="r-review-label">후기 미리보기</div>
+      <div class="r-review-text">"${r.review}"</div>
+    </div>` : ''}
+    <div class="r-link-row">
+      <a class="r-link-btn map" href="${mapLink}" target="_blank">📍 구글 지도</a>
+      <a class="r-link-btn review" href="${naverReviewUrl}" target="_blank">🟢 네이버 후기 (최근 1년)</a>
+      ${canReserve ? `<a class="r-link-btn reserve" href="${reserveUrl}" target="_blank">📅 타베로그 예약</a>` : ''}
+    </div>
+    <div class="r-card-actions">
+      <button class="visit-btn ${r.visited?'visited':''}" onclick="toggleVisited('${r.id}')">${r.visited?'✓ 방문완료':'방문 체크'}</button>
+      <button class="visit-btn" onclick="showEditRestaurantModal('${r.id}')">편집</button>
+      <button class="r-del-btn" onclick="deleteRestaurant('${r.id}')">삭제</button>
+    </div>
+  </div>`;
+}
+
+function toggleVisited(id) {
+  const r = state.restaurants.find(r=>r.id===id);
+  if (r) { r.visited = !r.visited; saveState(); renderMain(); }
+}
+function deleteRestaurant(id) {
+  if (!confirm('이 식당을 삭제할까요?')) return;
+  state.restaurants = state.restaurants.filter(r=>r.id!==id);
+  saveState();
+  renderMain();
+}
+
+// ──────────────────────────────────────────────
+// MODAL SYSTEM
+// ──────────────────────────────────────────────
+let modalMode = null;
+let modalContext = {};
+
+function showModal(title, bodyHtml) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalOverlay').classList.add('on');
+}
+function hideModal() {
+  document.getElementById('modalOverlay').classList.remove('on');
+  modalMode = null; modalContext = {};
+}
+function closeModal(e) { if (e.target===document.getElementById('modalOverlay')) hideModal(); }
+
+// TIMELINE MODAL
+function showAddTimelineModal(dayId) {
+  modalMode = 'addTimeline'; modalContext = {dayId};
+  showModal('일정 항목 추가', timelineForm({}));
+}
+function showEditTimelineModal(dayId, idx) {
+  modalMode = 'editTimeline'; modalContext = {dayId, idx};
+  showModal('일정 항목 편집', timelineForm(state.schedule[dayId].items[idx]));
+}
+function timelineForm(item) {
+  const coordsOk = !!(item.lat && item.lng);
+  return `
+  <div class="form-row"><label class="form-label">시간</label>
+    <input class="form-input" id="f-time" placeholder="예: 09:00" value="${item.time||''}" /></div>
+  <div class="form-row"><label class="form-label">유형</label>
+    <select class="form-select" id="f-type">
+      ${['move','food','sight','hotel','shop','tip'].map(t=>`<option value="${t}" ${item.type===t?'selected':''}>${{move:'이동',food:'식사',sight:'관광',hotel:'숙소',shop:'쇼핑',tip:'꿀팁'}[t]}</option>`).join('')}
+    </select></div>
+  <div class="form-row"><label class="form-label">제목 *</label>
+    <input class="form-input" id="f-title" placeholder="일정 제목" value="${item.title||''}" /></div>
+  <div class="form-row"><label class="form-label">설명</label>
+    <textarea class="form-textarea" id="f-desc">${item.desc||''}</textarea></div>
+  <div class="form-row"><label class="form-label">꿀팁</label>
+    <textarea class="form-textarea" style="min-height:50px" id="f-tip">${item.tip||''}</textarea></div>
+  <div class="form-row">
+    <label class="form-label">
+      구글 지도 URL
+      <span style="font-weight:400;color:var(--text3);margin-left:4px;">— 저장하면 지도 마커에 자동 반영</span>
+    </label>
+    <input class="form-input" id="f-mapurl" placeholder="https://maps.app.goo.gl/... 또는 전체 URL 붙여넣기" value="${item.mapUrl||''}" oninput="previewCoords(this.value)" />
+    <div id="coord-preview" style="margin-top:5px;font-size:11px;color:${coordsOk?'var(--green)':'var(--text3)'};">
+      ${coordsOk ? `✓ 현재 좌표: ${item.lat?.toFixed(4)}, ${item.lng?.toFixed(4)}` : '전체 URL(maps.google.com/@lat,lng...)을 붙여넣으면 지도 마커가 추가됩니다'}
+    </div>
+  </div>
+  `;
+}
+
+// EXPENSE MODAL
+function showAddExpenseModal() {
+  modalMode = 'addExpense'; modalContext = {};
+  showModal('사전 경비 추가', expenseForm({}));
+}
+function showEditExpenseModal(i) {
+  modalMode = 'editExpense'; modalContext = {i};
+  showModal('사전 경비 편집', expenseForm(state.budget.preset[i]));
+}
+function expenseForm(e) {
+  const cats = ['항공','숙소','교통','식비','입장료','쇼핑','기타'];
+  const cur = e.currency || 'KRW';
+  const orig = e.amountOrig != null ? e.amountOrig : (e.amountKrw || '');
+  return `
+  <div class="form-row"><label class="form-label">카테고리</label>
+    <select class="form-select" id="f-cat">
+      ${cats.map(c=>`<option value="${c}" ${e.category===c?'selected':''}>${c}</option>`).join('')}
+    </select></div>
+  <div class="form-row"><label class="form-label">내용 *</label>
+    <input class="form-input" id="f-name" placeholder="예: USJ 입장권" value="${e.name||''}" /></div>
+  <div class="form-row-2">
+    <div class="form-row" style="margin:0"><label class="form-label">통화</label>
+      <select class="form-select" id="f-currency" onchange="updateAmtPreview()">
+        <option value="KRW" ${cur==='KRW'?'selected':''}>원 (KRW)</option>
+        <option value="JPY" ${cur==='JPY'?'selected':''}>엔 (JPY)</option>
+        <option value="USD" ${cur==='USD'?'selected':''}>달러 (USD)</option>
+      </select></div>
+    <div class="form-row" style="margin:0"><label class="form-label">금액</label>
+      <input class="form-input" id="f-amtval" type="number" placeholder="0" value="${orig}" oninput="updateAmtPreview()" /></div>
+  </div>
+  <div class="amt-preview" id="f-amt-preview"></div>
+  <div class="form-row"><label class="form-label">메모</label>
+    <input class="form-input" id="f-notes" placeholder="메모" value="${e.notes||''}" /></div>
+  `;
+}
+
+// DAILY EXPENSE MODAL
+function showAddDailyModal() {
+  modalMode = 'addDaily'; modalContext = {};
+  showModal('현지 지출 추가', dailyForm({}));
+}
+function showEditDailyModal(i) {
+  modalMode = 'editDaily'; modalContext = {i};
+  showModal('현지 지출 편집', dailyForm(state.budget.daily[i]));
+}
+function dailyForm(e) {
+  const days = ['D1 (4/29)','D2 (4/30)','D3 (5/1)','D4 (5/2)','D5 (5/3)','D6 (5/4)','D7 (5/5)','D8 (5/6)'];
+  const cats = ['교통','식비','입장료','쇼핑','기타'];
+  const cur = e.currency || 'JPY';
+  const orig = e.amountOrig != null ? e.amountOrig : (e.amountJpy || '');
+  return `
+  <div class="form-row"><label class="form-label">날짜</label>
+    <select class="form-select" id="f-day">
+      ${days.map(d=>`<option value="${d}" ${e.day===d?'selected':''}>${d}</option>`).join('')}
+    </select></div>
+  <div class="form-row"><label class="form-label">카테고리</label>
+    <select class="form-select" id="f-cat">
+      ${cats.map(c=>`<option value="${c}" ${e.category===c?'selected':''}>${c}</option>`).join('')}
+    </select></div>
+  <div class="form-row"><label class="form-label">내용 *</label>
+    <input class="form-input" id="f-name" placeholder="예: 타코야키" value="${e.name||''}" /></div>
+  <div class="form-row-2">
+    <div class="form-row" style="margin:0"><label class="form-label">통화</label>
+      <select class="form-select" id="f-currency" onchange="updateAmtPreview()">
+        <option value="JPY" ${cur==='JPY'?'selected':''}>엔 (JPY)</option>
+        <option value="USD" ${cur==='USD'?'selected':''}>달러 (USD)</option>
+      </select></div>
+    <div class="form-row" style="margin:0"><label class="form-label">금액</label>
+      <input class="form-input" id="f-amtval" type="number" placeholder="0" value="${orig}" oninput="updateAmtPreview()" /></div>
+  </div>
+  <div class="amt-preview" id="f-amt-preview"></div>
+  <div class="form-row"><label class="form-label">메모</label>
+    <input class="form-input" id="f-notes" placeholder="메모" value="${e.notes||''}" /></div>
+  `;
+}
+
+// RESTAURANT MODAL
+function showAddRestaurantModal(defaultDay) {
+  modalMode = 'addRestaurant'; modalContext = {defaultDay};
+  showModal('식당 추가', restaurantForm({day:defaultDay||'D1'}));
+}
+function showEditRestaurantModal(id) {
+  modalMode = 'editRestaurant'; modalContext = {id};
+  const r = state.restaurants.find(r=>r.id===id);
+  showModal('식당 편집', restaurantForm(r));
+}
+function restaurantForm(r) {
+  const days = ['D1','D2','D3','D4','D5','D6','D7','D8'];
+  const areas = ['도톤보리/난바','신사이바시','우메다/나카츠','신세카이/텐노지','오사카성','덴포잔','나라','기타'];
+  return `
+  <div class="form-row-2">
+    <div class="form-row" style="margin:0"><label class="form-label">날짜</label>
+      <select class="form-select" id="f-rday">
+        ${days.map(d=>`<option value="${d}" ${r.day===d?'selected':''}>${d}</option>`).join('')}
+      </select></div>
+    <div class="form-row" style="margin:0"><label class="form-label">이모지</label>
+      <input class="form-input" id="f-emoji" maxlength="2" value="${r.emoji||'🍴'}" /></div>
+  </div>
+  <div class="form-row"><label class="form-label">식당 이름 *</label>
+    <input class="form-input" id="f-rname" placeholder="식당 이름" value="${r.name||''}" /></div>
+  <div class="form-row"><label class="form-label">지역</label>
+    <select class="form-select" id="f-rarea">
+      ${areas.map(a=>`<option value="${a}" ${r.area===a?'selected':''}>${a}</option>`).join('')}
+    </select></div>
+  <div class="form-row"><label class="form-label">대표 메뉴</label>
+    <input class="form-input" id="f-menu" placeholder="대표 메뉴 설명" value="${r.menu||''}" /></div>
+  <div class="form-row"><label class="form-label">설명</label>
+    <textarea class="form-textarea" id="f-rdesc">${r.desc||''}</textarea></div>
+  <div class="form-row"><label class="form-label">영업시간</label>
+    <input class="form-input" id="f-hours" placeholder="11:00~21:00" value="${r.hours||''}" /></div>
+  <div class="form-row"><label class="form-label">구글 지도 URL</label>
+    <input class="form-input" id="f-mapurl" placeholder="https://maps.app.goo.gl/..." value="${r.mapUrl||''}" /></div>
+  <div class="form-row"><label class="form-label">후기/메모</label>
+    <textarea class="form-textarea" style="min-height:50px" id="f-review">${r.review||''}</textarea></div>
+  <div class="form-row"><label class="form-label">태그 (쉼표로 구분)</label>
+    <input class="form-input" id="f-tags" placeholder="오코노미야키, 웨이팅, 예약 권장" value="${(r.tags||[]).join(', ')}" /></div>
+  `;
+}
+
+// ADD CATEGORY MODAL
+function showAddCategoryModal() {
+  modalMode = 'addCategory'; modalContext = {};
+  showModal('카테고리 추가', `
+  <div class="form-row"><label class="form-label">카테고리 이름 *</label>
+    <input class="form-input" id="f-catname" placeholder="예: 면세·환급" /></div>
+  `);
+}
+
+// SAVE MODAL
+function saveModal() {
+  if (modalMode === 'addTimeline' || modalMode === 'editTimeline') {
+    const title = document.getElementById('f-title').value.trim();
+    if (!title) { alert('제목을 입력해주세요.'); return; }
+    const mapUrl = document.getElementById('f-mapurl').value.trim();
+    const coords = extractCoordsFromUrl(mapUrl);
+    // 편집 시 기존 좌표 유지 (새 URL에 좌표 없으면)
+    const {dayId, idx} = modalContext;
+    const existing = modalMode === 'editTimeline' ? state.schedule[dayId].items[idx] : {};
+    const item = {
+      time: document.getElementById('f-time').value.trim(),
+      type: document.getElementById('f-type').value,
+      title,
+      desc: document.getElementById('f-desc').value.trim(),
+      tip:  document.getElementById('f-tip').value.trim(),
+      mapUrl,
+      lat: coords ? coords[0] : (existing.lat || null),
+      lng: coords ? coords[1] : (existing.lng || null),
+    };
+    if (modalMode === 'addTimeline') state.schedule[dayId].items.push(item);
+    else state.schedule[dayId].items[idx] = item;
+  }
+  else if (modalMode === 'addExpense' || modalMode === 'editExpense') {
+    const name = document.getElementById('f-name').value.trim();
+    if (!name) { alert('내용을 입력해주세요.'); return; }
+    const currency = document.getElementById('f-currency').value;
+    const amountOrig = parseFloat(document.getElementById('f-amtval').value) || 0;
+    let amountKrw, rateAtSave;
+    if (currency === 'JPY') { rateAtSave = state.budget.exchangeRate; amountKrw = Math.round(amountOrig * rateAtSave); }
+    else if (currency === 'USD') { rateAtSave = state.budget.usdRate; amountKrw = Math.round(amountOrig * rateAtSave); }
+    else { rateAtSave = null; amountKrw = Math.round(amountOrig); }
+    const entry = {
+      id: 'b'+Date.now(),
+      category: document.getElementById('f-cat').value,
+      name, currency, amountOrig, amountKrw, rateAtSave,
+      notes: document.getElementById('f-notes').value.trim(),
+      paid: false,
+    };
+    if (modalMode === 'addExpense') state.budget.preset.push(entry);
+    else { entry.id = state.budget.preset[modalContext.i].id; entry.paid = state.budget.preset[modalContext.i].paid; state.budget.preset[modalContext.i] = entry; }
+  }
+  else if (modalMode === 'addDaily' || modalMode === 'editDaily') {
+    const name = document.getElementById('f-name').value.trim();
+    if (!name) { alert('내용을 입력해주세요.'); return; }
+    const currency = document.getElementById('f-currency').value;
+    const amountOrig = parseFloat(document.getElementById('f-amtval').value) || 0;
+    const rateAtSave = currency === 'USD' ? state.budget.usdRate : state.budget.exchangeRate;
+    const amountKrw = Math.round(amountOrig * rateAtSave);
+    const entry = {
+      day: document.getElementById('f-day').value,
+      category: document.getElementById('f-cat').value,
+      name, currency, amountOrig, amountKrw, rateAtSave,
+      notes: document.getElementById('f-notes').value.trim(),
+    };
+    if (modalMode === 'addDaily') state.budget.daily.push(entry);
+    else state.budget.daily[modalContext.i] = entry;
+  }
+  else if (modalMode === 'addRestaurant' || modalMode === 'editRestaurant') {
+    const name = document.getElementById('f-rname').value.trim();
+    if (!name) { alert('식당 이름을 입력해주세요.'); return; }
+    const tagsRaw = document.getElementById('f-tags').value;
+    const r = {
+      id: modalMode==='editRestaurant' ? modalContext.id : 'r'+Date.now(),
+      name, emoji: document.getElementById('f-emoji').value.trim()||'🍴',
+      day: document.getElementById('f-rday').value,
+      area: document.getElementById('f-rarea').value,
+      menu: document.getElementById('f-menu').value.trim(),
+      desc: document.getElementById('f-rdesc').value.trim(),
+      hours: document.getElementById('f-hours').value.trim(),
+      mapUrl: document.getElementById('f-mapurl').value.trim(),
+      review: document.getElementById('f-review').value.trim(),
+      tags: tagsRaw.split(',').map(t=>t.trim()).filter(Boolean),
+      reel: false, featured: false,
+      visited: modalMode==='editRestaurant' ? (state.restaurants.find(r=>r.id===modalContext.id)||{}).visited||false : false,
+    };
+    if (modalMode === 'addRestaurant') state.restaurants.push(r);
+    else { const idx = state.restaurants.findIndex(r=>r.id===modalContext.id); if (idx>=0) state.restaurants[idx]=r; }
+  }
+  else if (modalMode === 'addCategory') {
+    const catname = document.getElementById('f-catname').value.trim();
+    if (!catname) { alert('카테고리 이름을 입력해주세요.'); return; }
+    state.checklist.push({cat:catname, items:[]});
+  }
+  saveState();
+  hideModal();
+  renderMain();
+}
+
+// 모달 내 좌표 미리보기
+function previewCoords(url) {
+  const el = document.getElementById('coord-preview');
+  if (!el) return;
+  const coords = extractCoordsFromUrl(url);
+  if (coords) {
+    el.style.color = 'var(--green)';
+    el.textContent = `✓ 좌표 인식: ${coords[0].toFixed(5)}, ${coords[1].toFixed(5)} — 저장 시 지도에 마커 추가됩니다`;
+  } else if (url.trim()) {
+    el.style.color = 'var(--amber)';
+    el.textContent = '⚠ 좌표를 찾을 수 없습니다. maps.google.com 전체 URL(/@lat,lng 포함)을 사용해주세요';
+  } else {
+    el.style.color = 'var(--text3)';
+    el.textContent = '전체 URL(maps.google.com/@lat,lng...)을 붙여넣으면 지도 마커가 추가됩니다';
+  }
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+loadState();
+buildNav();
+renderMain();
+updateFab('overview');
+// 앱 시작 시 실시간 환율 자동 조회 (마지막 업데이트가 1시간 이상 지났으면)
+(function() {
+  const last = state.budget.rateUpdated ? new Date(state.budget.rateUpdated) : null;
+  const ONE_HOUR = 60 * 60 * 1000;
+  if (!last || (Date.now() - last.getTime()) > ONE_HOUR) {
+    fetchRates();
+  }
+})();
+</script>
+</body>
+</html>
