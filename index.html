@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오사카 가족여행 2026</title>
+<title>상하이 여행 2026</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -342,20 +342,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 <div class="hero">
   <div class="hero-inner">
-    <h1>오사카 가족여행 2026</h1>
-    <p>성인 2명 + 4세 남아 · 7박 8일 · 오사카 집중형</p>
+    <h1>상하이 여행 2026</h1>
+    <p>4박 5일 · 상하이 집중형 · 디즈니랜드 포함</p>
     <div class="flight-grid">
       <div class="fc">
         <div class="fc-label">출국</div>
-        <div class="fc-route">ICN → KIX</div>
-        <div class="fc-time">04/29(수) 11:10 → 12:55</div>
-        <div class="fc-no">WE511 · 좌석 3석 확보</div>
+        <div class="fc-route">ICN → PVG</div>
+        <div class="fc-time">04/29(수) 09:30 → 11:50</div>
+        <div class="fc-no">상하이 푸동 국제공항 도착</div>
       </div>
       <div class="fc">
         <div class="fc-label">귀국</div>
-        <div class="fc-route">KIX → ICN</div>
-        <div class="fc-time">05/06(수) 15:05 → 17:05</div>
-        <div class="fc-no">WE512 · 린쿠 아울렛 경유 가능</div>
+        <div class="fc-route">PVG → ICN</div>
+        <div class="fc-time">05/03(토) 13:30 → 16:50</div>
+        <div class="fc-no">상하이 푸동 출발 귀국</div>
       </div>
     </div>
   </div>
@@ -380,84 +380,61 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 <script>
 // ──────────────────────────────────────────────
-// 지도 데이터 (소테츠 프레사 인 오사카-난바 기준)
+// 지도 데이터 (상하이 시내 호텔 기준 — 징안/인민광장 권역)
 // ──────────────────────────────────────────────
-const HOTEL = {coords:[34.6617,135.4993], name:'소테츠 프레사 인 오사카-난바'};
+const HOTEL = {coords:[31.2297,121.4756], name:'상하이 시내 호텔 (징안/인민광장 권역)'};
 
 const DAY_MAP_DATA = {
   d1:{
     locs:[
-      {n:'간사이 공항 (KIX) 도착',        c:[34.4344,135.2440], t:'move',  time:'12:55'},
-      {n:'난카이 라피트 → 난바역',          c:[34.6647,135.5002], t:'move',  time:'14:15'},
-      {n:'소테츠 프레사 인 체크인',         c:[34.6617,135.4993], t:'hotel', time:'14:30'},
-      {n:'도톤보리 · 에비스바시 산책',      c:[34.6687,135.5013], t:'sight', time:'16:00'},
-      {n:'저녁 식사 (도톤보리)',            c:[34.6680,135.5010], t:'food',  time:'18:00'},
+      {n:'인천국제공항 (ICN) 출발',            c:[37.4602,126.4407], t:'move',  time:'09:30'},
+      {n:'상하이 푸동 국제공항 (PVG) 도착',    c:[31.1443,121.8083], t:'move',  time:'11:50'},
+      {n:'자기부상열차 (磁浮) 탑승 · 롱양루역', c:[31.1979,121.6042], t:'move',  time:'13:00'},
+      {n:'지하철 2호선 → 호텔 체크인',         c:[31.2297,121.4756], t:'hotel', time:'14:30'},
+      {n:'황허루(黃河路) 먹자골목 저녁',        c:[31.2374,121.4800], t:'food',  time:'18:30'},
     ]
   },
   d2:{
     locs:[
-      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'07:30'},
-      {n:'JR 유니버설시티역',              c:[34.6644,135.4330], t:'move',  time:'08:00'},
-      {n:'슈퍼 닌텐도월드',               c:[34.6666,135.4329], t:'sight', time:'09:00'},
-      {n:'미니언 파크',                   c:[34.6643,135.4340], t:'sight', time:'13:30'},
-      {n:'유니버설 시티워크 기념품',        c:[34.6633,135.4319], t:'shop',  time:'17:30'},
-      {n:'소테츠 프레사 인 복귀',           c:[34.6617,135.4993], t:'hotel', time:'19:30'},
+      {n:'호텔 출발',                          c:[31.2297,121.4756], t:'hotel', time:'07:30'},
+      {n:'지하철 11호선 탑승',                 c:[31.2246,121.4480], t:'move',  time:'07:45'},
+      {n:'상하이 디즈니랜드역 도착',           c:[31.1500,121.6667], t:'move',  time:'08:45'},
+      {n:'상하이 디즈니랜드 입장 오픈런',      c:[31.1443,121.6660], t:'sight', time:'09:00'},
+      {n:'TRON 라이트사이클 파워런',           c:[31.1435,121.6680], t:'sight', time:'09:30'},
+      {n:'캐리비안의 해적 — 침몰한 보물',      c:[31.1430,121.6640], t:'sight', time:'11:00'},
+      {n:'주토피아: 핫 퍼슛',                 c:[31.1445,121.6690], t:'sight', time:'13:30'},
+      {n:'Illuminate! 야간 쇼 · 귀숙',        c:[31.1443,121.6660], t:'sight', time:'20:30'},
     ]
   },
   d3:{
     locs:[
-      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'10:00'},
-      {n:'신사이바시스지 상점가',           c:[34.6722,135.5009], t:'shop',  time:'10:00'},
-      {n:'돈키호테 난바 도톤보리점',        c:[34.6685,135.5007], t:'shop',  time:'13:30'},
-      {n:'우메다 한큐 버스터미널',          c:[34.7024,135.4959], t:'move',  time:'14:30'},
-      {n:'카메노이 호텔 아리마',           c:[34.7988,135.2469], t:'hotel', time:'16:15'},
+      {n:'호텔 출발',                          c:[31.2297,121.4756], t:'hotel', time:'09:30'},
+      {n:'티엔쯔팡 (田子坊) 골목',            c:[31.2097,121.4671], t:'sight', time:'10:00'},
+      {n:'우캉루 (武康路) 프랑스 조계지',      c:[31.2130,121.4484], t:'sight', time:'12:00'},
+      {n:'신천지 (新天地) 점심·카페',          c:[31.2193,121.4728], t:'food',  time:'13:30'},
+      {n:'M50 창의 예술 구역',                c:[31.2451,121.4477], t:'sight', time:'15:30'},
+      {n:'황허루(黃河路) 저녁 식사',           c:[31.2374,121.4800], t:'food',  time:'19:00'},
     ]
   },
   d4:{
     locs:[
-      {n:'카메노이 호텔 아리마 체크아웃',   c:[34.7988,135.2469], t:'hotel', time:'08:30'},
-      {n:'가이유칸 수족관',               c:[34.6546,135.4284], t:'sight', time:'10:00'},
-      {n:'덴포잔 마켓플레이스 점심',        c:[34.6551,135.4302], t:'food',  time:'12:30'},
-      {n:'소테츠 프레사 인 귀숙',          c:[34.6617,135.4993], t:'hotel', time:'18:30'},
+      {n:'호텔 출발',                          c:[31.2297,121.4756], t:'hotel', time:'07:50'},
+      {n:'예원 (豫园) 입장',                   c:[31.2270,121.4932], t:'sight', time:'08:30'},
+      {n:'남상만두 (南翔馒头店) 조식',          c:[31.2265,121.4929], t:'food',  time:'09:00'},
+      {n:'난징동루 (南京东路) 쇼핑거리',        c:[31.2371,121.4828], t:'shop',  time:'11:30'},
+      {n:'와이탄 (外滩) 산책 · 야경',          c:[31.2370,121.4879], t:'sight', time:'13:30'},
+      {n:'루자쭈이 (陸家嘴) · 동방명주',       c:[31.2394,121.5016], t:'sight', time:'15:30'},
+      {n:'황푸강 유람선 (선택)',               c:[31.2370,121.4879], t:'sight', time:'18:30'},
     ]
   },
   d5:{
     locs:[
-      {n:'텐노지 동물원',                 c:[34.6500,135.5136], t:'sight', time:'10:00'},
-      {n:'신세카이 쿠시카츠 점심',         c:[34.6519,135.5072], t:'food',  time:'12:00'},
-      {n:'스파월드',                      c:[34.6524,135.5060], t:'sight', time:'14:30'},
-      {n:'츠텐카쿠 타워',                 c:[34.6527,135.5063], t:'sight', time:'17:00'},
-      {n:'저녁 · 텐노지 미오',            c:[34.6478,135.5137], t:'food',  time:'18:30'},
-    ]
-  },
-  d6:{
-    locs:[
-      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'09:30'},
-      {n:'오사카성 · 천수각',             c:[34.6873,135.5259], t:'sight', time:'09:30'},
-      {n:'오사카성 공원 내 점심',          c:[34.6870,135.5230], t:'food',  time:'11:30'},
-      {n:'덴포잔 대관람차',               c:[34.6556,135.4296], t:'sight', time:'13:30'},
-      {n:'레고랜드 디스커버리 센터',        c:[34.6551,135.4285], t:'sight', time:'14:30'},
-      {n:'소테츠 프레사 인 복귀 · 도톤보리',c:[34.6680,135.5010], t:'food',  time:'18:30'},
-    ]
-  },
-  d7:{
-    locs:[
-      {n:'소테츠 프레사 인 출발',           c:[34.6617,135.4993], t:'hotel', time:'08:30'},
-      {n:'킨테츠 나라역 도착',             c:[34.6851,135.8325], t:'move',  time:'09:30'},
-      {n:'나라 사슴공원 · 사슴 먹이 체험', c:[34.6889,135.8434], t:'sight', time:'09:30'},
-      {n:'도다이지 대불전',               c:[34.6887,135.8398], t:'sight', time:'10:30'},
-      {n:'카키노하 스시 점심',            c:[34.6810,135.8290], t:'food',  time:'12:00'},
-      {n:'나라마치 전통 거리',             c:[34.6803,135.8294], t:'sight', time:'14:00'},
-      {n:'우메다 · HEP FIVE',            c:[34.7056,135.4983], t:'shop',  time:'16:30'},
-      {n:'우메다 저녁 후 귀숙',           c:[34.6617,135.4993], t:'food',  time:'18:30'},
-    ]
-  },
-  d8:{
-    locs:[
-      {n:'소테츠 프레사 인 체크아웃',       c:[34.6617,135.4993], t:'hotel', time:'09:00'},
-      {n:'린쿠타운역 하차',               c:[34.4396,135.2967], t:'move',  time:'09:34'},
-      {n:'린쿠 프리미엄 아울렛',           c:[34.4380,135.2975], t:'shop',  time:'10:00'},
-      {n:'간사이 공항 (KIX) 탑승',        c:[34.4344,135.2440], t:'move',  time:'11:45'},
+      {n:'호텔 체크아웃',                      c:[31.2297,121.4756], t:'hotel', time:'09:00'},
+      {n:'징안쓰 (静安寺) 쇼핑 · 카페',        c:[31.2246,121.4480], t:'shop',  time:'10:00'},
+      {n:'난징서루 (南京西路) 명품거리',        c:[31.2264,121.4596], t:'shop',  time:'11:00'},
+      {n:'마지막 점심 — 현지 식당',            c:[31.2280,121.4700], t:'food',  time:'12:30'},
+      {n:'롱양루역 → 마그레브 or 2호선',       c:[31.1979,121.6042], t:'move',  time:'14:30'},
+      {n:'푸동 국제공항 (PVG) 탑승',           c:[31.1443,121.8083], t:'move',  time:'16:00'},
     ]
   },
 };
@@ -467,174 +444,113 @@ const TYPE_COLORS = {
   hotel:'#22c55e', shop:'#a855f7', tip:'#ec4899'
 };
 
-// 노선 색상
+// 노선 색상 (상하이 지하철)
 const LC = {
-  nankai:'#003894', midosuji:'#e4002b', chuo:'#007a3d',
-  tanimachi:'#522785', yotsubashi:'#0066b3', sennichimae:'#e85298',
-  jr_loop:'#f68b1e', jr_yumesaki:'#0099cc', jr_yamato:'#8b5cf6',
-  kintetsu:'#b71c1c', kobe_subway:'#0055a2',
-  walk:'#16a34a', bus:'#d97706',
+  line1:'#E3002B',   // 1호선 (빨간)
+  line2:'#80BD01',   // 2호선 (녹색) — 푸동공항 직통
+  line4:'#CF007F',   // 4호선 (핑크) — 순환선
+  line7:'#F4A000',   // 7호선 (주황)
+  line10:'#C6B600',  // 10호선 (노란)
+  line11:'#800080',  // 11호선 (보라) — 디즈니 직통
+  line16:'#98D68E',  // 16호선 (연녹) — 디즈니
+  maglev:'#3DBBEA',  // 자기부상 磁浮
+  walk:'#16a34a', bus:'#d97706', taxi:'#f59e0b',
 };
 // 노선 아이콘
-const LI = { metro:'🚇', jr:'🚆', kintetsu:'🚃', bus:'🚌', walk:'🚶', nankai:'🚄' };
+const LI = { metro:'🚇', maglev:'🚄', bus:'🚌', walk:'🚶', taxi:'🚕' };
 
 const TRANSPORT_GUIDE = {
   d1:{
-    title:'간사이 공항 → 난바 → 도톤보리',
-    total:{time:'약 55분', cost:'성인 1,490엔 / 소아 무료'},
+    title:'푸동 공항 (PVG) → 시내 호텔 (징안/인민광장)',
+    total:{time:'마그레브 이용 시 약 55분 / 2호선 직행 약 80분', cost:'마그레브 50위안 + 지하철 4~6위안'},
     steps:[
-      {place:'간사이 공항 (KIX) 제1터미널'},
-      {transit:{line:'난카이 라피트α',color:LC.nankai,icon:LI.nankai,detail:'난바역 직통 · 34분 · 성인 1,490엔 · 4세 무료',tip:'사전 QR 예약 권장 (클룩/KKday ≈11,000원) — α는 직통, β는 린쿠타운 정차'}},
-      {place:'난카이 난바역 도착', note:'9번 승강장 하차'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'숙소까지 도보 약 10분 (약 800m 남쪽)',tip:'난바역 남쪽 출구 → 나니와스지 따라 직진'}},
-      {place:'소테츠 프레사 인 오사카-난바 체크인'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'도톤보리까지 도보 약 5분',tip:'숙소 북쪽으로 걸으면 도톤보리 강변'}},
-      {place:'도톤보리 · 에비스바시'},
+      {place:'상하이 푸동 국제공항 (PVG) 도착 · 입국 수속', note:'입국 심사 후 수하물 수취 · 출구로 이동'},
+      {transit:{line:'자기부상열차 磁浮',color:LC.maglev,icon:LI.maglev,detail:'푸동공항 → 롱양루(龍陽路)역 · 8분 · 50위안 (일반) / 100위안 (VIP)',tip:'세계에서 가장 빠른 상업용 열차. 최고 430km/h. 탑승 후 환율·속도 모두 인상적!'}},
+      {place:'롱양루(龍陽路)역 도착 — 지하철 환승', note:'1층 개찰구로 내려와 2호선으로 환승 (환승 무료)'},
+      {transit:{line:'지하철 2호선 (녹색)',color:LC.line2,icon:LI.metro,detail:'롱양루 → 인민광장(人民广场) · 9정거장 · 약 30분 · 5위안',tip:'알리페이/위챗페이 QR코드 결제 or 현금 자동발매기 이용. 캐리어 반입 가능'}},
+      {place:'인민광장역 도착 → 호텔 체크인', note:'1·2번 출구 방향으로 나와 도보 이동'},
     ],
     tips:[
-      '공항 제2터미널 도착 시 → 무료 셔틀버스로 제1터미널 이동 (15분) 후 난카이 탑승',
-      'IC카드(이코카·트래블로그) 탑승 2일차부터 적극 활용 — 라피트는 별도 예약',
-      '짐이 많으면 난바역 코인로커 (500~700엔) 맡기고 가볍게 이동',
+      '마그레브는 시간절약 효과 탁월 — 공항에서 짐 많을 때 강력 추천',
+      '지하철 결제는 알리페이 또는 위챗페이 QR코드가 가장 편리 (1인당 QR 발급)',
+      '현금 환전보다 알리페이/위챗페이 설정 사전에 완료 권장 — 현지 현금 결제 안 되는 곳 증가',
+      '캐리어 수화물 딜리버리 서비스 없음 — 직접 끌고 이동',
     ]
   },
   d2:{
-    title:'난바 → USJ → 난바 (왕복)',
-    total:{time:'편도 약 20분', cost:'편도 약 400엔 (IC카드)'},
+    title:'호텔 → 상하이 디즈니랜드 → 호텔 (왕복)',
+    total:{time:'편도 약 50~60분', cost:'편도 약 7위안 (지하철)'},
     steps:[
-      {place:'소테츠 프레사 인 → 지하철 난바역', note:'숙소에서 도보 10분'},
-      {transit:{line:'오사카메트로 요츠바시선',color:LC.yotsubashi,icon:LI.metro,detail:'난바(Y15) → 벤텐초(Y12) · 3정거장 · 약 6분 · 230엔',tip:'요츠바시선은 난바역 4번 출구 쪽에서 탑승'}},
-      {place:'벤텐초역 하차 → JR 환승', note:'지하 → 지상으로 올라와 JR 벤텐초역 환승 (도보 1분)'},
-      {transit:{line:'JR 오사카순환선',color:LC.jr_loop,icon:LI.jr,detail:'벤텐초 → 니시쿠조 · 1정거장 · 약 3분 · 170엔',tip:'오사카순환선 내선(内回り) 탑승 — 유니버설시티 방향 표시 확인'}},
-      {place:'니시쿠조역 환승', note:'홈에서 바로 JR 유메사키선 환승 가능'},
-      {transit:{line:'JR 유메사키선 (USJ선)',color:LC.jr_yumesaki,icon:LI.jr,detail:'니시쿠조 → 유니버설시티 · 1정거장 · 약 4분 · 요금 JR 구간 통합',tip:'유니버설시티행 종착역 — 내리면 바로 USJ 게이트 방향'}},
-      {place:'유니버설시티역 → USJ 입장', note:'역에서 USJ 게이트까지 도보 약 3분'},
+      {place:'호텔 → 징안쓰(静安寺)역 or 인민광장역', note:'호텔 위치에 따라 가장 가까운 11호선 환승역으로 이동'},
+      {transit:{line:'지하철 11호선 (보라)',color:LC.line11,icon:LI.metro,detail:'징안쓰역 → 디즈니역(迪士尼) · 약 50분 · 7위안',tip:'11호선은 디즈니까지 직통 — 환승 없이 한 번에 도착. 노동절 연휴 혼잡 예상 → 시간 여유 확보'}},
+      {place:'디즈니역(迪士尼站) 도착', note:'역 출구에서 디즈니 입장 게이트까지 도보 약 7분'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'디즈니역 → 상하이 디즈니랜드 게이트 · 도보 약 7분',tip:''}},
+      {place:'상하이 디즈니랜드 입장 · 오픈런'},
     ],
     tips:[
-      '귀로도 동일 루트 역방향 이용 (유니버설시티 → 니시쿠조 → 벤텐초 → 난바)',
-      'IC카드(이코카) 사용 시 환승 자동 처리 — 별도 티켓 구매 불필요',
-      '아이 4세는 지하철·JR 모두 무료 탑승 가능 (보호자 동반)',
-      '오전 7:30 출발 시 8:00~8:10 USJ 도착 — 오픈런에 충분한 시간',
+      '상하이 디즈니 앱(上海迪士尼度假区) 다운로드 필수 — 대기시간·DPA 구매·식당 예약',
+      'TRON + 주토피아 디즈니 프리미어 어클레스(DPA) 사전 구매 강력 추천 — 없으면 90분+ 대기',
+      '노동절 황금연휴 기간 — 개장 30분 전 도착 목표. 첫 입장 시 TRON 또는 주토피아 직행',
+      '귀로는 저녁 Illuminate! 야간쇼 후 21:00~22:00 — 퇴장 인파 집중. 공연 끝나고 20분 기다렸다 나오면 쾌적',
     ]
   },
   d3:{
-    title:'숙소 → 신사이바시 → 돈키호테 → 우메다 버스터미널 → 카메노이 호텔 아리마',
-    total:{time:'총 이동 약 100분', cost:'지하철 230엔 + 한큐 버스 1,500엔'},
+    title:'호텔 → 티엔쯔팡 → 프랑스 조계지(우캉루) → 신천지',
+    total:{time:'이동 최소화 (지하철 총 약 15분)', cost:'약 6~8위안'},
     steps:[
-      {place:'소테츠 프레사 인'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'신사이바시스지까지 도보 약 8분 (약 650m 북쪽)',tip:'숙소 → 나니와스지 → 미도스지 합류 → 신사이바시스지 남단 입구'}},
-      {place:'신사이바시스지 상점가', note:'600m 아케이드 쇼핑'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'돈키호테 난바점까지 도보 약 10분 (상점가 통과)',tip:'신사이바시스지 남쪽 끝 → 도톤보리 방향'}},
-      {place:'돈키호테 난바 도톤보리점', note:'면세 쇼핑 후 신사이바시역으로 이동 (14:30 버스 목표)'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'신사이바시(M18) → 우메다(M16) · 2정거장 · 약 5분 · 230엔',tip:'미도스지선 빨간 노선 — 배차 2~3분. 우메다역 지상으로 나와 한큐 버스터미널 방향'}},
-      {place:'우메다 한큐 버스터미널 1층 3번 승강장', note:'시간표 사전 확인 — 하루 수 회 운행'},
-      {transit:{line:'한큐 버스 (아리마 온천 직행)',color:LC.bus,icon:LI.bus,detail:'우메다 → 아리마 온천 · 약 65~70분 · 성인 1,500엔 · 4세 무료',tip:'고속도로 정체 시 지연 가능. 버스 내 짐칸 있음. 사전 예약 or 현장 구매'}},
-      {place:'아리마 온천 버스정류장 → 카메노이 호텔 아리마', note:'도보 5~10분 또는 호텔 픽업 서비스 확인'},
+      {place:'호텔 → 지하철역 이동'},
+      {transit:{line:'지하철 1호선 (빨간)',color:LC.line1,icon:LI.metro,detail:'인민광장(人民广场) → 황피난루(黃陂南路) · 2정거장 · 약 5분 · 3위안',tip:'황피난루역 1번 출구 → 도보 3분이면 신천지 입구'}},
+      {place:'티엔쯔팡 (田子坊) 골목 탐방', note:'황피난루역에서 도보 10분. 복고풍 골목 쇼핑·카페'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'티엔쯔팡 → 우캉루 · 도보 약 20분 (천천히 골목 구경하며)',tip:'복신루(复兴路) 따라 서쪽으로 걸으면 자연스럽게 프랑스 조계지 권역으로 진입'}},
+      {place:'우캉루 (武康路) 프랑스 조계지 산책', note:'100년 된 플라타너스 가로수길. 카페·갤러리·빈티지숍'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'우캉루 → 신천지 · 도보 약 15분 또는 택시 이용',tip:'노동절 당일 택시 앱(DiDi) 수요 폭주 — 도보 or 지하철 권장'}},
+      {place:'신천지 (新天地) 점심 · 카페', note:'석고문(石庫門) 건물 보존 거리. 레스토랑·바 밀집'},
     ],
     tips:[
-      '돈키호테 쇼핑은 14:00 전 마무리 목표 — 버스 여유 시간 확보',
-      '아리마 온천 버스는 현금 or IC카드 모두 이용 가능',
-      '카메노이 호텔 아리마 체크인 15:00~16:00 — 버스 시간에 맞게 출발 조정',
+      '5/1 노동절 당일 — 예원·와이탄·난징동루 극혼잡. 반드시 현지인 동네로 우회',
+      '티엔쯔팡·우캉루·신천지는 관광객 대비 현지인 비중 높아 여유로운 편',
+      'DiDi(디디) 앱 미리 설치·한국 카드 등록 — 노동절 혼잡 시 유일한 대안',
+      '알리페이 없으면 신천지 카페·식당 결제 불편. 사전 설정 필수',
     ]
   },
   d4:{
-    title:'카메노이 호텔 아리마 체크아웃 → 난바 → 가이유칸 수족관',
-    total:{time:'아리마→난바 약 90분 + 가이유칸 이동 약 15분', cost:'버스 1,500엔 + 지하철 510엔'},
+    title:'호텔 → 예원 → 난징동루 → 와이탄 → 루자쭈이',
+    total:{time:'총 이동 약 20분 (도보 위주)', cost:'약 4~6위안'},
     steps:[
-      {place:'카메노이 호텔 아리마 체크아웃', note:'짐은 호텔 클로크룸에 맡기거나 버스에 실음'},
-      {transit:{line:'한큐 버스 (아리마→오사카)',color:LC.bus,icon:LI.bus,detail:'아리마 온천 → JR 오사카역(우메다) · 약 65~70분 · 1,500엔',tip:'귀로 버스도 사전 시간 확인 필수 — 고속도로 정체 시 지연 가능'}},
-      {place:'우메다(JR 오사카역) 도착'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'우메다(M16) → 난바(M20) · 3정거장 · 7분 · 230엔',tip:'난바역 도착 후 숙소에 짐 보관'}},
-      {place:'난바역 → 숙소 짐 보관', note:'체크인 전이면 프런트에 맡기고 출발'},
-      {transit:{line:'오사카메트로 미도스지선→주오선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 혼마치(M18) 환승 → 주오선 → 오사카코(C11) · 약 13분 · 280엔',tip:'오사카코역 1번 출구 → 가이유칸 도보 5분'}},
-      {place:'가이유칸 수족관 관람', note:'2~2.5시간 관람'},
-      {transit:{line:'오사카메트로 주오선→미도스지선',color:LC.chuo,icon:LI.metro,detail:'오사카코 → 혼마치 → 미도스지선 → 난바 · 약 20분',tip:''}},
-      {place:'난바 귀숙'},
+      {place:'호텔 → 지하철역'},
+      {transit:{line:'지하철 10호선 (노란)',color:LC.line10,icon:LI.metro,detail:'인민광장 → 위위안화위안(豫园花园) · 2정거장 · 4분 · 3위안',tip:'위위안화위안역 출구로 나오면 예원 상권 바로 앞'}},
+      {place:'예원 (豫园) 입장 · 남상만두 조식', note:'08:30 개장 직후 입장 — 오전이 핵심. 11시 이후 인파 폭발'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'예원 → 난징동루 · 도보 약 20분 (하이퉁루 북쪽 방향)',tip:'황포구 골목 구경하며 이동. 관광버스 많으니 차도 주의'}},
+      {place:'난징동루 (南京东路) 보행자거리', note:'중국 최대 쇼핑 거리. 도보 1.5km 쭉 이어짐'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'난징동루 동쪽 끝 → 와이탄 · 도보 5분',tip:''}},
+      {place:'와이탄 (外滩) 강변 산책 · 야경', note:'강 건너 루자쭈이 마천루 뷰'},
+      {transit:{line:'지하철 2호선 (녹색)',color:LC.line2,icon:LI.metro,detail:'난징동루역 → 루자쭈이역 · 1정거장 · 2분 · 3위안 (또는 황푸강 터널 도보 10분)',tip:'터널 보행로 이용 시 무료지만 여름 더위 주의'}},
+      {place:'루자쭈이 (陸家嘴) · 동방명주 · 야경'},
     ],
     tips:[
-      '아리마 버스 출발 시간 기준으로 역산 — 가이유칸 입장 시간 조정',
-      '가이유칸 온라인 사전 구매 시 입장 줄 없음 — 체크아웃 전날 밤 구매 권장',
-      '이 날 이동이 많으므로 아이 낮잠 시간 확보 (버스 이동 중 OK)',
+      '예원은 반드시 오전 8:30 개장 즉시 입장 — 11시 이후 완전 포화 상태',
+      '와이탄 야경은 오후 6시 이후가 최고. 날씨 맑으면 루자쭈이 LED 조명이 황홀',
+      '황푸강 유람선(黄浦江游船) 60~90분 코스 — 저녁 7시 이후 출발이 야경 감상 최적',
+      '와이탄~루자쭈이 터널 보행로는 무료 · 15분 소요 — 지하철보다 운치 있음',
     ]
   },
   d5:{
-    title:'난바 → 텐노지 동물원 → 신세카이 · 스파월드',
-    total:{time:'이동 최소화 (지하철 총 약 10분)', cost:'지하철 약 460엔'},
+    title:'호텔 체크아웃 → 징안 쇼핑 → 푸동 공항 귀국',
+    total:{time:'시내 → 공항 약 60~75분', cost:'지하철 약 8위안 + 마그레브 50위안 (or 2호선 직행)'},
     steps:[
-      {place:'소테츠 프레사 인 → 지하철 난바역', note:'숙소에서 도보 10분'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 도부츠엔마에(M22) · 2정거장 · 4분 · 230엔',tip:'도부츠엔마에역 1번 출구 → 텐노지 동물원 정문까지 도보 3분'}},
-      {place:'텐노지 동물원 관람'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'텐노지 동물원 남문 → 신세카이 쟌쟌요코초 · 도보 약 8분',tip:'동물원 남문으로 나오면 바로 신세카이 방향 표지판'}},
-      {place:'신세카이 · 스파월드 · 츠텐카쿠'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'도부츠엔마에(M22) → 난바(M20) · 2정거장 · 4분 · 230엔',tip:'텐노지 미오 저녁 후 귀숙'}},
-      {place:'난바 귀숙'},
+      {place:'호텔 체크아웃 · 짐 수속', note:'캐리어 체크아웃 후 보관 요청 or 바로 이동'},
+      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'호텔 → 징안쓰 쇼핑 구역 · 도보 5~10분',tip:'짐은 코인로커 or 호텔 보관 서비스 이용 후 가볍게 쇼핑'}},
+      {place:'징안쓰 (静安寺) 주변 쇼핑 · 카페', note:'마지막 기념품 구매 · 브런치'},
+      {transit:{line:'지하철 2호선 (녹색)',color:LC.line2,icon:LI.metro,detail:'징안쓰역 → 롱양루(龍陽路)역 · 약 30분 · 5위안',tip:'롱양루에서 마그레브로 환승 or 2호선 직통으로 공항까지 계속 이용 가능'}},
+      {place:'롱양루역 → 마그레브 환승 (빠른 옵션)', note:'여유 있으면 2호선 직통으로 공항까지 (추가 30~40분)'},
+      {transit:{line:'자기부상열차 磁浮',color:LC.maglev,icon:LI.maglev,detail:'롱양루 → 푸동공항 · 8분 · 50위안',tip:'마지막 날 짐 있을 때 마그레브 최강. 공항 3시간 전 도착 목표'}},
+      {place:'푸동 국제공항 (PVG) 체크인 · 탑승'},
     ],
     tips:[
-      '텐노지~신세카이~스파월드~츠텐카쿠 모두 도보 10분 이내 — 이 날은 이동 최소화',
-      '도부츠엔마에역은 미도스지선(M)과 사카이스지선(K) 환승역 — 미도스지선 이용',
-      '황금연휴 5/3 — 오전 10시 동물원 개장 직후 입장 권장 (11시 이후 급격히 혼잡)',
-    ]
-  },
-  d6:{
-    title:'숙소 → 오사카성 → 덴포잔 → 도톤보리',
-    total:{time:'총 이동 약 40분', cost:'약 560엔'},
-    steps:[
-      {place:'소테츠 프레사 인 → 지하철 난바역'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'난바(M20) → 혼마치(M18) · 2정거장 · 4분 · 230엔',tip:'혼마치에서 주오선으로 환승'}},
-      {place:'혼마치역 환승 (미도스지→주오선)', note:'홈 이동 약 2분'},
-      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'혼마치(C16) → 모리노미야(C19) · 3정거장 · 7분 · 280엔 통합',tip:'모리노미야 1·2번 출구 → 오사카성 동쪽 해자 → 도보 약 8분'}},
-      {place:'오사카성 공원 · 천수각 관람', note:'관람 후 주오선으로 덴포잔 이동'},
-      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'모리노미야(C19) → 오사카코(C11) · 4정거장 · 8분 · 280엔',tip:'주오선이 오사카성(모리노미야)에서 덴포잔(오사카코)까지 직통 — 환승 없음!'}},
-      {place:'오사카코역 → 덴포잔 대관람차', note:'1번 출구 → 도보 5분'},
-      {transit:{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'오사카코(C11) → 혼마치(C16) · 4정거장 · 9분',tip:''},},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'혼마치(M18) → 난바(M20) · 2정거장 · 4분 · 통합 280엔',tip:'저녁은 도톤보리에서'}},
-      {place:'난바 · 도톤보리 저녁'},
-    ],
-    tips:[
-      '주오선(녹색) 하나로 오사카성(모리노미야) ↔ 덴포잔(오사카코) 직통 — 핵심 노선',
-      '오사카성 입장 전 공원 외곽 석벽·해자 산책은 무료 — 아이와 걷기 좋음',
-      '덴포잔 대관람차 → 레고랜드는 도보 3분 이내로 연계 쉬움',
-    ]
-  },
-  d7:{
-    title:'난바 → 나라 → 우메다 → 난바',
-    total:{time:'편도 나라까지 약 40분', cost:'편도 680엔 (급행) / 1,200엔 (특급)'},
-    steps:[
-      {place:'소테츠 프레사 인 → 킨테츠 난바역', note:'지하철 난바역에서 도보 3분 — 킨테츠 난바역(近鉄難波)은 별도 건물'},
-      {transit:{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 난바 → 킨테츠 나라역 · 약 39분 · 680엔 (4세 무료)',tip:'급행은 무료 좌석 — 혼잡 예상 시 특급권(520엔 추가) 구매해 지정석 이용 권장'}},
-      {place:'킨테츠 나라역 도착', note:'역에서 나라공원까지 도보 약 10분'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'나라역 → 사슴공원 → 도다이지 → 나라마치 · 전 코스 도보',tip:'나라 핵심 관광지는 모두 1.5km 반경 내 — 유모차 이동 가능한 포장도로'}},
-      {place:'나라 사슴공원 · 도다이지 · 나라마치 관광'},
-      {transit:{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 나라 → 킨테츠 우메다역 · 약 40분 · 680엔',tip:'나라에서 우메다 직통 — 오사카 난바 경유 안 해도 됨'}},
-      {place:'킨테츠 우메다역(오사카우메다역) → HEP FIVE · 루쿠아', note:'쇼핑 후 난바로 귀숙'},
-      {transit:{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'우메다(M16) → 난바(M20) · 3정거장 · 7분 · 230엔',tip:''}},
-      {place:'난바역 → 도보 → 숙소'},
-    ],
-    tips:[
-      '킨테츠 난바역은 지하철 난바역과 다른 역 — 오사카메트로 난바역 서쪽 방향 도보 3분',
-      '어린이날(5/5) 나라공원 혼잡 — 사슴 먹이(200엔) 재고 조기 소진될 수 있음',
-      '나라 사슴은 가방·음식 낚아채기로 유명 — 가방 지퍼 꼭 잠그기',
-      '도다이지 기둥 구멍(약 37cm×37cm) 통과 체험 — 아이 인기 코스',
-      'JR 야마토지선도 이용 가능 (JR 난바 → 나라 직통 50분, 860엔) — 킨테츠가 더 빠름',
-    ]
-  },
-  d8:{
-    title:'숙소 → 린쿠 아울렛 → 간사이 공항',
-    total:{time:'숙소→공항 총 약 65분', cost:'약 1,430엔'},
-    steps:[
-      {place:'소테츠 프레사 인 체크아웃 → 난카이 난바역', note:'숙소에서 도보 10분 — 캐리어 끌고 이동'},
-      {transit:{line:'난카이 공항선 라피트β',color:LC.nankai,icon:LI.nankai,detail:'난바 → 린쿠타운역 · 약 29분 · 성인 1,100엔 (라피트 요금)',tip:'반드시 라피트β 탑승 — α는 린쿠타운 통과. 9번 승강장에서 탑승 전 행선지 확인'}},
-      {place:'린쿠타운역 하차', note:'코인로커(500~600엔)에 캐리어 맡기고 아울렛 쇼핑'},
-      {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'린쿠타운역 → 린쿠 프리미엄 아울렛 · 도보 약 5분',tip:''}},
-      {place:'린쿠 프리미엄 아울렛 쇼핑', note:'10:00 오픈 · 11:30까지 쇼핑 후 공항 이동'},
-      {transit:{line:'난카이 공항선',color:LC.nankai,icon:LI.nankai,detail:'린쿠타운 → 간사이공항역 · 1정거장 · 약 6분 · 330엔',tip:'라피트 or 공항급행 모두 1정거장 — 급행으로도 충분'}},
-      {place:'간사이 공항 제1터미널 도착', note:'체크인 카운터 · 수하물 · 면세점 · 탑승구 이동'},
-    ],
-    tips:[
-      '15:05 출발 기준 3시간 전인 12:05까지 공항 도착 목표 (LCC 체크인 마감 60분 전)',
-      '아울렛 → 공항은 딱 1정거장 — 11:30 출발해도 여유 있음',
-      '캐리어는 아울렛 내 로커(500엔) 또는 린쿠타운역 로커(500~600엔) 이용',
-      '웨이브항공(WE512) LCC → 제2터미널 사용 가능성 있음. 탑승 전날 앱으로 재확인',
-      '면세 한도 총 800달러(한국) — 아울렛 영수증 보관',
+      '귀국 기준 3시간 전 공항 도착 목표 — 황금연휴 마지막 날 공항 극혼잡 예상',
+      '출국 전 알리페이 잔액 환급 필요시 앱 내 '提现' 기능 사용',
+      '기념품 최종 구매 — 上好佳(샹하오쟈) 과자, 상하이 브랜드 핸드크림, 왕빙빙 티 추천',
+      '중국 출국 시 액체류 100ml 이하 · 보조배터리 기내 반입만 가능 (위탁 불가)',
     ]
   },
 };
@@ -643,16 +559,11 @@ const TRANSPORT_GUIDE = {
 // 이동 항목별 교통 배지 (dayId_time 키)
 // ──────────────────────────────────────────────
 const ITEM_TRANSIT = {
-  'd1_13:40':{line:'난카이 라피트α',color:LC.nankai,icon:LI.nankai,detail:'간사이공항 → 난바역 · 34분 · 성인 1,490엔 · 4세 무료',tip:'α는 직통 34분. 사전 QR 예약 권장 (클룩/KKday ≈11,000원)'},
-  'd2_07:30':{line:'요츠바시선 → JR유메사키선',color:LC.yotsubashi,icon:LI.metro,detail:'난바(Y15) → 벤텐초 → 니시쿠조 → 유니버설시티 · 총 약 20분 · IC카드 약 400엔',tip:'IC카드(이코카) 사용 시 환승 자동 처리 — 아이 4세 무료'},
-  'd3_14:30':{line:'오사카메트로 미도스지선',color:LC.midosuji,icon:LI.metro,detail:'신사이바시(M18) → 우메다(M16) · 2정거장 · 약 5분 · 230엔',tip:'미도스지선 빨간 노선 — 우메다역 지상으로 나와 한큐 버스터미널 방향으로 이동'},
-  'd3_15:00':{line:'한큐 버스 (아리마 온천 직행)',color:LC.bus,icon:LI.bus,detail:'우메다 → 아리마 온천 · 약 65~70분 · 성인 1,500엔 · 4세 무료',tip:'한큐버스터미널 1층 3번 승강장. 하루 수 회 운행 — 사전 시간표 확인 필수'},
-  'd4_08:30':{line:'한큐 버스 (아리마→오사카)',color:LC.bus,icon:LI.bus,detail:'아리마 온천 → JR 오사카역(우메다) · 약 65~70분 · 1,500엔 → 미도스지선 230엔',tip:'귀로 버스도 사전 시간 확인 필수 — 고속도로 정체 시 지연 가능'},
-  'd6_13:00':{line:'오사카메트로 주오선',color:LC.chuo,icon:LI.metro,detail:'모리노미야(C19) → 오사카코(C11) · 4정거장 · 약 8분 · 280엔',tip:'주오선이 오사카성↔덴포잔 직통 — 환승 없음!'},
-  'd7_08:30':{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 난바 → 킨테츠 나라역 · 약 39분 · 680엔 · 4세 무료',tip:'킨테츠 난바역은 지하철 난바역과 다른 역 — 도보 3분 서쪽 이동 필요'},
-  'd7_15:30':{line:'킨테츠 나라선 急行',color:LC.kintetsu,icon:LI.kintetsu,detail:'킨테츠 나라 → 오사카우메다역 · 약 40분 · 680엔',tip:'나라에서 우메다 직통 — 오사카 난바 경유 불필요'},
-  'd8_09:00':{line:'난카이 라피트β',color:LC.nankai,icon:LI.nankai,detail:'난바역 9번 승강장 → 린쿠타운역 · 약 29분 · 성인 1,100엔',tip:'반드시 β 탑승 — α는 린쿠타운 통과. 예약 시 β 확인 필수'},
-  'd8_11:30':{line:'난카이 공항선',color:LC.nankai,icon:LI.nankai,detail:'린쿠타운 → 간사이공항역 · 1정거장 · 약 6분 · 330엔',tip:'라피트 or 공항급행 모두 1정거장 — 급행으로 충분'},
+  'd1_13:00':{line:'자기부상열차 磁浮',color:LC.maglev,icon:LI.maglev,detail:'푸동공항 → 롱양루역 · 8분 · 50위안',tip:'세계 최고속 상업열차. 최고 430km/h. 롱양루에서 2호선으로 환승 (무료)'},
+  'd1_14:00':{line:'지하철 2호선 (녹색)',color:LC.line2,icon:LI.metro,detail:'롱양루(龍陽路) → 인민광장(人民广场) · 9정거장 · 약 30분 · 5위안',tip:'알리페이 QR결제 or 자동발매기 현금 이용. 캐리어 반입 가능'},
+  'd2_07:45':{line:'지하철 11호선 (보라)',color:LC.line11,icon:LI.metro,detail:'징안쓰(静安寺) → 디즈니역(迪士尼站) · 약 50분 · 7위안',tip:'11호선 직통 — 환승 없음. 노동절 연휴 혼잡. 개장 1시간 전 출발 권장'},
+  'd4_08:30':{line:'지하철 10호선 (노란)',color:LC.line10,icon:LI.metro,detail:'인민광장 → 위위안화위안(豫园花园) · 2정거장 · 4분 · 3위안',tip:'위위안역 출구 → 예원 상권 바로 앞'},
+  'd5_14:30':{line:'지하철 2호선 (녹색)',color:LC.line2,icon:LI.metro,detail:'징안쓰 → 롱양루 · 약 30분 → 마그레브 환승 · 8분 · 합계 55위안',tip:'공항 3시간 전 출발 권장. 황금연휴 마지막날 지하철 혼잡'},
 };
 
 // ──────────────────────────────────────────────
@@ -666,118 +577,72 @@ const MEAL_RECS = {
       {name:'파리바게뜨 인천공항점',area:'인천공항',rating:'4.5★',reviews:'500+',tags:['베이커리','다양'],menu:'크루아상·샌드위치·커피 세트 — 아이와 함께 여유 있게',hours:'06:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=파리바게뜨+인천공항'},
     ],
     lunch:[
-      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['돈코츠 라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 오사카 첫 끼니로 가볍게',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
-      {name:'난바 워크 푸드코트 (なんばWALK)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['다양한 선택','지하상가','빠름'],menu:'라멘·우동·스시·돈카츠 등 다양 — 공항 이동 피로 후 빠른 점심',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=なんばウォーク+フードコート+大阪'},
-      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간','칸막이석'],menu:'특제 돈코츠 라멘 · 개인 칸막이석 — 첫날 간단하게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+      {name:'小杨生煎 (소양생전)',area:'인민광장/황포',rating:'4.7★',reviews:'8,000+',tags:['생전만두','현지 인기','웨이팅'],menu:'상하이 소울푸드 생전만두 (생간만터우) — 겉바속촉 철판 구이 만두. 4개 12위안',hours:'06:30~21:00',mapUrl:'https://www.google.com/maps/search/?q=小杨生煎+上海+人民广场'},
+      {name:'黃河路 먹자골목 라면집',area:'황허루',rating:'4.5★',reviews:'3,000+',tags:['현지 국수','가성비','현지인'],menu:'상하이 국수·홍소우동 한 그릇 20~30위안 — 도착 첫 끼니로 가볍게',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=黃河路+上海+美食街'},
+      {name:'人民广场 푸드코트 (港汇广场)',area:'인민광장',rating:'4.5★',reviews:'2,000+',tags:['다양','쾌적','빠름'],menu:'상하이 현지 요리·딤섬·볶음밥 등 — 이동 피로 후 편하게',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=港汇广场+美食+上海'},
     ],
     dinner:[
-      {name:'Shanghai cuisine RONTAN',area:'도톤보리',rating:'4.7★',reviews:'1,200+',tags:['샤오롱바오','예약 가능'],menu:'구운 샤오롱바오 — 育汁 폭발. 카운터 19석.',hours:'11:30~22:00 · 수 휴무',mapUrl:'https://www.google.com/maps/search/?q=Shanghai+cuisine+RONTAN+大阪道頓堀'},
-      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 야키소바',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
-      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['돈코츠 라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 1그릇 700엔 — 빠르고 확실',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
+      {name:'黃河路 먹자골목 홍소육집',area:'황허루',rating:'4.8★',reviews:'5,000+',tags:['홍소육','현지 노포','필수'],menu:'간장 돼지갈비 홍소육 (紅燒肉) — 상하이 소울푸드 1번. 입에서 녹는 질감',hours:'17:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=黃河路+红烧肉+上海'},
+      {name:'吉士酒家 (Jishi Restaurant)',area:'황포/인민광장',rating:'4.7★',reviews:'3,000+',tags:['상하이 가정식','현지인 단골','예약 권장'],menu:'홍소육·취두부·대하볶음 — 50년 노포. 저녁 6시 이후 1시간+ 웨이팅',hours:'11:30~14:00 · 17:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=吉士酒家+上海'},
+      {name:'海底捞 (하이디라오) 上海 인민광장점',area:'인민광장',rating:'4.6★',reviews:'10,000+',tags:['훠궈','서비스 유명','24시간'],menu:'마라·원탕 훠궈 1인 약 100위안 — 손 마사지·국수 묘기 서비스로 유명',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=海底捞+上海+人民广场'},
     ]
   },
   d2:{
     breakfast:[
-      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK'],menu:'찐만두 12개 720엔 · 슈마이 — 이른 아침 포장 픽업',hours:'10:00~21:00 (테이크아웃 빠름)',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
-      {name:'Komeda\'s Coffee 난바점',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 8:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
-      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
+      {name:'호텔 조식 or 편의점 (全家·罗森)',area:'시내',rating:'4.5★',reviews:'1,000+',tags:['편의점','빠름','간편'],menu:'중국 편의점 빵·오니기리·핫도그·두유 — 디즈니 오픈런 전 빠른 조식',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=全家便利店+上海'},
+      {name:'麦当劳 맥도날드 (上海 디즈니역 인근)',area:'디즈니역',rating:'4.4★',reviews:'2,000+',tags:['패스트푸드','빠름','무난'],menu:'맥머핀·해시브라운 세트 — 입장 전 빠르게 해결',hours:'06:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=麦当劳+迪士尼+上海'},
     ],
     lunch:[
-      {name:'키노피오 카페 (닌텐도월드)',area:'USJ',rating:'4.6★',reviews:'2,000+',tags:['닌텐도 콜라보','예약 권장'],menu:'마리오 버섯 버거 · 피치 파르페 · 쿠파 크레이프',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=キノピオカフェ+USJ+ユニバーサルスタジオジャパン'},
-      {name:'미니언 파크 버블 그릴',area:'USJ',rating:'4.5★',reviews:'1,000+',tags:['미니언 콜라보','아이 인기'],menu:'바나나 소프트크림 · 미니언 박스 런치',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=ミニオンパーク+レストラン+USJ'},
-      {name:'TAKOPA 타코야키 파크 (시티워크)',area:'유니버설시티워크',rating:'4.5★',reviews:'800+',tags:['타코야키','오사카 명물'],menu:'오사카 6개 명점 타코야키를 한자리에서 비교 체험',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=たこぱーく+ユニバーサルシティウォーク大阪'},
+      {name:'디즈니 Remy\'s Ratatouille Hide & Squeak (렘의 레스토랑)',area:'상하이 디즈니',rating:'4.6★',reviews:'3,000+',tags:['디즈니 콜라보','예약 권장','SNS 인기'],menu:'프랑스 빵·수프·파스타 코스 — 라따뚜이 테마 레스토랑. 앱 예약 필수',hours:'디즈니 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Ratatouille+Restaurant+Shanghai+Disneyland'},
+      {name:'디즈니 Treasure Cove (캐리비안 구역 식당)',area:'상하이 디즈니',rating:'4.5★',reviews:'2,000+',tags:['디즈니','캐리비안 테마'],menu:'해적 테마 버거·치킨 — 캐리비안의 해적 탑승 후 바로 인근',hours:'디즈니 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Treasure+Cove+Shanghai+Disneyland'},
     ],
     dinner:[
-      {name:'OSAKA Kiichi',area:'도톤보리',rating:'4.7★',reviews:'1,000+',tags:['와규 야키니쿠','예약 권장','SNS 인기'],menu:'A5 쿠로게 와규 — 철판 위에서 늘어나는 비주얼로 화제',hours:'17:00~23:30',mapUrl:'https://www.google.com/maps/search/?q=OSAKA+Kiichi+道頓堀'},
-      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간','칸막이석'],menu:'특제 돈코츠 라멘 · USJ 피로 회복에 딱',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
-      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 철판석',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
+      {name:'디즈니 Starliner Diner (Tomorrow Land)',area:'상하이 디즈니',rating:'4.5★',reviews:'1,500+',tags:['디즈니','버거','편함'],menu:'버거·치킨·사이드 세트 — 야간쇼 전 빠른 저녁 해결',hours:'디즈니 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Starliner+Diner+Shanghai+Disneyland'},
+      {name:'디즈니 스트리트 푸드 (퇴장 전)',area:'상하이 디즈니',rating:'4.4★',reviews:'1,000+',tags:['간편','가볍게'],menu:'추로스·팝콘·소프트아이스크림 — 야간쇼 전 간식',hours:'디즈니 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Shanghai+Disneyland+Street+Food'},
     ]
   },
   d3:{
     breakfast:[
-      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페','여유'],menu:'토스트+삶은달걀+커피 모닝 세트 — 8:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
-      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안','아이 인기'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트 — 쇼핑 전 든든하게',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
-      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK','빠름'],menu:'찐만두 포장 픽업 — 빠른 아침 해결',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+      {name:'淮海路 카페거리 브런치',area:'프랑스 조계지',rating:'4.6★',reviews:'2,000+',tags:['카페','브런치','현지인'],menu:'상하이 로컬 카페 에그스베네딕트·라테 — 우캉루 산책 전 여유 있게',hours:'08:00~18:00',mapUrl:'https://www.google.com/maps/search/?q=淮海路+咖啡+上海'},
+      {name:'Always Cafe 武康路점',area:'우캉루',rating:'4.7★',reviews:'1,500+',tags:['인스타 핫플','라테아트','현지 인기'],menu:'우캉루 플라타너스 아래 야외 테이블 — 롱블랙·오트밀라테',hours:'08:30~21:00',mapUrl:'https://www.google.com/maps/search/?q=Always+Cafe+武康路+上海'},
+      {name:'Manner Coffee (上海 체인)',area:'시내 곳곳',rating:'4.6★',reviews:'5,000+',tags:['저렴','빠름','현지 브랜드'],menu:'라테 15위안 — 상하이 토종 스페셜티 커피. 스타벅스 절반 가격',hours:'08:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Manner+Coffee+上海'},
     ],
     lunch:[
-      {name:'규카츠 모토무라 신사이바시점 (牛かつもと村)',area:'신사이바시',rating:'4.6★',reviews:'1,500+',tags:['규카츠','줄 짧음'],menu:'규카츠 정식 1,580엔 — 직접 돌판에 구워 먹기',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=牛かつもと村+心斎橋'},
-      {name:'난바 파크스 레스토랑 층 (なんばパークス)',area:'난바',rating:'4.5★',reviews:'600+',tags:['다양한 선택','쾌적'],menu:'라멘·스시·이탈리안·스테이크 등 10여 개 레스토랑',hours:'11:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=なんばパークス+レストラン+大阪'},
-      {name:'이치란 라멘 신사이바시점 (一蘭)',area:'신사이바시',rating:'4.5★',reviews:'900+',tags:['돈코츠 라멘','개인 칸막이'],menu:'특제 돈코츠 라멘 · 농도·마늘·양 개인 맞춤 주문',hours:'10:00~02:00',mapUrl:'https://www.google.com/maps/search/?q=一蘭+心斎橋'},
+      {name:'新天地 레스토랑가',area:'신천지',rating:'4.6★',reviews:'4,000+',tags:['다양한 선택','감성 분위기'],menu:'딤섬·상하이 가정식·베트남음식 등 — 석고문 건물 안 다양한 선택',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=新天地+餐厅+上海'},
+      {name:'功德林 (Gongdelin) 신천지점',area:'신천지',rating:'4.7★',reviews:'2,000+',tags:['채식','100년 노포','불교 음식'],menu:'채식 샤오롱바오·마파두부·탕수육 — 1922년 창업 전통 사찰음식점',hours:'11:00~21:30',mapUrl:'https://www.google.com/maps/search/?q=功德林+素食+上海+新天地'},
+      {name:'田子坊 내 현지 식당',area:'티엔쯔팡',rating:'4.5★',reviews:'1,500+',tags:['로컬','간단','저렴'],menu:'볶음밥·면류·딤섬 약 30~50위안 — 골목 탐방 중 부담 없이',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=田子坊+美食+上海'},
+    ],
+    dinner:[
+      {name:'黃河路 홍소육 전문점',area:'황허루',rating:'4.8★',reviews:'5,000+',tags:['홍소육','필수 코스','현지인'],menu:'상하이 홍소육·게살두부찜·볶음채소 — 황금연휴 6시 이후 1시간 웨이팅 각오',hours:'17:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=黃河路+红烧肉+上海餐厅'},
+      {name:'哈尔滨食府 (하얼빈식부)',area:'황포구',rating:'4.6★',reviews:'2,000+',tags:['동북 요리','족발','현지 단골'],menu:'동북식 족발(猪蹄)·만두·해산물 — 현지인들이 진짜 자주 가는 곳',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=哈尔滨食府+上海'},
+      {name:'沪上阿姨 (차·분식 체인)',area:'시내 곳곳',rating:'4.5★',reviews:'3,000+',tags:['티·분식','가성비','현지 브랜드'],menu:'치즈티·쌀국수·만두 25~40위안 — 이동 중 간단히',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=沪上阿姨+上海'},
     ]
   },
   d4:{
-    dinner:[
-      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 아리마 귀환 후 가볍게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
-      {name:'후쿠타로 (福太郎) 난바점',area:'도톤보리',rating:'4.5★',reviews:'3,000+',tags:['오코노미야키','아이 친화'],menu:'야마이모 오코노미야키 · 네기야키 · 철판석',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=福太郎+難波+道頓堀'},
-      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 칸막이 1인석 — 피로 회복에 딱',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
+    breakfast:[
+      {name:'南翔馒头店 (남상만두 예원점)',area:'예원',rating:'4.8★',reviews:'12,000+',tags:['샤오롱바오','100년 노포','필수'],menu:'상하이 샤오롱바오 원조. 증기 찜통째 나오는 육즙 폭발 만두. 1층 포장 권장 (3층은 웨이팅)',hours:'07:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=南翔馒头店+豫园+上海'},
+      {name:'富春小笼 (부춘소롱)',area:'황포구',rating:'4.7★',reviews:'3,000+',tags:['샤오롱바오','로컬','예약 권장'],menu:'80년 전통 로컬 소롱포 — 외국인 거의 없는 현지인 단골. 새우살 소롱포 강추',hours:'06:30~14:00 · 16:30~20:00',mapUrl:'https://www.google.com/maps/search/?q=富春小笼+上海'},
     ],
     lunch:[
-      {name:'나니와 쿠이신보 요코초 (なにわ食いしんぼ横丁)',area:'덴포잔',rating:'4.5★',reviews:'800+',tags:['오사카 명물 집합','레트로'],menu:'오코노미야키·타코야키·쿠시카츠·라멘 등 오사카 명물 총집합',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=なにわ食いしんぼ横丁+天保山マーケットプレース'},
-      {name:'모스버거 오사카코역 인근 (MOS BURGER)',area:'덴포잔',rating:'4.5★',reviews:'500+',tags:['버거','빠름','아이 친화'],menu:'밥버거·테리야키 버거·세트 — 빠른 점심으로 적합',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=モスバーガー+大阪港+海遊館'},
-      {name:'덴포잔 마켓플레이스 푸드코트',area:'덴포잔',rating:'4.5★',reviews:'600+',tags:['다양한 선택','가볍게'],menu:'오사카 명물 포함 다양한 메뉴 — 아이와 무난하게',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=天保山マーケットプレース+フードコート+大阪'},
+      {name:'和平饭店 The Peace Hotel 레스토랑',area:'와이탄',rating:'4.7★',reviews:'2,000+',tags:['와이탄 뷰','클래식 상하이','고급'],menu:'1929년 역사 호텔 레스토랑 — 와이탄 뷰 상하이 요리 코스. 예약 권장',hours:'11:30~14:30 · 17:30~22:00',mapUrl:'https://www.google.com/maps/search/?q=和平饭店+餐厅+外滩+上海'},
+      {name:'外滩边上 와이탄 강변 식당가',area:'와이탄',rating:'4.5★',reviews:'3,000+',tags:['뷰 레스토랑','강변','다양'],menu:'와이탄 강변 레스토랑 거리 — 상하이 요리·해산물·양식 등 여러 선택',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=外滩+餐厅+上海'},
+      {name:'1931 Bar Restaurant',area:'프랑스 조계지',rating:'4.6★',reviews:'1,500+',tags:['상하이 홈쿠킹','1930년대 분위기','현지 인기'],menu:'홍소육·장수 새우볶음·취두부 — 1930년대 노스탤지어 분위기 레스토랑',hours:'11:30~14:30 · 17:30~22:30',mapUrl:'https://www.google.com/maps/search/?q=1931+Bar+Restaurant+上海'},
+    ],
+    dinner:[
+      {name:'外滩源 (와이탄위안) 뷰 레스토랑',area:'와이탄',rating:'4.8★',reviews:'3,000+',tags:['야경 맛집','특별한 저녁','루자쭈이 뷰'],menu:'루자쭈이 야경 감상 디너 — 상하이 요리·양식 코스. 창가석 사전 예약 필수',hours:'17:30~22:30',mapUrl:'https://www.google.com/maps/search/?q=外滩+夜景+餐厅+上海'},
+      {name:'점도덕 (點都德) 上海점',area:'황포구',rating:'4.7★',reviews:'4,000+',tags:['광둥 딤섬','저녁 딤섬','현지 인기'],menu:'새우 창펀·소롱포·하가우·차슈빵 — 저녁 딤섬 코스. 현지인 예약 필수',hours:'10:30~21:30',mapUrl:'https://www.google.com/maps/search/?q=点都德+上海'},
+      {name:'大董烤鸭 (다동 오리 구이)',area:'루자쭈이/인근',rating:'4.8★',reviews:'5,000+',tags:['베이징덕','고급','기념일'],menu:'바삭한 베이징 오리구이 코스 — 2인 약 500위안. 이번 여행 최고급 식사',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=大董烤鸭+上海'},
     ]
   },
   d5:{
     breakfast:[
-      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 08:00~11:00 무료 토핑',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
-      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트 — 황금연휴 활동 전 에너지 충전',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
-      {name:'551 蓬莱 난바본점',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','포장 OK','빠름'],menu:'찐만두 포장 픽업 — 텐노지 이동 전 빠르게',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
+      {name:'징안쓰 주변 로컬 카페',area:'징안',rating:'4.5★',reviews:'1,000+',tags:['카페','여유','브런치'],menu:'상하이 로컬 스페셜티 카페 에그베네딕트·크로아상 — 귀국 전 여유 있게',hours:'08:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=静安寺+咖啡+上海'},
+      {name:'Manner Coffee 징안점',area:'징안',rating:'4.6★',reviews:'2,000+',tags:['저렴','현지 브랜드','빠름'],menu:'라테 15위안 — 상하이 토종 스페셜티. 마지막 날 가볍게',hours:'08:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=Manner+Coffee+静安+上海'},
     ],
     lunch:[
-      {name:'쿠시카츠 다루마 신세카이 본점 (串カツだるま)',area:'신세카이',rating:'4.5★',reviews:'5,000+',tags:['쿠시카츠','1929년 창업','소스 더블딥 금지'],menu:'소고기·새우·아스파라거스·치즈 꼬치 1개 100~220엔',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+新世界本店'},
-      {name:'텐구 신세카이점 (てんぐ)',area:'신세카이',rating:'4.5★',reviews:'1,200+',tags:['쿠시카츠'],menu:'다루마와 쌍벽을 이루는 쿠시카츠 명점 — 소스 항아리 공유 방식',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=てんぐ+新世界+串カツ'},
-      {name:'양식당 쟌쟌요코초 (じゃんじゃん横丁 정식)',area:'신세카이',rating:'4.5★',reviews:'700+',tags:['정식','부담 없음'],menu:'쟌쟌요코초 골목 내 정식집 — 생선구이·카레 등 500~800엔',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=じゃんじゃん横丁+新世界+食堂'},
-    ],
-    dinner:[
-      {name:'텐노지 미오 B1 레스토랑가 (天王寺MIO)',area:'텐노지',rating:'4.5★',reviews:'800+',tags:['다양한 선택','황금연휴 비교적 여유'],menu:'라멘·야키니쿠·이탈리안 등 10여 개 레스토랑 한자리에',hours:'11:00~21:30',mapUrl:'https://www.google.com/maps/search/?q=天王寺MIO+レストラン'},
-      {name:'아베노 하루카스 다이닝 (あべのハルカス)',area:'텐노지',rating:'4.6★',reviews:'600+',tags:['60층 뷰 레스토랑','특별한 날'],menu:'60층 전망 레스토랑 — 오사카 야경 감상하며 식사',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=あべのハルカス+ダイニング+天王寺'},
-      {name:'쿠시야키 텐노지점 (串焼き)',area:'텐노지',rating:'4.5★',reviews:'500+',tags:['쿠시야키','이자카야'],menu:'야키토리·쿠시야키 저녁 코스 2,000엔~ — 텐노지역 도보 5분',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=串焼き+天王寺+居酒屋'},
-    ]
-  },
-  d6:{
-    breakfast:[
-      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 오사카성 이동 전 여유롭게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
-      {name:'Eggs\'n Things 신사이바시점',area:'신사이바시',rating:'4.5★',reviews:'1,200+',tags:['팬케이크','하와이안'],menu:'딸기 휘핑크림 팬케이크 · 에그 베네딕트',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=Eggs+n+Things+心斎橋'},
-      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 약 500엔 — 07:00부터 바로 가능',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
-    ],
-    lunch:[
-      {name:'MIRAIZA OSAKA-JO 레스토랑',area:'오사카성',rating:'4.6★',reviews:'900+',tags:['오사카성 내부','역사 건물'],menu:'1930년대 역사 건물 내 카페 · 파스타·카레·스테이크',hours:'09:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=MIRAIZA+OSAKA-JO+大阪城'},
-      {name:'오사카성 공원 푸드트럭 (NHK 홀 앞)',area:'오사카성공원',rating:'4.5★',reviews:'600+',tags:['야외','피크닉'],menu:'샌드위치·핫도그·오니기리 — 공원 잔디밭 피크닉 스타일',hours:'10:00~18:00 (날씨에 따라 변동)',mapUrl:'https://www.google.com/maps/search/?q=大阪城公園+フードトラック'},
-      {name:'모리노미야 키테 레스토랑 (MORINOMIYA KITE)',area:'모리노미야',rating:'4.5★',reviews:'700+',tags:['복합몰','다양'],menu:'모리노미야역 인근 복합시설 — 라멘·스시·카페 등',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=もりのみやキューズモール+レストラン'},
-    ],
-    dinner:[
-      {name:'킨류 라멘 도톤보리 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'4,000+',tags:['라멘','24시간','웨이팅 없음'],menu:'진한 돼지뼈 라멘 700엔 — 도톤보리 야경과 함께',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀'},
-      {name:'오사카 오쇼 도톤보리점 (大阪王将)',area:'도톤보리',rating:'4.5★',reviews:'1,500+',tags:['교자','볶음밥','아이 OK'],menu:'파리파리 군만두·볶음밥 세트 — 아이도 좋아하는 맛',hours:'10:00~01:00',mapUrl:'https://www.google.com/maps/search/?q=大阪王将+道頓堀'},
-      {name:'이치란 라멘 도톤보리 (一蘭)',area:'도톤보리',rating:'4.5★',reviews:'800+',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 칸막이 1인석 — 아이 동반도 편함',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀'},
-    ]
-  },
-  d7:{
-    breakfast:[
-      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 약 500엔 — 나라 이동 전 빠르게',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
-      {name:'Komeda\'s Coffee 난바점 (コメダ珈琲)',area:'난바',rating:'4.5★',reviews:'700+',tags:['모닝 세트','카페'],menu:'토스트+삶은달걀+커피 모닝 세트 — 어린이날 나라 출발 전 충전',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=コメダ珈琲店+なんば'},
-      {name:'Starbucks 난바 시티점',area:'난바',rating:'4.5★',reviews:'600+',tags:['커피','빠름'],menu:'모닝 커피 + 샌드위치 세트 — 출발 전 가볍게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=スターバックス+なんばシティ+大阪'},
-    ],
-    lunch:[
-      {name:'카키노하 스시 총본점 (柿の葉すし)',area:'나라',rating:'4.5★',reviews:'1,000+',tags:['나라 명물','전통 스시'],menu:'감잎 스시 — 연어·고등어·도미 · 1인 세트 1,200엔~',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=柿の葉すし+総本家+奈良'},
-      {name:'가마메시 사토 나라점 (釜めし里)',area:'나라',rating:'4.5★',reviews:'600+',tags:['솥밥','나라 명물'],menu:'나라 명물 솥밥 (마쓰타케·게·채소) · 1,500엔~',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=釜めし里+奈良'},
-      {name:'쿠라스시 나라역점 (くら寿司)',area:'나라',rating:'4.5★',reviews:'800+',tags:['회전초밥','아이 인기'],menu:'회전초밥 1접시 115엔~ · 가이챠! 비슬롯 이벤트',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=くら寿司+近鉄奈良'},
-    ],
-    dinner:[
-      {name:'무기토멘스케 나카츠 (麦と麺助)',area:'나카츠/우메다',rating:'4.8★',reviews:'1,500+',tags:['라멘','2024 미쉐린 빕 구르망','웨이팅'],menu:'교지도리 닭육수 쇼유 라멘 + 와규 완탕 · 현금만',hours:'월·수~금 11~15:30 · 토일 ~16:00 · 화 휴무',mapUrl:'https://www.google.com/maps/search/?q=麦と麺助+中津+大阪'},
-      {name:'루쿠아 이올레 11F 다이닝 (LUCUA 1100)',area:'우메다',rating:'4.5★',reviews:'700+',tags:['우메다 역결','뷰 레스토랑'],menu:'스시·야키니쿠·이탈리안 등 다양 — 마지막 저녁 기념식사',hours:'11:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=ルクア1100+ダイニング+梅田'},
-      {name:'오사카 에키마에빌딩 이자카야 (駅前ビル)',area:'우메다',rating:'4.5★',reviews:'800+',tags:['이자카야','가성비','해산물'],menu:'우메다 역전 빌딩 지하 — 신선한 해산물·꼬치·사시미',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=大阪駅前ビル+居酒屋+梅田'},
-    ]
-  },
-  d8:{
-    breakfast:[
-      {name:'551 蓬莱 난바본점 (포장)',area:'난바',rating:'4.6★',reviews:'5,000+',tags:['찐만두','귀국 선물 가능'],menu:'찐만두·슈마이 포장 — 귀국 당일 공항·기내 간식으로',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=551蓬莱+難波本店'},
-      {name:'로손 or 세븐일레븐 (편의점 조식)',area:'난바',rating:'4.5★',reviews:'1,000+',tags:['편의점','간편','빠름'],menu:'오니기리·샌드위치·커피 세트 · 약 500엔 — 07:00부터',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=ローソン+なんば+大阪'},
-      {name:'Starbucks 난바 시티점',area:'난바',rating:'4.5★',reviews:'600+',tags:['커피','빠름'],menu:'모닝 커피 + 샌드위치 세트 — 체크아웃 후 가볍게',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=スターバックス+なんばシティ+大阪'},
-    ],
-    lunch:[
-      {name:'쿠시카츠 다루마 간사이공항점 (串カツだるま)',area:'간사이공항',rating:'4.5★',reviews:'500+',tags:['쿠시카츠','공항 내','마지막 일본 음식'],menu:'오사카 명물 쿠시카츠 꼬치튀김 — 귀국 전 마지막 한 꼬치',hours:'09:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+関西空港'},
-      {name:'간사이공항 2F 레스토랑가',area:'간사이공항',rating:'4.5★',reviews:'600+',tags:['다양한 선택','면세구역'],menu:'라멘·초밥·우동·카레 등 — 면세 구역 내 다양한 선택',hours:'06:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=関西空港+レストラン+2F'},
-      {name:'마이도오오키니 식당 공항점 (まいどおおきに)',area:'간사이공항',rating:'4.5★',reviews:'500+',tags:['일본 가정식','정식','저렴'],menu:'일본 가정식 정식 800엔~ — 아이와 함께 편안하게',hours:'08:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=まいどおおきに食堂+関西空港'},
+      {name:'静安寺 인근 현지 식당',area:'징안',rating:'4.5★',reviews:'1,500+',tags:['현지식','가볍게','공항 이동 전'],menu:'볶음밥·면류·만두 약 30~50위안 — 공항 이동 전 마지막 현지 밥',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=静安寺+餐厅+上海'},
+      {name:'上好佳 과자 · 기념품 구입 (편의점)',area:'시내',rating:'4.5★',reviews:'500+',tags:['기념품','과자','간편'],menu:'상하이 브랜드 과자·차·핸드크림 — 공항 면세점보다 저렴',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=上好佳+上海+超市'},
+      {name:'푸동 공항 美食 (PVG 출국장)',area:'푸동공항',rating:'4.4★',reviews:'1,000+',tags:['공항','다양','면세구역'],menu:'딘타이펑·하이디라오·스타벅스 등 — 출국 후 면세구역 식사 가능',hours:'06:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=浦东机场+美食+上海'},
     ]
   },
 };
@@ -850,166 +715,128 @@ function renderTransportGuide(dayId) {
 // ──────────────────────────────────────────────
 const SEED_SCHEDULE = {
   d1:{
-    title:'4월 29일(수) · 입국 → 난바 → 도톤보리',
-    sub:'12:55 KIX 도착 · 난카이 라피트 → 숙소 체크인 → 저녁 탐방',
+    title:'4월 29일(수) · 입국 → 시내 이동 → 난징동루 → 와이탄 야경',
+    sub:'09:30 ICN 출발 · 11:50 PVG 도착 · DiDi or 마글레브 → 숙소 → 난징동루 → 와이탄 점등 야경',
     badges:[{cls:'b-transit',txt:'이동일'}],
     items:[
-      {time:'07:00',type:'hotel',title:'인천공항 집결 · WE511 탑승 준비',desc:'캐리어 최종 점검. 여권·항공권·WE511 탑승권 확인. 아이 간식·물 배낭에 챙기기',tip:''},
-      {time:'08:00',type:'food',title:'조식 — 인천공항 간편 조식',desc:'출국 게이트 내 편의점 CU/GS25 or 스타벅스. 기내 탑승 후 기내식 제공 여부 확인',tip:''},
-      {time:'09:55',type:'move',title:'WE511 인천 출발',desc:'인천국제공항 (ICN) 출발. 비행시간 약 2시간. 일본 현지 시각 12:55 KIX 도착',tip:''},
-      {time:'12:55',type:'move',title:'간사이 공항 도착 · 입국 수속',desc:'Visit Japan Web 사전 등록 필수. 제2터미널 도착 시 무료 셔틀 → 제1터미널 (15분)',tip:''},
-      {time:'13:40',type:'move',title:'난카이 라피트 탑승 → 난바역 (34분)',desc:'성인 1,490엔 · 4세 무료. 사전 QR 예약 권장 (클룩/KKday 약 11,000원). 짐 보관칸 있어 편함. 14:15경 난바 도착',tip:'라피트 α(직통 34분) vs β(38분) — 입국 시 α 탑승 권장'},
-      {time:'14:00',type:'food',title:'중식 — 난바 도착 후 첫 점심',desc:'라피트 하차 후 난바역 인근. 가볍게 라멘·우동·오니기리. 이동 피로 회복 우선',tip:''},
-      {time:'14:30',type:'hotel',title:'숙소 체크인 (난바/도톤보리 권역)',desc:'난바역 도보 5~10분 이내 숙소. 짐 정리 + 4세 낮잠 30분 여유 확보',tip:''},
-      {time:'16:00',type:'sight',title:'도톤보리 · 에비스바시 첫 산책',desc:'글리코상 인증샷 · 강변 산책 · 네온사인 구경. 평지 중심 루트 — 유모차 이동 가능',tip:''},
-      {time:'18:00',type:'food',title:'석식 — 도톤보리 저녁 식사',desc:'입국 첫날은 가볍게 — 21:00 이전 귀숙. 다음날 USJ 오픈런 대비',tip:''},
+      {time:'07:00',type:'hotel',title:'인천공항 집결 · 탑승 준비',desc:'캐리어 최종 점검. 여권·항공권·탑승권 확인. 아이 간식·물 배낭에 챙기기',tip:'한국 여권 15일 무비자 입국 — 별도 비자 불필요. 알리페이·위챗 사전 등록 완료 여부 재확인'},
+      {time:'08:00',type:'food',title:'조식 — 인천공항 간편 조식',desc:'출국 게이트 내 편의점 or 스타벅스. 기내식 제공 여부 확인',tip:''},
+      {time:'09:30',type:'move',title:'ICN 출발 → PVG 도착 (비행 약 2시간)',desc:'인천 출발 09:30 → 상하이 푸동 11:50 도착. 한중 시차 없음 (UTC+8)',tip:''},
+      {time:'12:10',type:'move',title:'푸동 공항 입국 수속',desc:'입국 카드 기내에서 작성. 세관 신고서 준비. 짐 찾기 후 이동 수단 선택',tip:''},
+      {time:'12:40',type:'move',title:'공항 → 시내 이동 (DiDi 택시 or 마글레브)',desc:'① DiDi 택시: 공항 전용 승강장 탑승. 시내까지 약 40분·25,000~35,000원. 짐 많으면 더 편함 ② 마글레브: 성인 50위안·7분·430km/h → 룽양루역 2호선 환승. 속도 체험하고 싶으면 마글레브',tip:'첫날은 짐 있으므로 DiDi 추천. 마글레브는 귀국일에 체험 가능'},
+      {time:'13:30',type:'food',title:'중식 — 위신지 (蟹황쏙) 게살 국수',desc:'상하이 특산 게살(蟹粉)국수+샤오롱바오+돼지고기 튀김 세트. 다이마루 백화점 지점. 짭조름하고 고소한 이색적인 맛. 따중디엔핑 쿠폰으로 가성비 UP',tip:'첫 끼 상하이 대표 음식으로 시작 — 입맛 잡기 최적'},
+      {time:'14:00',type:'hotel',title:'숙소 체크인 (징안/인민광장 권역)',desc:'숙소 체크인 + 짐 정리 + 아이 낮잠 30분. 추천: JI호텔 더 스천중 로드점 (난징동루·와이탄 접근성 최고, 동방명주뷰 테라스룸 9~10만원대)',tip:'브로드웨이 맨션 호텔: 100년 역사 5성급 · 와이탄뷰 환상 · 10만원 초반대'},
+      {time:'15:30',type:'shop',title:'난징동루 쇼핑 & 길거리 간식',desc:'상하이의 명동. 미니소(규모 압도적)·탑토이·판마트·아디다스(중국 한정 디자인). 길거리 간식: 현다청 떡 (1851년 창업, 쫀득고소 4위안) · 나비파이 (고소한 버터향, 선물용 최적)',tip:'루이싱 커피(瑞幸) 생코코넛라떼 15위안 · 헤이티(喜茶) 다육포도 음료 — 둘 다 강추'},
+      {time:'17:30',type:'sight',title:'와이탄 (外滩) — 점등 시간 맞춰 방문',desc:'유럽풍 조계 건물 앞 황푸강 산책로. 황소 동상(뉴욕 월스트리트 작가 작품, 만지면 부자!) · 점등 후 황금빛 야경이 진짜 베스트. 동방명주 뷰포인트 확인',tip:'점등 시각은 일몰 기준 변동 — 도착 후 현장 확인. 인파 많으니 아이 손 꼭 잡기'},
+      {time:'19:30',type:'food',title:'석식 — 이치엔 양꼬치 (一千零一夜 제일백화점점)',desc:'현지인 맛집. 부드럽고 고소한 양꼬치 + 부추무침·옥수수·가지·볶음밥·냉면. 직원이 직접 구워줌. 2인 약 6만원. 새벽 2시까지 영업',tip:'⚠️ 웨이팅 극악 — 위챗 미니프로그램으로 매장 3km 이내서 원격 줄서기 필수! 오후 4~5시에 미리 걸어두기'},
     ]
   },
   d2:{
-    title:'4월 30일(목) · USJ 하루 종일',
-    sub:'닌텐도월드 오픈런 + 미니언 파크 · 황금연휴 직전 평일 — 최고의 날',
-    badges:[{cls:'b-usj',txt:'USJ'}],
+    title:'4월 30일(목) · 상하이 디즈니랜드 완전 정복',
+    sub:'DiDi 40분 → 오픈런 → 주토피아·트론·일곱난쟁이 → 불꽃놀이 → 홍이지아 롱샤 야식',
+    badges:[{cls:'b-usj',txt:'디즈니'}],
     items:[
-      {time:'06:30',type:'hotel',title:'소테츠 프레사 인 기상 · USJ 출발 준비',desc:'아이 간식·물·우비 배낭에 챙기기. IC카드·USJ QR 확인. 조기 출발로 오픈런 준비',tip:''},
-      {time:'07:00',type:'food',title:'조식 — 편의점 간편 조식',desc:'아이 간식·물·우비 필수. 편의점 조식 권장. 오니기리·샌드위치·음료 세트',tip:''},
-      {time:'07:30',type:'move',title:'난바 → JR 니시쿠조 환승 → 유니버설시티역 (약 30분)',desc:'IC카드 사용 가능. 오픈 30분 전 도착 목표',tip:''},
-      {time:'08:30',type:'sight',title:'USJ 입장 오픈런',desc:'공식 앱 오픈 시각 사전 확인 필수. 입장 즉시 닌텐도월드 직행',tip:'4/30은 황금연휴 전 평일 — 5/3~5 대비 훨씬 쾌적. 오픈런 효과 극대화'},
-      {time:'09:00',type:'sight',title:'슈퍼 닌텐도월드',desc:'요시 어드벤처 (4세 OK) · 마리오 카트 (107cm 이상. 성인만 탑승 시 차일드 스위치 활용). 확약권 필수',tip:''},
-      {time:'12:00',type:'food',title:'중식 — USJ 내 식사',desc:'닌텐도월드 레스토랑 / 미니언 카페. 11:45 or 13:30 이후 방문이 대기 짧음',tip:''},
-      {time:'13:30',type:'sight',title:'미니언 파크 + 퍼레이드',desc:'미니언 메이헴 (4세 탑승 가능) · 캐릭터 포토 · 퍼레이드 시간 앱 확인',tip:''},
-      {time:'17:30',type:'shop',title:'유니버설 시티워크 기념품 + 타코야키',desc:'4층 TAKOPA — 오사카 타코야키 6개 점포. 마리오 캡·미니언 굿즈 구매',tip:''},
-      {time:'19:30',type:'hotel',title:'숙소 복귀',desc:'역방향 동일 루트. 아이 입욕 후 21:00 취침',tip:''},
-      {time:'20:00',type:'food',title:'석식 — 난바 귀환 후 저녁',desc:'USJ 복귀 후 숙소 인근 저녁. 피곤하면 편의점 or 인근 라멘 간단히',tip:''},
+      {time:'07:00',type:'hotel',title:'기상 · 디즈니 출발 준비',desc:'아이 간식·물·우비 배낭에 챙기기. 디즈니 앱·QR 확인. 자외선 차단제 필수',tip:'노동절 연휴 (5/1~5) 시작 직전 평일 — 4/30은 비교적 쾌적. 이 날 못 가면 다시 없음'},
+      {time:'07:30',type:'food',title:'조식 — 지엔빙 (煎饼) or 편의점',desc:'중국 국민 아침 지엔빙(전병): 얇은 전병에 계란·유타오·소스. 든든하고 간편. 포장마차 or 편의점 대안',tip:'지엔빙 1개 8~12위안. 이동 중에 먹어도 OK'},
+      {time:'08:00',type:'move',title:'숙소 → DiDi 택시 → 디즈니 (약 40분·2만원)',desc:'DiDi 앱으로 호출. 공항 외곽이라 시내에서 약 40분·2만원 내외. 지하철 11호선도 가능 (인민광장→디즈니역 60분)',tip:'DiDi 추천 — 아이 있어서 짐 편하게. 기사에게 "迪士尼乐园" 보여주면 됨'},
+      {time:'09:00',type:'sight',title:'상하이 디즈니랜드 오픈런 입장',desc:'공식 앱으로 오픈 시각 사전 확인. DPA 패스: 꼭 타고 싶은 어트랙션 단품 구매 권장 (통합권은 이미 구경·쇼핑에도 시간 부족)',tip:'입장 즉시 주토피아로 직행 — 오전이 대기 가장 짧음'},
+      {time:'09:15',type:'sight',title:'주토피아 (Zootopia) — 전세계 최초 테마존',desc:'영화 속에 들어온 듯한 생동감·포토존·디테일. 두 번 방문 추천할 정도의 퀄리티. 아이 눈 뒤집힘 주의',tip:'오전 오픈런 직후 주토피아 입장 대기가 가장 짧음 — 여기서 시간 넉넉하게'},
+      {time:'11:00',type:'sight',title:'트론 라이트사이클 파워 런 · 일곱 난쟁이 광산열차',desc:'트론: 시속 100km 오토바이 형태 — 밤에 타면 우주 온 느낌. 일곱 난쟁이: 생각보다 속도감 있는 롤러코스터 (기대 이상)',tip:'트론은 오전 DPA 예약 or 오픈런 직후 줄 서기. 줄 길어지면 야간으로 넘겨도 야경 효과 UP'},
+      {time:'12:30',type:'food',title:'중식 — 원더랜드 레스토랑',desc:'가든 오브 더 12 프렌즈 or 토미타운 테이블. 앱 예약 권장. 11:45 or 13:30 방문이 대기 짧음',tip:'외부 음료 반입 가능 — 루이싱 커피 사 들어오면 돈 아낌'},
+      {time:'14:00',type:'sight',title:'판타지랜드 · 토이스토리 랜드',desc:'슬링키 독 대쉬 (97cm 이상 탑승) · RC 레이서 · 미키 필하매직. 아이 최적 구역',tip:''},
+      {time:'16:00',type:'sight',title:'트레저 코브 해적 지구 + 퍼레이드',desc:'미키·미니 퍼레이드 시간 앱 확인. 불꽃놀이: 명당 자리보다 인기 어트랙션 하나 더 타는 게 낫다는 현지 팁',tip:'불꽃놀이는 어디서나 보임 — 미리 자리 잡느라 30분 소비 말 것'},
+      {time:'18:30',type:'shop',title:'디즈니타운 기념품 쇼핑',desc:'공원 밖 디즈니타운. 폐장 후에도 입장 가능. 상하이 한정 굿즈·주토피아 캐릭터 굿즈',tip:''},
+      {time:'20:00',type:'move',title:'디즈니 → 숙소 복귀 (DiDi)',desc:'귀환 DiDi 꿀팁: 정식 승강장 호객행위 혼잡 — 앱으로 골목 조용한 곳에서 호출 권장',tip:''},
+      {time:'21:00',type:'food',title:'야식 — 홍이지아 (弄里家) 인민광장점 롱샤',desc:'민물 가재(롱샤) 전문 맛집. 마늘 롱샤 시그니처 — 직원이 직접 발라줌. 마늘소스+면사리 비빔 = "차이나 알리오올리오". 새벽 2시까지 영업',tip:'시원한 칭다오 맥주 한 병 필수. 이날 피로가 확 풀림 😄'},
     ]
   },
   d3:{
-    title:'5월 1일(금) · 신사이바시 쇼핑 → 카메노이 호텔 아리마 1박',
-    sub:'신사이바시스지 → 돈키호테 → 우메다 버스 → 아리마 온천 · 가이세키',
-    badges:[{cls:'b-shop',txt:'쇼핑'},{cls:'b-ryokan',txt:'료칸'}],
+    title:'5월 1일(금) · 프렌치 컨세션 + 신천지 + 임시정부청사',
+    sub:'황금연휴 D1 · 사계민복 베이징덕 → 우캉루 → 안푸루 → 임시정부청사 → 신천지 → 대오춘',
+    badges:[{cls:'b-shop',txt:'쇼핑'},{cls:'b-sight',txt:'문화'}],
     items:[
-      {time:'08:30',type:'hotel',title:'소테츠 프레사 인 기상 · 아리마 이동 준비',desc:'료칸 이동일. 1박 짐을 미리 정리. 귀중품·세면도구 별도 챙기기. 체크아웃은 당일',tip:''},
-      {time:'09:00',type:'food',title:'조식 — 신사이바시 이동 전 카페',desc:'Komeda\'s Coffee or Eggs\'n Things 신사이바시점. 쇼핑 전 여유 있게',tip:''},
-      {time:'10:00',type:'shop',title:'신사이바시스지 상점가',desc:'난바역 도보 5분. 600m 아케이드. 유니클로·GAP·무인양품·로프트·키디랜드',tip:''},
-      {time:'12:00',type:'food',title:'중식 — 신사이바시 인근',desc:'다이마루 백화점 지하 B2 or 난바 파크스 레스토랑가',tip:''},
-      {time:'13:30',type:'shop',title:'돈키호테 난바 도톤보리점',desc:'24시간. 과자·화장품·약·완구. 5,000엔 이상 세금환급 8%. 여권 필수',tip:'계산대 상시 혼잡 — 14:00 전 마무리 목표. 면세 영수증 따로 보관'},
-      {time:'14:30',type:'move',title:'난바 → 우메다 한큐 버스터미널 (미도스지선 5분)',desc:'신사이바시역 승차 → 우메다역 하차. 지상 출구로 나와 한큐 버스터미널 방향 이동',tip:''},
-      {time:'15:00',type:'move',title:'한큐 버스 탑승 → 아리마 온천 직행 (약 65분)',desc:'우메다 한큐 버스터미널 1층 3번 승강장. 성인 1,500엔 · 4세 무료',tip:'출발 전 시간표 확인 필수 — 하루 수 회 운행. 버스 내 짐칸 있음'},
-      {time:'16:15',type:'hotel',title:'카메노이 호텔 아리마 체크인 · 유카타 착용',desc:'다다미방 체험. 가족탕 예약 시간 확인 후 입욕. 아리마 긴센(金泉)·긴센(銀泉) 탐방',tip:''},
-      {time:'18:00',type:'food',title:'료칸 가이세키 저녁 식사',desc:'다다미방 개별 서빙 or 식당. 아이 어린이 식사 플랜 별도 확인. 계절 재료 코스 요리',tip:''},
-      {time:'20:00',type:'hotel',title:'온천 재입욕 · 취침',desc:'가족 모두 리프레시. 다음날 가이유칸 및 난바 이동 에너지 충전',tip:''},
+      {time:'08:30',type:'hotel',title:'기상 · 프렌치 컨세션 이른 출발',desc:'황금연휴 5/1 시작. 우캉루 인파 폭발 전 오전 일찍 도착이 핵심',tip:''},
+      {time:'09:00',type:'food',title:'조식 — Manner Coffee (曼纳咖啡) 씨솔트 치즈 라떼',desc:'상하이 로컬 스페셜티 커피 체인. 아메리카노 15위안. 씨솔트 치즈 라떼 강추. 스타벅스 절반 가격에 퀄리티 높음',tip:''},
+      {time:'10:00',type:'sight',title:'武康路 (우캉루) + 우캉 맨션 인증샷',desc:'플라타너스 가로수길 + 유럽풍 건축. 우캉 맨션(武康大楼): 1924년 건축 배 모양 아파트·영화 촬영지. 횡단보도 건너편 사거리에서 건물 전체 나오게 찍기',tip:'인생샷 원하면 오전 일찍 방문 필수 — 황금연휴 오전 10시만 돼도 인파 급증'},
+      {time:'10:45',type:'shop',title:'안푸루 (安福路) 힙 브랜드 거리',desc:'우캉루에서 연결. 르라보·하메이·섭듀드·멜빌 등 힙합 브랜드 집결. 안푸루 카페: 고민형 인형이 음료와 함께 나옴 (떼서 가방에 달기)',tip:''},
+      {time:'11:30',type:'sight',title:'대한민국 임시정부 청사 (大韩民国临时政府旧址)',desc:'김구 선생 집무실과 독립운동 유물·기록. 신천지 인근. 무료 관람. 가슴 뭉클한 역사 체험 — 아이에게도 큰 교육',tip:'상하이 여행 중 꼭 방문해야 할 곳. 관람 약 30~40분'},
+      {time:'12:30',type:'food',title:'아점 — 사계민복 (四季民福) 베이징덕',desc:'미슐랭 선정 베이징덕 맛집. 눈앞에서 오리 썰어주는 퍼포먼스. 껍질 바삭·속살 촉촉. 한국과 차원 다른 맛. 2인 반 마리면 충분',tip:'중국은 외부 음료 반입 가능 — 루이싱/헤이티 사 들어오면 좋음. 예약 권장'},
+      {time:'14:30',type:'sight',title:'신천지 (新天地) + 젠틀몬스터 플래그십',desc:'1930년대 스쿠먼 건축 보존지구. 젠틀몬스터 상하이 플래그십: 인테리어가 예술 수준 (무조건 방문). 온러닝·룰루레몬·스투시 등 브랜드 가득',tip:''},
+      {time:'15:30',type:'sight',title:'田子坊 (티엔쯔팡) 골목 탐방',desc:'옛 태가 거리 개조 예술가 거리. 토끼 사탕·아이러브 상하이 티셔츠·수제 기념품. 아이 아이스크림 간식',tip:'규모는 소소함 — 신천지+젠틀몬스터에서 시간 더 쓰고 싶으면 생략 가능'},
+      {time:'16:30',type:'food',title:'디저트 — 폴록스 (Foc) 미슐랭 프렌치 토스트',desc:'겉은 설탕 코팅으로 바삭, 속은 묵직하고 고소. 미슐랭 선정. 신천지 인근',tip:''},
+      {time:'18:30',type:'food',title:'석식 — 大壶春 (대오춘) 상하이 생젠 군만두',desc:'밑은 바삭하게 굽고 위는 찐 상하이식 생젠 군만두. 육즙 일품. 완탕도 깔끔하고 맛있음. 예원 인근',tip:'야식 꿀팁: 메이투안(美团) 앱으로 배달 주문 가능 — 숙소에서 야식 편하게'},
     ]
   },
   d4:{
-    title:'5월 2일(토) · 아리마 체크아웃 → 가이유칸 수족관',
-    sub:'카메노이 호텔 아리마 체크아웃 → 한큐 버스 → 난바 → 가이유칸 → 귀숙',
-    badges:[{cls:'b-osaka',txt:'오사카'}],
+    title:'5월 2일(토) · 예원 · 북부이탄 · 루자쭈이 · 정원 마사지',
+    sub:'황금연휴 D2 · 예원 → 북부이탄 공원(실버에그) → 점도덕 딤섬 → 루자쭈이 육교 → 페이다추 → 마사지',
+    badges:[{cls:'b-sight',txt:'관광'}],
     items:[
-      {time:'07:00',type:'hotel',title:'카메노이 호텔 아리마 기상',desc:'료칸 마지막 아침. 노천탕 아침 입욕 or 객실 준비. 체크아웃 전 짐 정리 완료',tip:''},
-      {time:'07:30',type:'food',title:'조식 — 료칸 가이세키 조식',desc:'카메노이 호텔 아리마 조식 포함 플랜 확인. 다다미방 or 식당에서 일본식 조식. 아이 어린이 식사 플랜 확인',tip:''},
-      {time:'08:30',type:'move',title:'카메노이 호텔 아리마 체크아웃 · 난바 복귀',desc:'한큐 버스 우메다행 → 미도스지선 난바역. 짐은 숙소 프런트에 보관 or 수하물 배송',tip:'버스 출발 시간 전날 재확인 — 혼잡 시 30분 일찍 출발'},
-      {time:'10:00',type:'sight',title:'가이유칸 수족관 입장',desc:'난바역 → 주오선(혼마치 환승) → 오사카코역 도보 5분. 성인 2,700엔 · 4세 600엔. 고래상어 수조 · 해달 · 펭귄존. 2~2.5시간 소요',tip:'온라인 사전 구매 권장 — 줄 없이 바로 입장'},
-      {time:'12:30',type:'food',title:'중식 — 덴포잔 마켓플레이스',desc:'수족관 옆 나니와 쿠이신보요코초. 오사카 명물 한자리에',tip:''},
-      {time:'14:30',type:'move',title:'가이유칸 → 난바 복귀 (주오선)',desc:'오사카코 → 혼마치 → 미도스지선 난바역. 약 20분 · 280엔',tip:''},
-      {time:'15:00',type:'hotel',title:'숙소 짐 찾기 · 휴식',desc:'아리마 온천 피로 풀기. 아이 낮잠 시간 확보',tip:''},
-      {time:'18:30',type:'food',title:'석식 — 도톤보리',desc:'도톤보리 야경 + 저녁 식사. 아이가 좋아하는 네온사인 거리',tip:''},
+      {time:'08:00',type:'hotel',title:'기상 · 예원 이른 출발 준비',desc:'황금연휴 5/2. 예원은 10:00 오픈 — 오전 9:30 현장 대기 권장',tip:''},
+      {time:'08:30',type:'food',title:'조식 — 南翔馒头店 1층 포장 카운터',desc:'예원 본점 1층 포장 카운터는 빠름. 기본 샤오롱바오 강추 (게살 버전은 호불호 갈림). 완탕도 맛있음',tip:'빨대로 국물 먼저 빨아먹는 법 숙지 — 한입 베어물면 화상 주의'},
+      {time:'10:00',type:'sight',title:'예원 (豫园) 명청 정원 + 성황묘 간식거리',desc:'입장 40위안. 1577년 명나라 정원. 가산·연못·정자. 예원 외곽 성황묘 길거리: 탕후루·훈툰·찹쌀 디저트 — 아이 탕후루 필수',tip:'황금연휴 극혼잡 — 온라인 사전 예약 권장. 소지품 주의'},
+      {time:'11:30',type:'sight',title:'북부이탄 공원 (北外滩) + 실버에그 조형물',desc:'와이탄보다 여유롭고 동방명주 뷰가 뛰어남. 거대한 실버에그 조형물: 엘리베이터 문이 열리면 동방명주가 액자처럼 — 미래 도시 느낌. 낮+밤 모두 아름다움',tip:''},
+      {time:'12:30',type:'food',title:'중식 — 点都德 (점도덕) 홍미 창펀',desc:'홍미 창펀(붉은쌀 쌀국수 롤) 전문 딤섬 맛집. 쫄깃한 붉은 쌀 반죽+바삭한 튀김+새우. 하가우도 맛있음. 어떤 메뉴 시켜도 실패 없음',tip:'매너 커피 북부이탄점 씨솔트 치즈 라떼를 사서 디저트로'},
+      {time:'14:00',type:'sight',title:'루자쭈이 (陆家嘴) 6번 출구 육교 포토스팟',desc:'루지아주이역 6번 출구로 나오면 나오는 육교. 동방명주·진마오타워·상하이타워 3대 빌딩을 한 컷에 담을 수 있는 최고의 포토스팟',tip:''},
+      {time:'15:00',type:'shop',title:'正大广场 (정대광장) 쇼핑 + 홀리랜드 수건 케이크',desc:'루자쭈이 대형 쇼핑몰. 토끼 사탕·요인초 핸드크림 등 기념품 원스톱. 홀리랜드(好利来): 수건 케이크 원조 · 패키징 귀여워서 선물 최적 · 보냉 포장 가능 → 야식으로',tip:''},
+      {time:'16:30',type:'sight',title:'황푸강 유람선 (선택) or 와이탄 산책',desc:'40분 코스 약 100위안. 강 위에서 와이탄+루자쭈이 스카이라인 동시 감상. 아이 배 타는 재미',tip:''},
+      {time:'19:00',type:'food',title:'석식 — 肥大厨 (페이다추) 고추 고기 볶음',desc:'국물 없는 빠삭한 불고기 느낌. 매콤한 과리 고추+고기가 짭조름한 밥도둑. 밥솥 찰밥+얼굴만 한 레몬티가 별미. 한식이 당길 때 딱',tip:''},
+      {time:'21:00',type:'hotel',title:'정원 마사지 (精源按摩)',desc:'한국인에게 유명한 가성비 마사지 샵. 시내 여러 지점. 상하이는 마사지 퀄리티 좋고 가격 저렴 — 4일차 피로 완벽 해소',tip:'예약 or 현장 방문. 발 마사지 60분 약 100~150위안'},
     ]
   },
   d5:{
-    title:'5월 3일(일) · 텐노지 동물원 · 신세카이 · 스파월드',
-    sub:'황금연휴 시작 · 텐노지~신세카이 권역 집중 — 이동 최소화',
-    badges:[{cls:'b-shinsekai',txt:'신세카이'},{cls:'b-new',txt:'신규 코스'}],
+    title:'5월 3일(일) · 귀국 — 스벅 로스터리 → 마트 쇼핑 → 마글레브 → PVG',
+    sub:'오전: 스타벅스 리저브 로스터리 + 루이비통 하우스 → 마트 쇼핑 → 마글레브 → 13:30 출발',
+    badges:[{cls:'b-transit',txt:'귀국일'}],
     items:[
-      {time:'08:00',type:'hotel',title:'소테츠 프레사 인 기상 · 텐노지 출발 준비',desc:'황금연휴 5/3 — 텐노지 동물원 개장(10:00) 맞춰 일찍 출발. 물·선크림 필수',tip:''},
-      {time:'08:30',type:'food',title:'조식 — 호텔 인근 카페',desc:'텐노지 이동 전 가볍게. Komeda\'s Coffee or 편의점 모닝 세트. 아이 도시락 준비 가능',tip:''},
-      {time:'10:00',type:'sight',title:'텐노지 동물원',desc:'난바 → 미도스지선 → 도부츠엔마에역 (약 7분). 성인 500엔 · 4세 무료. 기린·사자·코끼리 등 200종',tip:'황금연휴 5/3 — 개장 직후(10:00) 입장 권장. 11시 이후 급격히 혼잡'},
-      {time:'12:00',type:'food',title:'중식 — 신세카이 쿠시카츠',desc:'텐노지 남문 → 도보 10분 → 신세카이. 다루마 본점 / 쟌쟌요코초',tip:''},
-      {time:'13:30',type:'sight',title:'신세카이 시장 거리 탐방',desc:'빌리켄 동상 · 레트로 상점가 · 쟌쟌요코초 골목. 아이 솜사탕·타코야키 간식',tip:''},
-      {time:'14:30',type:'sight',title:'스파월드',desc:'신세카이 도보 5분. 세계 각국 테마 온천. 성인 1,000엔 (16:00 이후 야간권 더 저렴)',tip:'수영복 현장 렌탈 가능. 스파가든 4세 이용 가능 여부 사전 전화 확인'},
-      {time:'17:00',type:'sight',title:'츠텐카쿠 타워 (선택)',desc:'성인 1,000엔. 높이 103m. 신세카이 상징. 체력 여유 있으면 추가',tip:''},
-      {time:'18:30',type:'food',title:'석식 — 텐노지 인근',desc:'황금연휴 도톤보리 극혼잡 예상 — 텐노지 미오 쇼핑센터 레스토랑가 권장',tip:''},
-    ]
-  },
-  d6:{
-    title:'5월 4일(월) · 오사카성 · 덴포잔',
-    sub:'오사카성 공원 산책 → 덴포잔 대관람차 → 저녁 도톤보리',
-    badges:[{cls:'b-osaka',txt:'오사카성'}],
-    items:[
-      {time:'08:30',type:'hotel',title:'소테츠 프레사 인 기상 · 오사카성 출발 준비',desc:'황금연휴 5/4 — 오사카성 공원 일찍 출발. 물·모자·선크림 필수 챙기기',tip:''},
-      {time:'09:00',type:'food',title:'조식 — 호텔 인근 카페',desc:'오사카성 이동 전 가볍게. Komeda\'s Coffee or Eggs\'n Things. 아이와 느긋하게',tip:''},
-      {time:'09:30',type:'sight',title:'오사카성 공원 · 천수각 입장',desc:'JR 오사카죠코엔역 도보 5분. 천수각 입장 600엔. 공원은 무료. 해자·석벽 산책 아이 좋아함',tip:'황금연휴 황금 날씨 예상 — 물·모자 필수'},
-      {time:'11:30',type:'food',title:'중식 — 오사카성 공원 인근',desc:'NHK홀 앞 푸드트럭 or 오사카성 공원 내 카페',tip:''},
-      {time:'13:00',type:'move',title:'오사카성 → 덴포잔 이동',desc:'주오선 약 20분. 오사카코역 하차',tip:''},
-      {time:'13:30',type:'sight',title:'덴포잔 대관람차',desc:'탑승 800엔 (4세 400엔). 높이 112.5m. 맑은 날 아카시 대교까지. 투명 캡슐칸 추가 요금',tip:''},
-      {time:'14:30',type:'sight',title:'레고랜드 디스커버리 센터 오사카 (선택)',desc:'덴포잔 내 위치. 5세 이상 추천이나 4세도 입장 가능. 성인 2,400엔 · 4세 1,800엔',tip:''},
-      {time:'16:30',type:'move',title:'숙소 복귀 · 휴식',desc:'',tip:''},
-      {time:'18:30',type:'food',title:'석식 — 도톤보리 탐방',desc:'아이가 가장 좋아하는 거리. 네온사인 야경 + 저녁 식사',tip:''},
-    ]
-  },
-  d7:{
-    title:'5월 5일(화) · 나라 당일치기 + 우메다',
-    sub:'어린이날 — 나라 사슴공원 → 도다이지 → 우메다 귀환',
-    badges:[{cls:'b-nara',txt:'나라'}],
-    items:[
-      {time:'07:30',type:'hotel',title:'소테츠 프레사 인 기상 · 나라 출발 준비',desc:'어린이날 나라 당일치기. 킨테츠 나라역까지 약 39분 — 08:30 출발 목표. 사슴 센베이 현금 준비',tip:''},
-      {time:'08:00',type:'food',title:'조식 — 편의점 간편 조식',desc:'나라 이동 전 가볍게. 오니기리·샌드위치·음료. 아이 간식 배낭에 여분 챙기기',tip:''},
-      {time:'08:30',type:'move',title:'난바 → 킨테츠 나라역 (약 39분)',desc:'킨테츠 특급 (추가 520엔) or 급행 무료. 나라까지 약 39~45분',tip:'어린이날 혼잡 — 킨테츠 특급 사전 예약 권장'},
-      {time:'09:30',type:'sight',title:'나라 사슴공원 · 사슴 먹이 체험',desc:'사슴 센베이 200엔. 사슴 약 1,000마리 자유 방목. 4세 아이 인생 경험. 뿔 있는 수컷 주의',tip:'가방 열어놓으면 사슴이 뺏어감! 음식은 가방 안에'},
-      {time:'10:30',type:'sight',title:'도다이지 대불전 입장',desc:'입장 600엔. 세계 최대 목조 건축. 높이 15m 청동 대불. 아이와 함께 기둥 구멍 통과 체험',tip:''},
-      {time:'12:00',type:'food',title:'중식 — 나라 상점가',desc:'카키노하 스시 or 나라 명물 솥밥 (가마메시)',tip:''},
-      {time:'14:00',type:'sight',title:'나라마치 전통 거리 산책',desc:'에도시대 상인 주택가. 기념품점 · 카페 · 전통 공예품',tip:''},
-      {time:'15:30',type:'move',title:'나라 → 우메다 이동',desc:'킨테츠 나라 → 오사카우메다역 직통 약 40분',tip:''},
-      {time:'16:30',type:'shop',title:'우메다 루쿠아 · HEP FIVE',desc:'HEP FIVE 관람차 탑승 (성인 600엔 · 어린이 300엔). 아이 장난감 최종 구매',tip:''},
-      {time:'18:30',type:'food',title:'석식 — 우메다 권역',desc:'아래 맛집 참고. 나라 당일치기 후 우메다서 마무리',tip:''},
-    ]
-  },
-  d8:{
-    title:'5월 6일(수) · 귀국 — 린쿠 아울렛 경유',
-    sub:'폴로 랄프로렌 팩토리 스토어 → 간사이 공항 15:05 출발 WE512',
-    badges:[{cls:'b-transit',txt:'귀국일'},{cls:'b-shop',txt:'아울렛'}],
-    items:[
-      {time:'07:00',type:'hotel',title:'기상 · 체크아웃 준비',desc:'캐리어 최종 확인. 전날 밤 완전히 싸두기. 여권·항공권·WE512 체크',tip:''},
-      {time:'08:00',type:'food',title:'조식 — 편의점 간편식',desc:'onigiri·샌드위치. 아이 음료·간식 챙기기',tip:''},
-      {time:'09:00',type:'move',title:'난바역 → 난카이 라피트β 탑승',desc:'귀국편 라피트β (린쿠타운 정차편) 사전 예약 필수. 난카이 난바역 9번 승강장',tip:'라피트α는 린쿠타운 통과 — 반드시 β 탑승. 예약 시 확인'},
-      {time:'09:34',type:'shop',title:'린쿠타운역 하차 → 린쿠 프리미엄 아울렛',desc:'캐리어는 역 코인로커 or 아울렛 내 로커 보관 (500~600엔). 아울렛 오픈 10:00',tip:''},
-      {time:'10:00',type:'shop',title:'폴로 랄프로렌 팩토리 스토어 쇼핑',desc:'영업 10:00~20:00. 폴로 외 GAP · 바나나리퍼블릭 · G-STAR 동일 구역. 세금환급 카운터 확인',tip:'출발 3시간 전 공항 도착 = 12:05까지. 아울렛 → 공항 라피트 5분. 11:30 출발이 안전'},
-      {time:'11:30',type:'move',title:'린쿠타운역 → 간사이 공항역 (약 5분)',desc:'',tip:''},
-      {time:'11:45',type:'move',title:'간사이 공항 도착 · 탑승 수속',desc:'WE512 = 웨이브항공 (LCC) → 제2터미널 가능성 있음. 사전 확인 필수',tip:'15:05 출발 → 3시간 전 12:05 공항 도착 목표'},
-      {time:'12:30',type:'food',title:'중식 — 간사이 공항 레스토랑',desc:'탑승 수속 완료 후 면세구역 내 레스토랑. 마지막 일본 음식. 시간 여유 반드시 확인',tip:'WE512 출발 15:05 — 탑승구 이동 시간 고려 13:30 이전 식사 완료'},
-      {time:'15:05',type:'move',title:'WE512 탑승 → 인천 출발',desc:'17:05 ICN 도착. 7박 8일 오사카 가족여행 완료 🎉',tip:''},
+      {time:'07:30',type:'hotel',title:'기상 · 체크아웃 준비',desc:'캐리어 최종 확인. 전날 밤 완전히 싸두기. 여권·항공권 재확인',tip:''},
+      {time:'08:00',type:'food',title:'조식 — 지엔빙 or Manner Coffee',desc:'마지막 아침. 거리 지엔빙 포장마차 or Manner Coffee. 체크아웃 전 가볍게',tip:''},
+      {time:'08:30',type:'hotel',title:'숙소 체크아웃',desc:'프런트 체크아웃 완료. 큰 캐리어는 호텔 보관 요청 후 가볍게 이동',tip:''},
+      {time:'09:00',type:'sight',title:'스타벅스 리저브 로스터리 (烘焙工坊)',desc:'세계 최대 규모 스타벅스. 거대한 로스팅 통과 커피 파이프가 천장까지 — 커피 공장 같은 이색 체험. 상하이 한정 굿즈 판매',tip:'외관+내부 구경만 해도 20분. 굿즈 구매하고 싶으면 30분 여유'},
+      {time:'09:30',type:'sight',title:'루이비통 상하이 하우스 (선택)',desc:'거대한 배 모양 LV 건물 — 외관 인증샷 필수. 내부 전시 팝업도 있음. 사전 예약 권장',tip:''},
+      {time:'10:00',type:'shop',title:'마트 쇼핑 — 올래(Ole) or 허생(盒马) or 렌화(联华)',desc:'시내 접근성 좋은 슈퍼마켓. 상하이 과자·차·소스·라면·조미료 구매. 캐리어 꽉 채워 가기',tip:'따룬파(大润发): 더 저렴하지만 시내에서 약간 멀음. 시간 없으면 올래/허생으로'},
+      {time:'10:45',type:'move',title:'숙소 → 지하철 2호선 → 룽양루 환승',desc:'2호선 룽양루역 하차. 마글레브 탑승 준비. 환승 포함 약 40분',tip:''},
+      {time:'11:10',type:'move',title:'마글레브 탑승 → 푸동 공항 (7분 · 430km/h)',desc:'성인 50위안. 귀국할 때 마글레브 체험! 430km/h 속도 아이에게 설명해주기',tip:''},
+      {time:'11:30',type:'hotel',title:'푸동 공항 체크인 · 수속',desc:'탑승 수속 + 보안검색 + 출국 수속 완료. 공항 면세점 마지막 쇼핑',tip:''},
+      {time:'12:30',type:'food',title:'중식 — 공항 레스토랑',desc:'면세 구역 내 마지막 중국 음식. 4일간 가장 맛있었던 메뉴 재방문 or 아쉬웠던 메뉴 도전',tip:''},
+      {time:'13:30',type:'move',title:'출발 → ICN 도착 (비행 약 2시간)',desc:'13:30 PVG 출발 → 16:50 ICN 도착. 4박 5일 상하이 가족여행 완료 🎉',tip:''},
     ]
   }
 };
 
 const SEED_RESTAURANTS = [
-  {id:'r1',name:'Shanghai cuisine RONTAN',emoji:'🥟',day:'D1',area:'도톤보리/난바',tags:['샤오롱바오','예약 가능','현장 웨이팅'],menu:'육즙이 물풍선처럼 터지는 그릴 샤오롱바오 (생젠만터우)',desc:'상하이식 구운 소롱포 전문. 카운터 19석. 돼지고기+젤라틴 육즙이 핵심. 국물 먼저 빨아먹고 먹는 법 있음.',hours:'11:30~22:00 · 수요일 휴무',mapUrl:'https://www.google.com/maps/search/?q=Shanghai+cuisine+RONTAN+%E5%A4%A7%E9%98%AA',review:'겉은 바삭 안은 육즙 폭발. 한입 베어물면 뜨거운 국물이 팡 터져나와 화상주의 😂',reel:true,featured:true,visited:false},
-  {id:'r2',name:'후쿠타로 (福太郎) 난바점',emoji:'🍜',day:'D1',area:'도톤보리/난바',tags:['오코노미야키','웨이팅 있음'],menu:'오코노미야키 · 야키소바 · 네기야키',desc:'도톤보리 골목의 오코노미야키 명점. 아이 친화적. 한국어 메뉴 있음. 넓은 철판 테이블석.',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%A6%8F%E5%A4%AA%E9%83%8E+%E9%9B%A3%E6%B3%A2',review:'첫날 저녁으로 딱! 철판 앞에 앉아서 직접 보며 먹는 오코노미야키 맛이 진짜였어요.',reel:false,featured:false,visited:false},
-  {id:'r3',name:'Amato Maeda Namba-Walk',emoji:'🎋',day:'D1',area:'도톤보리/난바',tags:['디저트','줄 없음'],menu:'단짠 쫀득한 미타라시 당고',desc:'난바워크 지하상가. 쫄깃한 당고에 달콤 짭짤한 미타라시 소스. 아이 간식으로 최적.',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=Amato+Maeda+%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF',review:'',reel:true,featured:false,visited:false},
-  {id:'r4',name:'OSAKA Kiichi',emoji:'🍖',day:'D2',area:'도톤보리/난바',tags:['와규 야키니쿠','예약 권장','인기 맛집'],menu:'아코디언처럼 늘어나는 A5 와규 스테이크',desc:'도톤보리 강변 인근. A5 쿠로게 와규 전문. 얇게 썰어 철판 위에서 구우면 늘어나는 비주얼로 SNS 화제.',hours:'17:00~23:30',mapUrl:'https://www.google.com/maps/search/?q=OSAKA+Kiichi+%E9%81%93%E9%A0%93%E5%A0%80',review:'와규가 진짜 늘어납니다 😱 철판에 올려놓으면 아코디언처럼 쭉 늘어나는 게 신기해서 영상 계속 찍었어요.',reel:true,featured:true,visited:false},
-  {id:'r5',name:'카모진 (鴨人)',emoji:'🦆',day:'D2',area:'도톤보리/난바',tags:['야키토리','웨이팅'],menu:'오리 야키토리 · 오리 껍질 꼬치 강추',desc:'오리 전문 야키토리. 오리 껍질 꼬치가 시그니처 — 기름지지 않고 바삭.',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=%E9%B4%A8%E4%BA%BA+%E5%A4%A7%E9%98%AA',review:'오리 껍질 꼬치가 진짜 생각지도 못한 맛. 느끼하지 않고 고소하게 바삭 구워져서 하이볼이랑 무한 조합.',reel:true,featured:false,visited:false},
-  {id:'r6',name:'이치란 라멘 도톤보리점',emoji:'🍜',day:'D2',area:'도톤보리/난바',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 개인 칸막이석',desc:'USJ 지친 날 — 빠르고 확실한 선택. 칸막이 1인석 구조라 아이 동반도 편함. 24시간 영업.',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=%E4%B8%80%E8%98%AD+%E9%81%93%E9%A0%93%E5%A0%80',review:'',reel:false,featured:false,visited:false},
-  {id:'r7',name:'Gion Tsujiri · Daimaru Shinsaibashi',emoji:'🍵',day:'D3',area:'신사이바시',tags:['말차 파르페','웨이팅'],menu:'말차 러버를 위한 궁극의 파르페 — 오사카 지점 한정 메뉴',desc:'교토 기온 츠지리의 오사카 지점. 다이마루 신사이바시 내 위치. 진한 말차 소프트아이스크림 + 말차 젤리 + 팥 + 양갱 층층이.',hours:'10:00~20:00 (백화점 영업시간 따름)',mapUrl:'https://www.google.com/maps/search/?q=%E7%A5%87%E5%9C%92%E8%BE%BB%E5%88%A9+%E5%A4%A7%E4%B8%B8%E5%BF%83%E6%96%8B%E6%A9%8B',review:'오사카 한정 메뉴가 진짜 레전드. 말차 쓴맛이 확실하게 살아있어서 달달한 팥이랑 밸런스가 완벽해요.',reel:true,featured:true,visited:false},
-  {id:'r8',name:'居酒屋 月盗',emoji:'🥚',day:'D3',area:'신사이바시',tags:['이자카야','예약 권장'],menu:'점심 한정 1,000엔 계란말이 정식 — 주황색 노른자가 흘러나오는 비주얼',desc:'점심 한정 타마고야키 정식이 SNS 폭발. 황금빛 노른자가 반숙으로 흘러나오는 비주얼이 핵심.',hours:'점심: 11:30~14:00 · 저녁: 17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%B1%85%E9%85%92%E5%B1%8B+%E6%9C%88%E7%9B%97+%E5%BF%83%E6%96%8B%E6%A9%8B',review:'1000엔에 이 비주얼이 말이 돼? 계란말이 잘라보면 노른자가 주르르륵...',reel:true,featured:true,visited:false},
-  {id:'r9',name:'아마노자쿠 (甘の雫)',emoji:'🍦',day:'D3',area:'신사이바시',tags:['크레페 디저트','SNS 핫플'],menu:'쫀득한 크레페 반죽에 커스터드 브륄레를 올린 반칙 맛',desc:'얇고 쫀득한 크레페 위에 토치로 구운 커스터드 크림. 캐러멜화된 겉면의 바삭함 + 크림의 부드러움.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%94%98%E3%81%AE%E9%9B%AB+%E5%BF%83%E6%96%8B%E6%A9%8B',review:'크레페라고 쉽게 봤다가 한입 먹고 눈이 번쩍 😳 브륄레 부분이 바삭하고 안은 커스터드가 진해요.',reel:true,featured:false,visited:false},
-  {id:'r10',name:'쿠시카츠 다루마 신세카이 본점',emoji:'🍢',day:'D5',area:'신세카이/텐노지',tags:['쿠시카츠','웨이팅'],menu:'오사카 명물 쿠시카츠 꼬치튀김 · 소스 더블딥 금지!',desc:'1929년 창업 신세카이 본점. 쿠시카츠 1꼬치 100~200엔대. 소고기·새우·아스파라거스·치즈 등 30종 이상.',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=%E4%B8%B2%E3%82%AB%E3%83%84%E3%81%A0%E3%82%8B%E3%81%BE+%E6%96%B0%E4%B8%96%E7%95%8C+%E6%9C%AC%E5%BA%97',review:'아이한테 미리 소스 두 번 찍으면 안 된다고 알려주니까 규칙 잘 지키면서 맛있게 먹었어요.',reel:false,featured:false,visited:false},
-  {id:'r11',name:'무기토멘스케 (麦と麺助)',emoji:'🍜',day:'D7',area:'우메다/나카츠',tags:['라멘','미쉐린 빕 구르망','예약 불가','웨이팅 필수'],menu:'특제 쇼유 라멘 · 교지도리 치킨 브로스 · 와규 완탕',desc:'2024 미쉐린 빕 구르망. 나카츠역 도보 4분. 교지도리 닭육수 + 와규 완탕 조합. 13석 카운터. 오픈 1시간 전 40명 줄.',hours:'월·수~금 11:00~15:30 · 토일 11:00~16:00 · 화 휴무 · 현금만',mapUrl:'https://www.google.com/maps/search/?q=%E9%BA%A6%E3%81%A8%E9%BA%BA%E5%8A%A9+%E4%B8%AD%E6%B4%A5',review:'줄 서서 먹은 보람이 10000% 있는 곳. 닭국물인데 이렇게 깊은 맛이 날 수 있나 싶을 정도.',reel:true,featured:true,visited:false},
-  {id:'r12',name:'나라 카키노하 스시 총본점',emoji:'🍱',day:'D7',area:'나라',tags:['나라 향토 스시','예약 없이 가능'],menu:'감잎에 싼 전통 초밥 · 나라 명물',desc:'나라의 전통 초밥. 감잎으로 싸서 1~2일 숙성. 연어·고등어·도미. 아이도 먹기 좋은 깔끔한 맛.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=%E6%9F%BF%E3%81%AE%E8%91%89%E3%81%9A%E3%81%97+%E7%B7%8F%E6%9C%AC%E5%AE%B6+%E5%A5%88%E8%89%AF',review:'나라 오면 꼭 먹어야 하는 것. 감잎 향이 은은하게 배어있어 독특해요.',reel:false,featured:false,visited:false},
-  {id:'r13',name:'오코노미야키 미즈노 도톤보리',emoji:'🍡',day:'D7',area:'도톤보리/난바',tags:['오코노미야키','웨이팅'],menu:'마지막 날 특별 오코노미야키 · 야마이모 야키',desc:'70년 이상 노포. 미쉐린 가이드 수록. 밀가루 없이 100% 참마만 사용한 야마이모 야키 시그니처.',hours:'11:00~21:30 · 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=%E7%BE%8E%E6%B4%A5%E3%81%AE+%E9%81%93%E9%A0%93%E5%A0%80',review:'70년 노포의 맛이 뭔지 알았어요. 야마이모 야키는 밀가루 없는데 이렇게 촉촉하고 구수할 수가.',reel:false,featured:false,visited:false},
+  {id:'r1',name:'小杨生煎 (샤오양 생젠)',emoji:'🥟',day:'D1',area:'징안/인민광장',tags:['생젠만터우','현장 웨이팅','현금 가능'],menu:'바삭한 밑면에 육즙 터지는 상하이 생젠 만터우 4개 세트',desc:'1994년 창업 상하이 생젠 전문 체인. 돼지고기 소 + 젤라틴 육수. 밑면 바삭, 위는 촉촉한 피. 4개 6위안 초저가.',hours:'06:30~21:00 · 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=%E5%B0%8F%E6%9D%A8%E7%94%9F%E7%85%8E+%E4%B8%8A%E6%B5%B7',review:'겉은 바삭 안은 육즙 폭발. 4개에 6위안이 말이 됩니까?? 현지인 1등 아침 빵집',reel:true,featured:true,visited:false},
+  {id:'r2',name:'위신지 (蟹皇荟) 게살국수',emoji:'🦀',day:'D1',area:'징안/인민광장',tags:['게살국수','따중디엔핑 쿠폰','첫끼 추천'],menu:'상하이 게살(蟹粉)국수 + 샤오롱바오 + 돼지고기 튀김',desc:'상하이 특산 게살 요리 전문. 게살국수+샤오롱바오+돼지고기 튀김 조합. 짭조름하고 고소한 이색 맛. 따중디엔핑 할인 쿠폰으로 가성비 UP. 다이마루 백화점 지점.',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=%E8%9F%B9%E7%9A%87%E8%8D%9F+%E4%B8%8A%E6%B5%B7',review:'첫 끼로 상하이 대표 게살국수 — 이색적인 맛에 입맛 확 열림. 가성비도 좋음.',reel:true,featured:true,visited:false},
+  {id:'r3',name:'一千零一夜 이치엔 양꼬치 (제일백화점점)',emoji:'🍢',day:'D1',area:'난징동루/징안',tags:['양꼬치','웨이팅 극악','위챗 원격줄서기'],menu:'부드럽고 고소한 양꼬치 · 부추무침 · 볶음밥 · 냉면',desc:'현지인 찐 맛집. 양꼬치 부드럽고 고소. 직원이 직접 구워줌. 2인 약 6만원. 새벽 2시 영업. 제일백화점 지점이 맛+서비스 최고.',hours:'17:00~02:00',mapUrl:'https://www.google.com/maps/search/?q=%E4%B8%80%E5%8D%83%E9%9B%B6%E4%B8%80%E5%A4%9C+%E4%B8%8A%E6%B5%B7',review:'양꼬치 직원이 직접 구워줘서 최상의 상태로 먹음. 옥수수·가지·볶음밥까지 다 맛있어요.',reel:true,featured:true,visited:false},
+  {id:'r4',name:'弄里家 홍이지아 (인민광장점)',emoji:'🦞',day:'D2',area:'인민광장/황푸',tags:['민물가재 롱샤','새벽2시 영업','야식'],menu:'마늘 롱샤(民물가재) · 면사리 비빔 · 칭다오 맥주',desc:'민물 가재 전문 맛집. 마늘 롱샤 시그니처. 직원이 직접 발라줌. 마늘소스+면사리 비벼 먹으면 "차이나 알리오올리오". 새벽 2시까지 영업.',hours:'11:00~02:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%BC%84%E9%87%8C%E5%AE%B6+%E4%B8%8A%E6%B5%B7+%E4%BA%BA%E6%B0%91%E5%B9%BF%E5%9C%BA',review:'디즈니 후 피곤한 몸에 맥주 한 캔이랑 롱샤 먹으니까 천국. 직원이 발라줘서 편함.',reel:true,featured:true,visited:false},
+  {id:'r5',name:'四季民福 사계민복 베이징덕',emoji:'🦆',day:'D3',area:'프렌치 컨세션',tags:['미슐랭','베이징덕','예약 권장'],menu:'눈앞에서 썰어주는 베이징덕 · 껍질 바삭+속살 촉촉 · 2인 반마리',desc:'미슐랭 선정 베이징덕 맛집. 가성비·분위기·서비스 모두 만족. 눈앞 퍼포먼스 후 껍질은 바삭하고 속살은 촉촉. 한국 오리구이와 차원이 다름.',hours:'11:00~14:00 · 17:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%9B%9B%E5%AD%A3%E6%B0%91%E7%A6%8F+%E4%B8%8A%E6%B5%B7',review:'눈앞에서 오리 써는 퍼포먼스부터 압도됨. 껍질 바삭함이 진짜 다른 차원이에요.',reel:true,featured:true,visited:false},
+  {id:'r6',name:'大壶春 (대오춘) 상하이 생젠',emoji:'🥟',day:'D3',area:'예원/황푸',tags:['생젠 군만두','완탕','현지 명물'],menu:'밑은 바삭 위는 찐 상하이 생젠 군만두 · 완탕',desc:'상하이식 생젠 군만두 전문. 밑은 바삭하게 굽고 위는 쪄서 육즙이 일품. 완탕도 깔끔하고 맛있음. 예원 인근.',hours:'07:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%A4%A7%E5%A3%B6%E6%98%A5+%E4%B8%8A%E6%B5%B7',review:'소롱포와 또 다른 매력. 밑면 바삭함이 중독성 있어요.',reel:false,featured:true,visited:false},
+  {id:'r7',name:'点都德 (점도덕) 홍미 창펀',emoji:'🍱',day:'D4',area:'북부이탄/홍구',tags:['딤섬','홍미 창펀','어떤 메뉴도 실패 없음'],menu:'홍미 창펀 · 하가우 · 다양한 딤섬',desc:'홍미 창펀 전문. 쫄깃한 붉은 쌀 반죽+바삭한 튀김+새우. 하가우도 맛있음. 전반적으로 퀄리티 높아 어떤 메뉴 시켜도 실패 없음.',hours:'10:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%82%B9%E9%83%BD%E5%BE%B7+%E4%B8%8A%E6%B5%B7',review:'홍미 창펀이 쫄깃하고 고소한 게 진짜 별미. 어떤 메뉴 시켜도 맛있음.',reel:false,featured:true,visited:false},
+  {id:'r8',name:'肥大厨 (페이다추) 고추고기볶음',emoji:'🌶',day:'D4',area:'루자쭈이/푸동',tags:['고추고기볶음','한국인 취향','밥도둑'],menu:'매콤한 과리 고추+고기 볶음 · 밥솥 찰밥 · 레몬티',desc:'국물 없는 빠삭한 불고기 느낌. 매콤한 과리 고추와 고기가 짭조름한 밥도둑. 밥솥에 나오는 찰기 있는 찰밥+얼굴만 한 레몬티가 별미. 한식 생각날 때 딱.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=%E8%82%A5%E5%A4%A7%E5%8E%A8+%E4%B8%8A%E6%B5%B7',review:'한국 불고기 같으면서 또 다른 맛. 밥솥 찰밥이랑 먹으면 진짜 밥도둑이에요.',reel:false,featured:false,visited:false},
+  {id:'r9',name:'Manner Coffee 북부이탄점',emoji:'☕',day:'D4',area:'북부이탄/홍구',tags:['스페셜티 커피','동방명주뷰','씨솔트 치즈 라떼'],menu:'씨솔트 치즈 라떼 (강추) · 아메리카노 15위안',desc:'통창으로 동방명주가 보이는 매너 커피 북부이탄 지점. 씨솔트 치즈 라떼 강력 추천. 커피+뷰 조합 최강.',hours:'07:30~21:00',mapUrl:'https://www.google.com/maps/search/?q=Manner+Coffee+%E5%8C%97%E5%A4%96%E6%BB%A9+%E4%B8%8A%E6%B5%B7',review:'씨솔트 치즈 라떼 마시면서 동방명주 보면 진짜 상하이에 온 실감.',reel:false,featured:false,visited:false},
+  {id:'r10',name:'喜茶 헤이티 (HEYTEA)',emoji:'🧋',day:'D1',area:'난징동루/전지점',tags:['과일차','다육 포도','상하이 음료 맛집'],menu:'다육 포도 (포도 과육 씹히는 식감) · 다양한 과일 티',desc:'중국 1위 밀크티/과일차 체인. 특히 다육 포도는 과육이 씹히는 식감 뛰어남. 난징동루 외 상하이 전역 지점.',hours:'09:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%96%9C%E8%8C%B6+%E4%B8%8A%E6%B5%B7',review:'다육 포도 한 잔으로 여행 기분 UP. 과육이 정말 가득.',reel:false,featured:false,visited:false},
+  {id:'r11',name:'瑞幸咖啡 루이싱 커피 (Luckin)',emoji:'☕',day:'D1',area:'전 지점 (시내 곳곳)',tags:['저렴한 커피','생코코넛라떼','15위안'],menu:'생 코코넛 라떼 (고소달콤) · 아메리카노 15위안',desc:'중국 메가 커피 체인. 아메리카노 약 15위안으로 매우 저렴. 생 코코넛 라떼 강추. 앱 주문 시 추가 할인. 상하이 전역 수백 지점.',hours:'07:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=%E7%91%9E%E5%B9%B8%E5%92%96%E5%95%A1+%E4%B8%8A%E6%B5%B7',review:'생코코넛 라떼가 고소하고 달콤. 15위안이 말이 됩니까 진짜로.',reel:false,featured:false,visited:false},
+  {id:'r12',name:'好利来 홀리랜드 (수건 케이크)',emoji:'🎂',day:'D4',area:'루자쭈이/정대광장',tags:['수건케이크','선물용','야식'],menu:'수건 케이크 원조 · 패키징 귀여워 선물 최적 · 보냉 포장',desc:'수건 케이크(毛巾卷) 원조 디저트 맛집. 패키징이 귀여워 선물용으로 최적. 보냉 포장 가능하여 호텔 야식으로도 굿. 정대광장 내.',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=%E5%A5%BD%E5%88%A9%E6%9D%A5+%E4%B8%8A%E6%B5%B7',review:'패키징이 너무 귀여워서 선물용으로 대량 구매. 맛도 담백하고 부드러워요.',reel:false,featured:false,visited:false},
+  {id:'r13',name:'Focacceria (폴록스) 프렌치 토스트',emoji:'🍞',day:'D3',area:'신천지',tags:['미슐랭','프렌치토스트','디저트'],menu:'설탕 코팅 바삭 프렌치 토스트 · 속은 묵직하고 고소',desc:'미슐랭 선정 프렌치 토스트 전문점. 겉은 설탕 코팅으로 바삭, 속은 묵직하면서 고소. 신천지 인근.',hours:'11:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=Focacceria+%E4%B8%8A%E6%B5%B7+%E6%96%B0%E5%A4%A9%E5%9C%B0',review:'설탕 코팅 부분이 바삭한데 속은 또 엄청 촉촉. 미슐랭 인증된 맛.',reel:true,featured:true,visited:false},
+  {id:'r14',name:'南翔馒头店 (남상 만터우점)',emoji:'🫕',day:'D4',area:'예원/구시가',tags:['소롱포','예원 본점','1층 포장 추천'],menu:'정통 소롱포 · 기본 소롱포 강추 (게살은 호불호)',desc:'1900년 창업 예원 본점. 소롱포 발상지. 1층 포장 카운터 대기 짧음. 기본 소롱포가 맛있음. 게살 버전은 비린 맛 호불호 있음.',hours:'07:00~21:00 · 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=%E5%8D%97%E7%BF%94%E9%A6%92%E5%A4%B4%E5%BA%97+%E4%B8%8A%E6%B5%B7%E8%B1%AB%E5%9B%AD',review:'소롱포 원조. 1층 포장이 줄 짧음. 게살보다 기본 소롱포가 더 맛있다는 후기가 많음.',reel:true,featured:true,visited:false},
+  {id:'r15',name:'스타벅스 리저브 로스터리 (烘焙工坊)',emoji:'☕',day:'D5',area:'징안',tags:['세계 최대','상하이 한정 굿즈','포토스팟'],menu:'상하이 한정 음료·굿즈 · 거대 로스팅 공장 내부',desc:'세계 최대 규모 스타벅스. 거대한 로스팅 통과 커피 파이프가 천장까지. 상하이 한정 굿즈 구매 가능. 마지막 날 방문 추천.',hours:'07:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=%E6%98%9F%E5%B7%B4%E5%85%8B%E5%A4%9A%E4%B8%8A%E6%B5%B7%E7%83%98%E7%84%99%E5%B7%A5%E5%9D%8A',review:'커피 공장 같은 분위기에 압도됨. 한정 굿즈 종류가 엄청 많아서 선물용으로 최고.',reel:false,featured:false,visited:false},
+  {id:'r16',name:'海底捞 (하이디라오) 핫팟',emoji:'🍲',day:'D1',area:'전지점',tags:['훠궈','24시간','아이 친화'],menu:'훠궈 · 아이 반죽 놀이 서비스 · 무료 아이스크림',desc:'중국 1위 훠궈 체인. 24시간 영업. 아이 돌봐주는 서비스·밀가루 반죽 놀이·무료 아이스크림. 웨이팅 길지만 앱 예약 가능.',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=%E6%B5%B7%E5%BA%95%E6%8D%9E+%E4%B8%8A%E6%B5%B7',review:'아이가 밀가루 반죽 만들기 서비스에 완전 빠짐. 기다리는 동안 스낵 계속 줌.',reel:false,featured:false,visited:false},
 ];
 
 const SEED_BUDGET = {
-  exchangeRate: 9.5,    // 원/엔
-  usdRate: 1489,        // 원/$ (저장 당시 환율)
+  exchangeRate: 192,    // 원/위안 (CNY)
+  usdRate: 1380,        // 원/$ (저장 당시 환율)
   rateUpdated: null,    // 마지막 실시간 업데이트 시각
   preset: [
-    {id:'b1',category:'항공',name:'파리타 항공 WE511/WE512 항공권 (3인)',currency:'KRW',amountOrig:670200,amountKrw:670200,rateAtSave:null,notes:'왕복 3석',paid:true},
-    {id:'b2',category:'숙소',name:'소테츠 프레사 인 오사카-난바 호텔 2박 (4/29~5/1)',currency:'USD',amountOrig:154.44,amountKrw:229807,rateAtSave:1489,notes:'조식 불포함',paid:true},
-    {id:'b3',category:'숙소',name:'카메노이 호텔 아리마 1박 (5/1~5/2)',currency:'USD',amountOrig:301.60,amountKrw:448915,rateAtSave:1489,notes:'가이세키 조석식 포함',paid:true},
-    {id:'b4',category:'입장료',name:'USJ 입장권 2인 + 익스프레스 패스',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'4세 무료. 클룩 사전 구매',paid:false},
-    {id:'b5',category:'교통',name:'난카이 라피트 왕복 2인',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'α+β 각 1회 (성인 2인)'},
-    {id:'b6',category:'교통',name:'이코카 IC카드 충전 (3인)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'교통비 충분히 충전',paid:false},
+    {id:'b1',category:'항공',name:'항공권 왕복 (3인) ICN-PVG',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'왕복 3석',paid:false},
+    {id:'b2',category:'숙소',name:'상하이 시내 호텔 4박 (4/29~5/3)',currency:'USD',amountOrig:0,amountKrw:0,rateAtSave:1380,notes:'징안/인민광장 권역',paid:false},
+    {id:'b3',category:'입장료',name:'상하이 디즈니랜드 입장권 (2인+아이)',currency:'CNY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'성인 475위안·아동 385위안·4세 무료. 앱 사전 구매',paid:false},
+    {id:'b4',category:'입장료',name:'예원 (豫园) 입장권 (2인)',currency:'CNY',amountOrig:80,amountKrw:15360,rateAtSave:192,notes:'성인 40위안×2',paid:false},
+    {id:'b5',category:'교통',name:'마글레브 (浦东空港) 왕복 2인',currency:'CNY',amountOrig:200,amountKrw:38400,rateAtSave:192,notes:'성인 50위안×2×왕복 2회',paid:false},
+    {id:'b6',category:'교통',name:'상하이 지하철 교통카드 충전 (3인)',currency:'CNY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'알리페이 지하철 QR or IC카드',paid:false},
     {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'출발 전 가입',paid:false},
-    {id:'b8',category:'기타',name:'일본 eSIM 2회선',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'7박 8일 무제한',paid:false},
-    {id:'b9',category:'숙소',name:'에어비앤비 2박 (5/2 ~ 5/6)',currency:'KRW',amountOrig:455612,amountKrw:455612,rateAtSave:null,notes:'',paid:false},
+    {id:'b8',category:'기타',name:'중국 eSIM 2회선',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'4박 5일 데이터 전용',paid:false},
+    {id:'b9',category:'기타',name:'알리페이/위챗페이 외화카드 연동',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'한국 카드 연동 사전 완료',paid:false},
   ],
   daily: []
 };
@@ -1017,49 +844,58 @@ const SEED_BUDGET = {
 const SEED_CHECKLIST = [
   {cat:'여행 서류 (필수)',items:[
     {text:'여권 3인 유효기간 확인 (6개월 이상)',checked:false,priority:'필수'},
-    {text:'Visit Japan Web 가족 전원 등록',checked:false,priority:'필수'},
+    {text:'중국 무비자 입국 조건 재확인 (한국 여권 15일 무비자)',checked:false,priority:'필수'},
     {text:'항공권 모바일 체크인',checked:false,priority:'필수'},
-    {text:'숙소·료칸 예약 확인서 출력/저장',checked:false,priority:'필수'},
-    {text:'USJ 입장권·익스프레스 패스 QR 저장',checked:false,priority:'필수'},
+    {text:'숙소 예약 확인서 출력/저장',checked:false,priority:'필수'},
+    {text:'상하이 디즈니랜드 입장권 QR 저장',checked:false,priority:'필수'},
     {text:'해외여행자보험 증권 저장',checked:false,priority:'필수'},
   ]},
-  {cat:'교통 · 결제 수단',items:[
-    {text:'이코카 IC카드 구매 또는 충전',checked:false,priority:'필수'},
-    {text:'트래블로그/트래블월렛 카드 발급',checked:false,priority:'권장'},
-    {text:'난카이 라피트 예약 (입국·귀국)',checked:false,priority:'필수'},
-    {text:'일본 eSIM 구매 및 설치',checked:false,priority:'필수'},
-    {text:'현금 환전 (200,000엔 권장)',checked:false,priority:'필수'},
+  {cat:'결제 수단 (중국 현지)',items:[
+    {text:'알리페이 (支付宝) 한국 카드 연동 완료',checked:false,priority:'필수'},
+    {text:'위챗페이 (微信支付) 한국 카드 연동 완료',checked:false,priority:'필수'},
+    {text:'트래블로그/하나 트래블카드 발급',checked:false,priority:'권장'},
+    {text:'현금 위안화 환전 (500위안 기본)',checked:false,priority:'권장'},
+    {text:'중국 eSIM 구매 및 설치 (한국 출발 전)',checked:false,priority:'필수'},
+  ]},
+  {cat:'앱 사전 설치',items:[
+    {text:'알리페이 앱 설치 + 한국 카드 등록',checked:false,priority:'필수'},
+    {text:'위챗 (微信) 설치 — 미니프로그램 줄서기용',checked:false,priority:'필수'},
+    {text:'디디 (DiDi) 택시 앱 설치 + 가입',checked:false,priority:'필수'},
+    {text:'상하이 디즈니 공식 앱 설치 (DPA 예약용)',checked:false,priority:'필수'},
+    {text:'메이투안 (美团) 앱 설치 — 배달·야식 주문',checked:false,priority:'권장'},
+    {text:'VPN 앱 설치 (구글·카카오 중국 차단 대비)',checked:false,priority:'권장'},
+    {text:'高德地图 (가오더/고덕 지도) 설치 — 구글맵 대체',checked:false,priority:'필수'},
+    {text:'루이싱 커피 앱 설치 (할인 쿠폰)',checked:false,priority:'선택'},
+  ]},
+  {cat:'현지 꿀팁 사전 숙지',items:[
+    {text:'이치엔 양꼬치 — 위챗 미니프로그램 원격 줄서기 방법 확인 (매장 3km 이내)',checked:false,priority:'필수'},
+    {text:'디즈니 DPA 패스 구매 방법 및 인기 어트랙션 파악',checked:false,priority:'권장'},
+    {text:'따중디엔핑 (大众点评) 앱 — 맛집 쿠폰·예약 활용',checked:false,priority:'권장'},
+    {text:'구글맵 대신 고덕지도 (高德地图) 사용 연습',checked:false,priority:'필수'},
+    {text:'중국 배달 앱 메이투안으로 야식 주문 방법 확인',checked:false,priority:'선택'},
   ]},
   {cat:'아이 용품 (4세)',items:[
     {text:'힙시트 or 접이식 유모차',checked:false,priority:'필수'},
     {text:'해열제·지사제·연고 상비약',checked:false,priority:'필수'},
     {text:'아이 간식 충분량 (과자·음료)',checked:false,priority:'필수'},
-    {text:'수영복 (스파월드)',checked:false,priority:'필수'},
-    {text:'아이 슬리퍼',checked:false,priority:'권장'},
-    {text:'우비 or 우산 (5월 소나기 대비)',checked:false,priority:'권장'},
+    {text:'우비 or 우산 (5월 상하이 소나기 대비)',checked:false,priority:'권장'},
     {text:'선크림 SPF50+',checked:false,priority:'권장'},
-    {text:'아이 마스크 여분',checked:false,priority:'선택'},
+    {text:'아이 마스크 여분',checked:false,priority:'권장'},
+    {text:'아이 슬리퍼',checked:false,priority:'선택'},
   ]},
   {cat:'의류 · 짐',items:[
-    {text:'편한 운동화 (걷기 많음)',checked:false,priority:'필수'},
-    {text:'얇은 겉옷 (5월 일교차)',checked:false,priority:'권장'},
+    {text:'편한 운동화 (하루 1만보 이상 걷기)',checked:false,priority:'필수'},
+    {text:'얇은 겉옷 (5월 상하이 일교차 10도)',checked:false,priority:'권장'},
     {text:'캐리어 자물쇠',checked:false,priority:'권장'},
     {text:'보조가방/백팩',checked:false,priority:'권장'},
-    {text:'멀티 어댑터 (220V→110V)',checked:false,priority:'권장'},
     {text:'보조배터리 (항공사 규정 확인)',checked:false,priority:'권장'},
   ]},
-  {cat:'쇼핑 · 구매 예정',items:[
-    {text:'드럭스토어 구매 리스트 작성',checked:false,priority:'권장'},
-    {text:'돈키호테 세금환급용 여권 소지',checked:false,priority:'필수'},
-    {text:'카베진·이브·로이히츠보코 목록',checked:false,priority:'선택'},
-    {text:'아이 USJ 굿즈 예산 설정',checked:false,priority:'선택'},
-  ]},
   {cat:'사전 예약 완료 체크',items:[
-    {text:'USJ 티켓 예약 완료',checked:false,priority:'필수'},
-    {text:'료칸 예약 완료 (가족탕 확인)',checked:false,priority:'필수'},
+    {text:'항공권 예약 완료',checked:false,priority:'필수'},
     {text:'숙소 예약 완료',checked:false,priority:'필수'},
-    {text:'라피트 예약 완료',checked:false,priority:'필수'},
-    {text:'인기 식당 예약 (RONTAN, 키이치 등)',checked:false,priority:'권장'},
+    {text:'상하이 디즈니랜드 입장권 예약 완료',checked:false,priority:'필수'},
+    {text:'大董烤鸭 (따동 베이징덕) 저녁 예약',checked:false,priority:'권장'},
+    {text:'南翔馒头店 2층 예약 or 1층 포장 전략 결정',checked:false,priority:'권장'},
   ]},
 ];
 
@@ -1082,7 +918,7 @@ function extractCoordsFromUrl(url) {
 
 function loadState() {
   try {
-    const saved = localStorage.getItem('osaka2026');
+    const saved = localStorage.getItem('shanghai2026');
     if (saved) {
       state = JSON.parse(saved);
       if (!state.version || state.version < DATA_VERSION) {
@@ -1150,7 +986,7 @@ function resetToSeed() {
 }
 
 function saveState() {
-  localStorage.setItem('osaka2026', JSON.stringify(state));
+  localStorage.setItem('shanghai2026', JSON.stringify(state));
 }
 
 // ──────────────────────────────────────────────
@@ -1158,14 +994,11 @@ function saveState() {
 // ──────────────────────────────────────────────
 const TABS = [
   {id:'overview',label:'전체'},
-  {id:'d1',label:'D1 4/29'},
-  {id:'d2',label:'D2 4/30 USJ'},
-  {id:'d3',label:'D3 5/1 쇼핑'},
-  {id:'d4',label:'D4 5/2 료칸'},
-  {id:'d5',label:'D5 5/3 신세카이'},
-  {id:'d6',label:'D6 5/4 오사카성'},
-  {id:'d7',label:'D7 5/5 나라'},
-  {id:'d8',label:'D8 5/6 귀국'},
+  {id:'d1',label:'D1 4/29 입국'},
+  {id:'d2',label:'D2 4/30 디즈니'},
+  {id:'d3',label:'D3 5/1 컨세션'},
+  {id:'d4',label:'D4 5/2 예원'},
+  {id:'d5',label:'D5 5/3 귀국'},
   {id:'budget',label:'💰 경비'},
   {id:'checklist',label:'✅ 준비물'},
   {id:'restaurants',label:'🍽 식당'},
@@ -1191,8 +1024,7 @@ function updateFab(id) {
   const fab = document.getElementById('fab');
   const fabMap = {
     d1:'+ 일정 추가', d2:'+ 일정 추가', d3:'+ 일정 추가',
-    d4:'+ 일정 추가', d5:'+ 일정 추가', d6:'+ 일정 추가',
-    d7:'+ 일정 추가', d8:'+ 일정 추가',
+    d4:'+ 일정 추가', d5:'+ 일정 추가',
     budget:'+ 경비 추가', restaurants:'+ 식당 추가',
   };
   if (fabMap[id]) { fab.textContent = fabMap[id]; fab.classList.remove('fab-hidden'); }
@@ -1229,9 +1061,9 @@ function renderMain() {
 // OVERVIEW
 // ──────────────────────────────────────────────
 function renderOverview() {
-  const dayKeys = ['d1','d2','d3','d4','d5','d6','d7','d8'];
-  const dayDates = ['4/29 수','4/30 목','5/1 금','5/2 토','5/3 일','5/4 월','5/5 화','5/6 수'];
-  const dayNums = ['D1','D2','D3','D4','D5','D6','D7','D8'];
+  const dayKeys = ['d1','d2','d3','d4','d5'];
+  const dayDates = ['4/29 수','4/30 목','5/1 금','5/2 토','5/3 일'];
+  const dayNums = ['D1','D2','D3','D4','D5'];
 
   const totalAll = [...(state.budget.preset||[]), ...(state.budget.daily||[])].reduce((s,e) => s+(e.amountKrw||0), 0);
   const ckTotal = state.checklist.reduce((s,c) => s+c.items.length, 0);
@@ -1240,7 +1072,7 @@ function renderOverview() {
 
   return `
   <div class="stat-cards">
-    <div class="stat-card"><div class="stat-val">7박 8일</div><div class="stat-label">여행 기간</div></div>
+    <div class="stat-card"><div class="stat-val">4박 5일</div><div class="stat-label">여행 기간</div></div>
     <div class="stat-card"><div class="stat-val">3명</div><div class="stat-label">여행 인원</div></div>
     <div class="stat-card"><div class="stat-val">${Math.round(totalAll/10000)}만원</div><div class="stat-label">총 예상 경비</div></div>
     <div class="stat-card"><div class="stat-val">${ckDone}/${ckTotal}</div><div class="stat-label">준비물 체크</div></div>
@@ -1507,10 +1339,10 @@ function renderBudget() {
     </div>
     <div class="exr-rows">
       <div class="exr-row">
-        <span class="exr-flag">🇯🇵</span>
-        <span class="exr-label">엔화</span>
-        <input class="exr-input" type="number" step="0.01" value="${jpy}" onchange="updateJpyRate(this.value)" />
-        <span class="exr-unit">원 / 엔</span>
+        <span class="exr-flag">🇨🇳</span>
+        <span class="exr-label">위안화</span>
+        <input class="exr-input" type="number" step="0.01" value="${jpy}" onchange="updateCnyRate(this.value)" />
+        <span class="exr-unit">원 / 위안</span>
       </div>
       <div class="exr-row">
         <span class="exr-flag">🇺🇸</span>
@@ -1621,8 +1453,8 @@ function renderBudget() {
   `;
 }
 
-function updateJpyRate(val) {
-  state.budget.exchangeRate = parseFloat(val) || 9.5;
+function updateCnyRate(val) {
+  state.budget.exchangeRate = parseFloat(val) || 192;
   saveState();
   renderMain();
 }
@@ -1647,9 +1479,9 @@ async function fetchRates() {
       if (!res.ok) continue;
       const data = await res.json();
       const rates = data.krw;
-      if (!rates || !rates.jpy || !rates.usd) continue;
-      // 원/엔 = 1 / (엔/원 = rates.jpy)  →  rates.jpy 는 1원당 엔화
-      state.budget.exchangeRate = Math.round((1 / rates.jpy) * 100) / 100;
+      if (!rates || !rates.cny || !rates.usd) continue;
+      // 원/위안 = 1 / (위안/원 = rates.cny)  →  rates.cny 는 1원당 위안화
+      state.budget.exchangeRate = Math.round((1 / rates.cny) * 100) / 100;
       state.budget.usdRate = Math.round(1 / rates.usd);
       state.budget.rateUpdated = new Date().toISOString();
       saveState();
