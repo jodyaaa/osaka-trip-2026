@@ -1068,7 +1068,7 @@ const SEED_CHECKLIST = [
 // ──────────────────────────────────────────────
 let state = {};
 
-const DATA_VERSION = 6; // 모든 일정 호텔 출발 + 조식/중식/석식 완비
+const DATA_VERSION = 7; // 경비 실제 데이터 반영
 
 // 구글 지도 URL에서 좌표 추출 (@lat,lng 패턴)
 function extractCoordsFromUrl(url) {
@@ -1089,8 +1089,12 @@ function loadState() {
         migrateRestaurantUrls();
         migrateBudgetV5();
         if (!state.version || state.version < 6) {
-          // 일정 대폭 변경 (호텔 출발 + 조식/중식/석식 완비) — 일정만 시드 초기화
           state.schedule = JSON.parse(JSON.stringify(SEED_SCHEDULE));
+        }
+        if (!state.version || state.version < 7) {
+          // 경비 시드 데이터 교체 — preset 전체를 최신 시드로 리셋
+          state.budget.preset = JSON.parse(JSON.stringify(SEED_BUDGET.preset));
+          state.budget.usdRate = SEED_BUDGET.usdRate;
         }
         state.version = DATA_VERSION;
         saveState();
