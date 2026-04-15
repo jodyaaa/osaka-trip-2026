@@ -662,7 +662,9 @@ const SEED_SCHEDULE = {
     sub:'09:30 ICN 출발 · 11:50 KIX 도착 · 난카이 라피트 → 호텔 체크인 → 쿠로몬 → 도톤보리 점등 야경',
     badges:[{cls:'b-transit',txt:'이동일'}],
     items:[
+      {time:'08:00',type:'food',title:'조식 — 인천공항 출발 전 간단 아침',desc:'탑승 전 게이트 인근 스타벅스 or CU·GS25 편의점. 오니기리·샌드위치·커피로 가볍게',tip:'탑승구 확인 후 인근 카페 이용 권장'},
       {time:'10:00',type:'hotel',title:'인천공항 T2 집결 · 탑승 준비',desc:'에어부산 BX-174 · 인천 제2터미널. 캐리어 최종 점검. 여권·항공권·탑승권 확인',tip:'체크인 마감 12:40 기준 최소 90분 전인 11:10까지 카운터 도착 필요. 여유 있게 10시 집결'},
+      {time:'11:30',type:'food',title:'중식 — 공항 식당 or 편의점 간편식',desc:'탑승 전 마지막 끼니. 공항 식당가 또는 편의점 간편식. BX-174 기내식 제공 시 기내에서 식사',tip:''},
       {time:'12:40',type:'move',title:'ICN T2 출발 → KIX 도착 (에어부산 BX-174)',desc:'인천 T2 출발 12:40 → 간사이 국제공항 15:00 도착. PNR: KHQ2TM. 기내 10KG + 위탁 15KG',tip:'환불 불가. Traveloka 예약 ID: 1348936277'},
       {time:'15:20',type:'move',title:'KIX 입국 수속',desc:'입국 카드 기내 작성 완료. 지문 인식 후 수하물 수취. 이코카 카드 발급',tip:'Visit Japan Web QR 준비해두면 심사 빠름'},
       {time:'15:50',type:'move',title:'난카이 라피트 → 난바역 도착',desc:'KIX 2층 난카이 매표소에서 라피트 티켓 구매. 난바까지 약 38분',tip:'라피트 티켓 1,380엔. 이코카 카드 탑승 불가 — 별도 구매 필수'},
@@ -677,10 +679,12 @@ const SEED_SCHEDULE = {
     sub:'JR 유메사키선 → 오픈런 → 슈퍼 닌텐도 월드 → 미니언 파크 → 해리포터 → 난바 귀환',
     badges:[{cls:'b-usj',txt:'USJ'}],
     items:[
+      {time:'07:00',type:'food',title:'조식 — 편의점 간편 아침 (USJ 오픈런 전)',desc:'패밀리마트·로손·세븐일레븐 주먹밥·샌드위치·커피. USJ 입장 전 빠른 아침 필수',tip:'USJ 내 식사는 비쌈 — 출발 전 든든하게 먹기'},
       {time:'07:30',type:'hotel',title:'기상 · USJ 출발 준비',desc:'아이 간식·물·우비 배낭에 챙기기. USJ 앱·QR 확인. 자외선 차단제 필수',tip:'Express Pass: 슈퍼 닌텐도 월드 + 미니언 파크 조합 사전 구매 강력 추천'},
       {time:'08:20',type:'move',title:'JR 난바역 → 유니버설시티역 (약 15분)',desc:'난바에서 JR 야마토지선 타고 니시쿠조역 환승 → JR 유메사키선 유니버설시티역 하차. 이코카 이용',tip:''},
       {time:'08:30',type:'sight',title:'USJ 입장 오픈런',desc:'개장 시간에 맞춰 입장. 슈퍼 닌텐도 월드 방향으로 직행',tip:'오픈런 10분 내 닌텐도 월드 도착하면 입장 대기 15분 이내'},
       {time:'09:00',type:'sight',title:'슈퍼 닌텐도 월드',desc:'마리오 카트 · 동키콩 어드벤처 · 파워업 밴드 체험. 포토존 압도적',tip:'파워업 밴드 (3,500엔) 구매하면 게임 연동 가능 — 아이와 방문 시 강추'},
+      {time:'12:30',type:'food',title:'중식 — USJ 슈퍼 닌텐도 월드 레스토랑',desc:'마리오 버섯수프·파워업 밴드 런치 세트. USJ 공식 앱 사전 예약 권장. 1인 2,000~3,000엔대',tip:'닌텐도 월드 내 레스토랑 — 오픈 직후보다 12:30 전후 방문 추천'},
       {time:'13:30',type:'sight',title:'미니언 파크',desc:'미니언 해저 2만리 · 미니언 파크 구역 탐방. 미니언 캐릭터 굿즈',tip:''},
       {time:'15:30',type:'sight',title:'해리포터 · 호그스미드 마을',desc:'버터맥주·호그와트 익스프레스·허마이오니 지팡이 굿즈. 포토존',tip:'버터맥주 790엔 — 따뜻한 버전도 있음'},
       {time:'17:30',type:'shop',title:'시티워크 기념품 쇼핑',desc:'USJ 한정 굿즈 마지막 쇼핑. 미니언·닌텐도 캐릭터 상품',tip:''},
@@ -692,6 +696,7 @@ const SEED_SCHEDULE = {
     sub:'신사이바시스지 → 아메리카무라 인증샷 → 텐노지 동물원 → 신세카이 쿠시카츠 → 츠텐카쿠',
     badges:[{cls:'b-shop',txt:'쇼핑'},{cls:'b-shinsekai',txt:'신세카이'}],
     items:[
+      {time:'08:00',type:'food',title:'조식 — 도톤보리·신사이바시 카페 모닝 세트',desc:'신사이바시·도톤보리 인근 카페. 일본 모닝 세트(커피+토스트+달걀). 600~1,000엔대. 쇼핑 전 여유로운 아침',tip:''},
       {time:'09:00',type:'hotel',title:'호텔 출발',desc:'',tip:''},
       {time:'10:00',type:'shop',title:'신사이바시스지 상점가 쇼핑',desc:'1km 아케이드 쇼핑 거리. 유니클로·돈키호테·다이소·로프트. 면세 (여권 지참)',tip:'돈키호테에서 면세: 여권 제시 + 5,001엔 이상 구매 시 8% 소비세 환급'},
       {time:'12:00',type:'sight',title:'아메리카무라 (アメリカ村)',desc:'오사카 하라주쿠. 빈티지 패션·힙합 스트릿 문화. 삼각공원 인증샷 포토존',tip:''},
@@ -713,6 +718,7 @@ const SEED_SCHEDULE = {
       {time:'10:00',type:'hotel',title:'체크아웃 완료 · 짐 픽업',desc:'10:00 이전 체크아웃. 호텔 보관 짐 수령',tip:''},
       {time:'10:30',type:'move',title:'난바역 → 난카이 라피트 탑승',desc:'난바역 2층 난카이 매표소에서 라피트 티켓 구매. KIX까지 약 38분. 11:10까지 공항 도착 목표',tip:'라피트 성인 1,380엔. BX-171 12:50 출발 기준 체크인 마감 최소 90분 전 → 11:20 공항 도착'},
       {time:'11:10',type:'move',title:'KIX 도착 · 에어부산 체크인 수속',desc:'에어부산 BX-171 카운터 체크인 + 수하물 위탁 + 출국 수속. PNR: KHQ2TM',tip:'출국 후 면세구역 내 화장품·주류·과자 마지막 쇼핑'},
+      {time:'11:30',type:'food',title:'중식 — KIX 면세구역 레스토랑 (마지막 일본 식사)',desc:'출국 수속 후 면세구역 내 식당. 오사카 4일 마지막 식사. 라멘·스시·우동 中 선택',tip:'12:50 탑승 기준 12:20까지 게이트 도착 목표 — 식사는 11:30~12:10 내로'},
       {time:'12:50',type:'move',title:'KIX 출발 → ICN T2 도착',desc:'12:50 KIX 출발 → 15:00 ICN 터미널2 도착. 3박 4일 오사카 여행 완료',tip:''},
     ]
   },
@@ -805,7 +811,7 @@ const SEED_CHECKLIST = [
 // ──────────────────────────────────────────────
 let state = {};
 
-const DATA_VERSION = 8; // 항공권·숙박 실제 정보 반영 (BX-174/171, 더 원파이브 8RAL2XVM)
+const DATA_VERSION = 9; // D1~D4 조식·중식 일정 항목 복구
 
 // 구글 지도 URL에서 좌표 추출 (@lat,lng 패턴)
 function extractCoordsFromUrl(url) {
@@ -838,6 +844,10 @@ function loadState() {
           state.schedule = JSON.parse(JSON.stringify(SEED_SCHEDULE));
           state.budget.preset = JSON.parse(JSON.stringify(SEED_BUDGET.preset));
           state.budget.usdRate = SEED_BUDGET.usdRate;
+        }
+        if (!state.version || state.version < 9) {
+          // D1~D4 조식·중식 일정 항목 복구
+          state.schedule = JSON.parse(JSON.stringify(SEED_SCHEDULE));
         }
         state.version = DATA_VERSION;
         saveState();
