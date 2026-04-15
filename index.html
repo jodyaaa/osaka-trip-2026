@@ -393,6 +393,7 @@ const DAY_MAP_DATA = {
       {n:'더 원파이브 오사카 남바 쿠로몬', c:[34.6631,135.5061], t:'hotel', time:'14:00'},
       {n:'쿠로몬 시장 (黒門市場)',         c:[34.6627,135.5067], t:'sight', time:'15:00'},
       {n:'도톤보리 · 에비스바시',          c:[34.6687,135.5012], t:'sight', time:'17:00'},
+      {n:'도톤보리 리버 크루즈',           c:[34.6686,135.5010], t:'sight', time:'18:00'},
       {n:'도톤보리 저녁 식사',             c:[34.6687,135.5012], t:'food',  time:'19:00'},
     ]
   },
@@ -415,7 +416,8 @@ const DAY_MAP_DATA = {
       {n:'텐노지 동물원',                  c:[34.6468,135.5133], t:'sight', time:'14:00'},
       {n:'신세카이 · 쿠시카츠 다루마',    c:[34.6519,135.5072], t:'food',  time:'17:00'},
       {n:'츠텐카쿠 타워',                 c:[34.6523,135.5064], t:'sight', time:'18:30'},
-      {n:'텐노지 저녁 식사',              c:[34.6468,135.5133], t:'food',  time:'19:30'},
+      {n:'하루카스 300 전망대',           c:[34.6461,135.5135], t:'sight', time:'19:00'},
+      {n:'텐노지 저녁 식사',              c:[34.6468,135.5133], t:'food',  time:'20:00'},
     ]
   },
   d4:{
@@ -450,19 +452,20 @@ const LI = { metro:'🚇', maglev:'🚄', bus:'🚌', walk:'🚶', taxi:'🚕' }
 const TRANSPORT_GUIDE = {
   d1:{
     title:'간사이 국제공항 (KIX) → 난바 (숙소)',
-    total:{time:'약 40분', cost:'난카이 라피트 성인 1,290엔'},
+    total:{time:'약 40분', cost:'난카이 라피트 성인 1,380엔'},
     steps:[
       {place:'간사이 국제공항 (KIX) 도착 · 입국 수속', note:'입국 카드 기내 작성 완료. 수하물 수취 후 2층 출국장으로 이동'},
-      {transit:{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'KIX → 난바역 · 약 38분 · 성인 1,290엔 (자유석)',tip:'이코카 카드 사용 불가 — 별도 라피트 티켓 구매 필요. 난바역 2층 난카이 매표소 or 사전 예약'}},
+      {transit:{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'KIX → 난바역 · 약 38분 · 성인 1,380엔 (자유석)',tip:'이코카 카드 사용 불가 — 별도 라피트 티켓 구매 필요. 난바역 2층 난카이 매표소 or 사전 예약'}},
       {place:'난바역 (Namba) 도착', note:'2번 개찰구 방향으로 나와 도보 이동'},
       {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'난바역 → 더 원파이브 호텔 · 도보 약 5~7분',tip:'쿠로몬 시장 방향으로 이동. 구글맵 이용 권장'}},
       {place:'더 원파이브 오사카 남바 쿠로몬 · 체크인'},
     ],
     tips:[
+      '라피트 특급 (1,380엔·35분): 전 좌석 지정제, 편안한 이동. 30분 간격 운행',
+      '공항 급행 대안 (970엔·50분): 이코카 카드 이용 가능. 좌석 미보장이지만 더 저렴',
       '라피트 사전 예약: KKday / Klook 에서 미리 구매하면 줄 서지 않아도 됨',
       '이코카 카드: 공항 1층 자동발매기에서 발급 가능 (2,000엔 → 1,500엔 충전+500엔 보증금)',
       'Visit Japan Web 사전 등록으로 입국 심사 빠르게 통과',
-      'Japan eSIM 구매 시 현지 인터넷 개통까지 수분 소요 — 비행기 착륙 직후 개통',
     ]
   },
   d2:{
@@ -502,13 +505,13 @@ const TRANSPORT_GUIDE = {
   },
   d4:{
     title:'쿠로몬 시장 아침 → 난바역 → 난카이 라피트 → KIX 귀국',
-    total:{time:'호텔 → 공항 약 60분', cost:'라피트 성인 1,290엔'},
+    total:{time:'호텔 → 공항 약 60분', cost:'라피트 성인 1,380엔'},
     steps:[
       {place:'더 원파이브 호텔 체크아웃', note:'큰 짐은 프런트 보관 or 코인로커 이용 후 쿠로몬 방문'},
       {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'호텔 → 쿠로몬 시장 · 도보 약 2분',tip:'호텔 바로 옆 위치. 귀국 전 마지막 쇼핑 찬스'}},
       {place:'쿠로몬 시장 (黒門市場) 아침 쇼핑', note:'마지막 기념품·식품 구매. 8:30~9:00부터 상점 문 열기 시작'},
       {transit:{line:'도보',color:LC.walk,icon:LI.walk,detail:'쿠로몬 시장 → 난바역 · 도보 약 7분',tip:''}},
-      {transit:{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'난바역 → KIX · 약 38분 · 성인 1,290엔',tip:'출발 3시간 전 공항 도착 목표. 라피트 탑승 전 짐 확인'}},
+      {transit:{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'난바역 → KIX · 약 38분 · 성인 1,380엔',tip:'출발 3시간 전 공항 도착 목표. 라피트 탑승 전 짐 확인'}},
       {place:'간사이 국제공항 (KIX) 체크인 · 탑승'},
     ],
     tips:[
@@ -524,10 +527,10 @@ const TRANSPORT_GUIDE = {
 // 이동 항목별 교통 배지 (dayId_time 키)
 // ──────────────────────────────────────────────
 const ITEM_TRANSIT = {
-  'd1_11:50':{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'KIX → 난바역 · 약 38분 · 성인 1,290엔',tip:'이코카 카드 사용 불가 — 별도 라피트 티켓 구매. 난바역 남카이 매표소 or 사전 예약'},
+  'd1_11:50':{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'KIX → 난바역 · 약 38분 · 성인 1,380엔',tip:'이코카 카드 사용 불가 — 별도 라피트 티켓 구매. 난바역 남카이 매표소 or 사전 예약'},
   'd1_13:10':{line:'도보',color:LC.walk,icon:LI.walk,detail:'난바역 → 더 원파이브 호텔 · 도보 약 5분',tip:'짐이 많을 경우 택시 이용 추천. 난바역 택시 승강장 이용'},
   'd2_07:30':{line:'JR 야마토지선 → JR 유메사키선',color:LC.jr_yumesakiline,icon:LI.metro,detail:'JR 난바역 → 니시쿠조역 환승 → 유니버설시티역 · 약 15분 · 이코카 이용',tip:'이코카 카드로 탑승. 유니버설시티역 하차 후 도보 3분이면 USJ 입구'},
-  'd4_11:00':{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'난바역 → KIX · 약 38분 · 성인 1,290엔',tip:'귀국일 라피트. 출발 3시간 전 공항 도착 목표'},
+  'd4_11:00':{line:'난카이 라피트 (ラピート)',color:LC.nankai,icon:LI.metro,detail:'난바역 → KIX · 약 38분 · 성인 1,380엔',tip:'귀국일 라피트. 출발 3시간 전 공항 도착 목표'},
 };
 
 // ──────────────────────────────────────────────
@@ -544,8 +547,9 @@ const MEAL_RECS = {
       {name:'이치란 라멘 (도톤보리)',area:'도톤보리',rating:'4.8★',reviews:'10,000+',tags:['1인석 라멘','돈코츠','오사카 필수'],menu:'돈코츠 라멘 — 1인 칸막이석 독특한 분위기. 진한 국물',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀+大阪'},
     ],
     dinner:[
-      {name:'도톤보리 타코야키 (구쿠루)',area:'도톤보리',rating:'4.7★',reviews:'8,000+',tags:['타코야키','오사카 명물','즉석'],menu:'문어 가득 바삭한 타코야키 8개 세트 — 도톤보리 명물',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=くくる+道頓堀+大阪'},
-      {name:'킨류 라멘 (金龍ラーメン)',area:'도톤보리',rating:'4.5★',reviews:'5,000+',tags:['24시간','돈코츠','가성비'],menu:'진한 돈코츠 라멘 650엔 — 24시간 운영. 도톤보리 야식 맛집',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀+大阪'},
+      {name:'아메무라 샤인 (Shine) 스키야키',area:'아메리카무라',rating:'4.9★',reviews:'릴스 추천',tags:['스키야키','인스타 릴스','한국인 직원'],menu:'산처럼 쌓인 고기+계란 노른자 스키야키 시그니처 — 도톤보리 도보 5분',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=Shine+restaurant+sukiyaki+아메리카무라+大阪'},
+      {name:'치야키 우나기 호젠지 야마카즈',area:'도톤보리/호젠지',rating:'4.8★',reviews:'릴스 추천',tags:['장어덮밥','인스타 릴스','다다미방'],menu:'통통 부드러운 장어덮밥 · 계란 장어덮밥 — 도톤보리 근처 호젠지 골목',hours:'11:30~14:30 · 17:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=호젠지+야마카즈+장어+道頓堀+大阪'},
+      {name:'도톤보리 타코야키 (구쿠루)',area:'도톤보리',rating:'4.7★',reviews:'8,000+',tags:['타코야키','오사카 명물','즉석'],menu:'문어 가득 바삭한 타코야키 8개 세트',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=くくる+道頓堀+大阪'},
     ]
   },
   d2:{
@@ -570,7 +574,9 @@ const MEAL_RECS = {
       {name:'신세카이 이자카야 야키니쿠',area:'신세카이',rating:'4.6★',reviews:'3,000+',tags:['야키니쿠','이자카야','현지'],menu:'가성비 야키니쿠·생맥주 — 신세카이 현지 분위기 만끽',hours:'11:30~23:00',mapUrl:'https://www.google.com/maps/search/?q=新世界+焼肉+居酒屋+大阪'},
     ],
     dinner:[
-      {name:'텐노지 상점가 오코노미야키',area:'텐노지',rating:'4.7★',reviews:'4,000+',tags:['오코노미야키','오사카 소울푸드','가성비'],menu:'오사카식 두꺼운 오코노미야키+돼지고기 — 텐노지 주민 단골 식당',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=天王寺+お好み焼き+大阪'},
+      {name:'오유키 (お雪) 스시 — 신세카이 45년 노포',area:'신세카이',rating:'4.9★',reviews:'릴스 추천',tags:['스시','인스타 릴스','45년 노포','현금만'],menu:'스시 세트 1,000엔 · 장어 반마리 1,500엔 — 식사 중 깜짝 노래 서비스',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=お雪+스시+新世界+大阪'},
+      {name:'쿠시카츠 다루마 신세카이 본점',area:'신세카이',rating:'4.8★',reviews:'15,000+',tags:['쿠시카츠','2번 금지','오사카 명물'],menu:'바삭 꼬치 튀김 — 소스 2번 찍기 금지! 한 꼬치 120~200엔',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+新世界+大阪'},
+      {name:'텐노지 상점가 오코노미야키',area:'텐노지',rating:'4.7★',reviews:'4,000+',tags:['오코노미야키','오사카 소울푸드','가성비'],menu:'오사카식 두꺼운 오코노미야키+돼지고기',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=天王寺+お好み焼き+大阪'},
     ]
   },
   d4:{
@@ -659,11 +665,12 @@ const SEED_SCHEDULE = {
       {time:'07:00',type:'hotel',title:'인천공항 집결 · 탑승 준비',desc:'캐리어 최종 점검. 여권·항공권·탑승권 확인',tip:'Visit Japan Web 사전 등록으로 입국 심사 시간 단축'},
       {time:'09:30',type:'move',title:'ICN 출발 → KIX 도착 (비행 약 2시간)',desc:'인천 출발 09:30 → 간사이 국제공항 11:50 도착. 한일 시차 없음 (UTC+9)',tip:''},
       {time:'12:10',type:'move',title:'KIX 입국 수속',desc:'입국 카드 기내 작성 완료. 지문 인식 후 수하물 수취',tip:'Visit Japan Web QR 준비해두면 심사 빠름'},
-      {time:'13:10',type:'move',title:'난카이 라피트 → 난바역 도착',desc:'KIX 2층 난카이 매표소에서 라피트 티켓 구매. 난바까지 약 38분',tip:'라피트 티켓 1,290엔. 이코카 카드는 탑승 불가 — 별도 구매 필수'},
+      {time:'13:10',type:'move',title:'난카이 라피트 → 난바역 도착',desc:'KIX 2층 난카이 매표소에서 라피트 티켓 구매. 난바까지 약 38분',tip:'라피트 티켓 1,380엔. 이코카 카드는 탑승 불가 — 별도 구매 필수'},
       {time:'14:00',type:'hotel',title:'더 원파이브 오사카 남바 쿠로몬 체크인',desc:'체크인 후 짐 정리. 쿠로몬 시장 바로 옆 위치',tip:'체크인 시간 전이면 짐만 맡기고 바로 탐색 가능'},
       {time:'15:00',type:'sight',title:'쿠로몬 시장 (黒門市場) 탐방',desc:'오사카의 부엌. 신선한 해산물·과일·일본 식료품. 즉석 참치·굴·크림새우 현장 시식',tip:'평일 오후가 제일 여유로움. 현금 준비 권장 (일부 점포 카드 안 됨)'},
       {time:'17:00',type:'sight',title:'도톤보리 · 에비스바시 산책',desc:'오사카의 상징 글리코 사인·카니도라쿠 게 간판. 에비스바시 다리에서 기념사진',tip:'점등 시각은 일몰 후 — 저녁 7시 이후가 야경 최고'},
-      {time:'19:00',type:'food',title:'저녁 — 도톤보리 타코야키·라멘',desc:'이치란 라멘 혼잡 시 킨류 라멘(金龍ラーメン)도 추천. 타코야키 후식',tip:'도톤보리는 언제나 혼잡 — 저녁 7~8시가 절정. 인파 조심'},
+      {time:'18:00',type:'sight',title:'도톤보리 리버 크루즈 (강력 추천)',desc:'글리코 사인과 함께 화려한 난바를 뱃 위에서 감상. 20분 코스 약 1,000엔. 조이패스 이용 가능',tip:'처음 오사카 왔다면 가장 기억에 남는 경험. 사진 명당 자리 서둘러 잡기'},
+      {time:'19:30',type:'food',title:'저녁 — 아메무라 샤인 스키야키 or 치야키 장어덮밥',desc:'아메무라 샤인 스키야키: 도톤보리 도보 5분, 한국인 직원, 산처럼 쌓인 고기 인생 맛집 | 치야키 우나기 호젠지: 인생 장어덮밥, 다다미방, 도톤보리 근처',tip:'두 곳 모두 인스타 릴스 추천 맛집. 스키야키는 저녁 전용(17시~). 장어덮밥은 점심도 가능'},
     ]
   },
   d2:{
@@ -693,7 +700,8 @@ const SEED_SCHEDULE = {
       {time:'14:00',type:'sight',title:'텐노지 동물원 (天王寺動物園)',desc:'500엔 입장. 기린·코끼리·펭귄. 아이와 방문 시 좋음',tip:''},
       {time:'17:00',type:'food',title:'저녁 — 쿠시카츠 다루마 신세카이 본점',desc:'오사카 소울푸드 쿠시카츠. 소스 2번 찍으면 퇴출. 한 꼬치 120~200엔',tip:'대기 길면 인근 다른 쿠시카츠 가게 이용 가능. 신세카이 전체가 쿠시카츠 거리'},
       {time:'18:30',type:'sight',title:'츠텐카쿠 (通天閣) 타워 야경',desc:'신세카이 상징 타워. 전망대 입장 1,000엔. 빌켄상 발 만지면 행운',tip:'타워 외부 야경 감상도 무료로 충분히 예쁨'},
-      {time:'19:30',type:'food',title:'텐노지 이자카야 마무리',desc:'텐노지 역 주변 이자카야에서 생맥주+야키토리로 마무리',tip:''},
+      {time:'19:00',type:'sight',title:'하루카스 300 전망대 (선택)',desc:'일본 최고층 빌딩 아베노 하루카스 300m 전망대. 오사카 야경 360도 파노라마. 1,500엔. 조이패스 이용 가능',tip:'텐노지역 14번 출구에서 직결. 맑은 날 야경이 압도적'},
+      {time:'20:00',type:'food',title:'저녁 — 오유키 스시 (신세카이 45년 노포)',desc:'45년간 부부가 직접 운영. 스시 세트 1,000엔·장어 반마리 1,500엔. 식사 중 깜짝 노래 서비스. 현금만 가능',tip:'신세카이 숨은 보석. SNS 유명 스시집보다 저렴하고 맛있다는 후기 다수. 현금 필수 지참'},
     ]
   },
   d4:{
@@ -703,7 +711,7 @@ const SEED_SCHEDULE = {
     items:[
       {time:'08:00',type:'hotel',title:'더 원파이브 체크아웃 준비',desc:'캐리어 최종 확인. 이코카 카드 잔액 확인. 여권·항공권 재확인',tip:'이코카 카드 환불: 공항 서비스센터 or 난바역 창구에서 보증금 500엔 + 잔액 환불'},
       {time:'08:30',type:'food',title:'쿠로몬 시장 마지막 아침 쇼핑',desc:'호텔 옆 쿠로몬 시장. 참치·굴·일본 과자·기념품 최종 구매',tip:'진공포장 제품: 오징어채·젓갈·반건조 생선 — 기내 위탁 가능'},
-      {time:'11:00',type:'move',title:'난바역 → 난카이 라피트 탑승',desc:'난바역 2층 난카이 매표소에서 라피트 티켓 구매. KIX까지 약 38분',tip:'라피트 성인 1,290엔. 15:00 출발 기준 3시간 전 공항 도착 목표'},
+      {time:'11:00',type:'move',title:'난바역 → 난카이 라피트 탑승',desc:'난바역 2층 난카이 매표소에서 라피트 티켓 구매. KIX까지 약 38분',tip:'라피트 성인 1,380엔. 15:00 출발 기준 3시간 전 공항 도착 목표'},
       {time:'12:00',type:'move',title:'KIX 도착 · 체크인 수속',desc:'항공사 카운터 체크인 + 수하물 위탁 + 출국 수속',tip:'면세품 마지막 쇼핑: 출국 후 면세구역 내 화장품·주류·과자 구매 가능'},
       {time:'15:00',type:'move',title:'KIX 출발 → ICN 도착',desc:'15:00 KIX 출발 → 17:20 ICN 도착. 3박 4일 오사카 여행 완료',tip:''},
     ]
@@ -719,6 +727,9 @@ const SEED_RESTAURANTS = [
   {id:'r6',name:'USJ 슈퍼 닌텐도 월드 레스토랑',emoji:'🍄',day:'D2',area:'USJ 내부',tags:['USJ','닌텐도','마리오'],menu:'마리오 버섯수프 · 파워업 밴드 점심 세트',desc:'슈퍼 닌텐도 월드 내 레스토랑. 마리오 캐릭터 테마 음식. 앱 사전 예약 권장. 아이 최고 행복.',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Super+Nintendo+World+Restaurant+USJ',review:'음식보다 분위기에 돈 내는 거지만 아이들 반응 보면 충분히 가치 있음.',reel:false,featured:true,visited:false},
   {id:'r7',name:'텐노지 오코노미야키',emoji:'🥞',day:'D3',area:'텐노지',tags:['오코노미야키','오사카 소울푸드','가성비'],menu:'오사카식 두꺼운 오코노미야키 + 돼지고기 — 텐노지 현지 단골',desc:'오코노미야키는 오사카 소울푸드. 텐노지 주변 현지 오코노미야키 가게. 철판 위에서 직접 굽는 것도 재밌음.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=天王寺+お好み焼き+大阪',review:'오사카식 두꺼운 오코노미야키가 진짜. 현지 맛집 분위기 느껴짐.',reel:false,featured:false,visited:false},
   {id:'r8',name:'도톤보리 카니도라쿠 (かに道楽)',emoji:'🦀',day:'D1',area:'도톤보리',tags:['게 요리','고급','오사카 명물'],menu:'게 코스 요리 — 도톤보리 명물 대형 게 간판 레스토랑',desc:'도톤보리의 상징 거대 게 간판. 게 코스 요리 전문. 1인 3,000~10,000엔대. 특별한 날 추천.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=かに道楽+道頓堀+大阪',review:'게 코스 먹다 보면 뭔가 다른 맛인지 구분 안 되는데 분위기가 최고.',reel:false,featured:false,visited:false},
+  {id:'r9',name:'아메무라 샤인 식당 (Shine) 스키야키',emoji:'🥩',day:'D1',area:'아메리카무라/도톤보리',tags:['스키야키','인스타 릴스 추천','한국인 직원'],menu:'산처럼 쌓인 고기+달콤한 소스+계란 노른자 스키야키 시그니처',desc:'도톤보리 도보 5분 아메리카무라 인근 스키야키 전문점. 한국인 직원 있어 소통 편함. 사케 추천도 받을 수 있음. 분위기부터 마지막까지 압도적 만족.',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=Shine+restaurant+sukiyaki+아메리카무라+大阪',review:'인생 스키야키 맛집. 산처럼 쌓인 고기에 계란 노른자 섞으면 진짜 다른 세계. 한국인 직원 있어서 사케 추천도 받음.',reel:true,featured:true,visited:false},
+  {id:'r10',name:'치야키 우나기 호젠지 야마카즈 (장어덮밥)',emoji:'🐍',day:'D1',area:'도톤보리/호젠지',tags:['장어덮밥','인스타 릴스 추천','다다미방'],menu:'장어덮밥 (우나동) · 계란 장어덮밥 — 통통 부드러운 장어+적당한 소스',desc:'도톤보리 근처 호젠지 골목 위치. 찾기 쉬움. 1층 테이블석, 2~3층 신발 벗고 들어가는 다다미방. 장어 통통하고 부드러움. 소스 간 적절. 인생 장어덮밥.',hours:'11:30~14:30 · 17:00~21:00 (화요일 휴무)',mapUrl:'https://www.google.com/maps/search/?q=호젠지+야마카즈+장어+道頓堀+大阪',review:'인생 장어덮밥이라 할 만큼 통통하고 부드러움. 다다미방 분위기도 정통 일본 느낌.',reel:true,featured:true,visited:false},
+  {id:'r11',name:'오유키 (お雪) 스시 — 신세카이 45년 노포',emoji:'🍣',day:'D3',area:'신세카이',tags:['스시','인스타 릴스 추천','45년 노포','현금만'],menu:'장어 반마리 1,500엔 · 스시 세트 1,000엔 — SNS 유명 스시집 못지 않은 숨은 보석',desc:'45년간 부부가 직접 요리·서빙. 작고 아늑한 공간. 장어 반마리 1,500엔, 스시 세트 1,000엔으로 믿기지 않는 가성비. 식사 중 깜짝 노래 서비스. 현금만 가능.',hours:'11:00~20:00 (비정기 휴무)',mapUrl:'https://www.google.com/maps/search/?q=お雪+스시+新世界+大阪',review:'45년 부부 노포. 스시 세트 1,000엔이 말이 되나요?? 중간에 깜짝 노래까지. 신세카이 숨은 찐 맛집.',reel:true,featured:true,visited:false},
 ];
 
 const SEED_BUDGET = {
@@ -729,12 +740,13 @@ const SEED_BUDGET = {
     {id:'b1',category:'항공',name:'항공권 왕복 (3인) ICN-KIX',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'왕복 3석',paid:false},
     {id:'b2',category:'숙소',name:'더 원파이브 오사카 남바 쿠로몬 3박 (4/29~5/2)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:9.5,notes:'3박 4일 남바 쿠로몬',paid:false},
     {id:'b3',category:'입장료',name:'USJ 입장권 (성인+아이)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'성인 8,800엔·아동 5,800엔. USJ 공식 사이트 사전 구매',paid:false},
-    {id:'b4',category:'교통',name:'난카이 라피트 왕복 (성인 1인)',currency:'JPY',amountOrig:2580,amountKrw:24510,rateAtSave:9.5,notes:'성인 1,290엔 x 왕복 2회',paid:false},
+    {id:'b4',category:'교통',name:'난카이 라피트 왕복 (성인 1인)',currency:'JPY',amountOrig:2760,amountKrw:26220,rateAtSave:9.5,notes:'성인 1,380엔 x 왕복 2회',paid:false},
     {id:'b5',category:'교통',name:'이코카 카드 발급 (3인)',currency:'JPY',amountOrig:6000,amountKrw:57000,rateAtSave:9.5,notes:'1인당 2,000엔 (1,500엔 충전+500엔 보증금) x 3인',paid:false},
     {id:'b6',category:'교통',name:'JR 유메사키선 USJ 왕복 (3인)',currency:'JPY',amountOrig:1080,amountKrw:10260,rateAtSave:9.5,notes:'편도 약 180엔 x 왕복 x 3인',paid:false},
     {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'출발 전 가입',paid:false},
     {id:'b8',category:'기타',name:'Japan eSIM 2회선',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'3박 4일 데이터 전용 eSIM',paid:false},
     {id:'b9',category:'입장료',name:'USJ Express Pass (성인 1인)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'닌텐도 월드+미니언 파크 조합 추천. 사전 구매',paid:false},
+    {id:'b10',category:'기타',name:'조이패스 or 주유패스 (선택)',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'조이패스: 크루즈·하루카스300·미오백화점 등. 주유패스: 시내 교통+명소 무제한. 일정 확인 후 선택',paid:false},
   ],
   daily: []
 };
@@ -749,8 +761,9 @@ const SEED_CHECKLIST = [
     {text:'해외여행자보험 증권 저장',checked:false,priority:'필수'},
   ]},
   {cat:'교통 준비 (일본 현지)',items:[
-    {text:'난카이 라피트 티켓 사전 예약 (KKday/Klook)',checked:false,priority:'권장'},
+    {text:'난카이 라피트 티켓 사전 예약 (KKday/Klook) — 성인 1,380엔',checked:false,priority:'권장'},
     {text:'이코카 카드 공항 도착 즉시 발급 계획 확인',checked:false,priority:'필수'},
+    {text:'조이패스/주유패스 필요 여부 확인 (크루즈·하루카스300 등 포함 여부)',checked:false,priority:'권장'},
     {text:'Japan eSIM 구매 및 설치 (한국 출발 전)',checked:false,priority:'필수'},
     {text:'트래블로그/하나 트래블카드 발급 (엔화 결제)',checked:false,priority:'권장'},
     {text:'현금 엔화 환전 (30,000~50,000엔 기본)',checked:false,priority:'권장'},
