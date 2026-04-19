@@ -662,20 +662,19 @@ function renderTransportGuide(dayId) {
 // ──────────────────────────────────────────────
 const SEED_SCHEDULE = {
   d1:{
-    title:'4월 29일(수) · 입국 → 쿠로몬 시장 → 도톤보리 야경',
-    sub:'09:30 ICN 출발 · 11:50 KIX 도착 · 난카이 라피트 → 호텔 체크인 → 쿠로몬 → 도톤보리 점등 야경',
+    title:'4월 29일(수) · 마티나 라운지 점심 → 입국 → Kouroan 저녁 오마카세',
+    sub:'12:40 ICN 출발 · 15:00 KIX 도착 · 마티나 라운지 점심 → 더 원파이브 체크인 → Kouroan 오마카세 저녁 → 다카시마야 케이크',
     badges:[{cls:'b-transit',txt:'이동일'}],
     items:[
-      {time:'08:00',type:'food',title:'조식 — 인천공항 출발 전 간단 아침',desc:'탑승 전 게이트 인근 스타벅스 or CU·GS25 편의점. 오니기리·샌드위치·커피로 가볍게',tip:'탑승구 확인 후 인근 카페 이용 권장'},
-      {time:'10:00',type:'hotel',title:'인천공항 T2 집결 · 탑승 준비',desc:'에어부산 BX-174 · 인천 제2터미널. 캐리어 최종 점검. 여권·항공권·탑승권 확인',tip:'체크인 마감 12:40 기준 최소 90분 전인 11:10까지 카운터 도착 필요. 여유 있게 10시 집결'},
-      {time:'11:30',type:'food',title:'중식 — 공항 식당 or 편의점 간편식',desc:'탑승 전 마지막 끼니. 공항 식당가 또는 편의점 간편식. BX-174 기내식 제공 시 기내에서 식사',tip:''},
+      {time:'10:00',type:'hotel',title:'인천공항 T2 집결 · 탑승 준비',desc:'에어부산 BX-174 · 인천 제2터미널. 캐리어 최종 점검. 여권·항공권·탑승권 확인, 발렛은 예약불가, 오전에 장기주차장 현황 확인 후 자차 이동 / 리무진 / 지하철 선택',tip:'체크인 마감 12:40 기준 최소 90분 전인 11:10까지 카운터 도착 필요. 라운지 이용해야하기까 여유 있게 10시 집결'},
+      {time:'11:00',type:'food',title:'점심 — 마티나 라운지',desc:'2터미널 252번 게이트 4층',tip:''},
       {time:'12:40',type:'move',title:'ICN T2 출발 → KIX 도착 (에어부산 BX-174)',desc:'인천 T2 출발 12:40 → 간사이 국제공항 15:00 도착. PNR: KHQ2TM. 기내 10KG + 위탁 15KG',tip:'환불 불가. Traveloka 예약 ID: 1348936277'},
-      {time:'15:20',type:'move',title:'KIX 입국 수속',desc:'입국 카드 기내 작성 완료. 지문 인식 후 수하물 수취. 이코카 카드 발급',tip:'Visit Japan Web QR 준비해두면 심사 빠름. ⚠️ 다카시마야 키티 카드 이용 예정이면 자동 게이트 말고 유인 창구에서 수동 입국 스탬프 받기'},
-      {time:'15:50',type:'move',title:'난카이 라피트 → 난바역 도착',desc:'KIX 2층 난카이 매표소에서 라피트 티켓 구매. 난바까지 약 38분',tip:'라피트 티켓 1,380엔. 이코카 카드 탑승 불가 — 별도 구매 필수'},
-      {time:'16:40',type:'hotel',title:'더 원파이브 오사카 남바 쿠로몬 체크인',desc:'체크인 15:00~00:00. 프리미어룸(금연) · 싱글 침대 2개 · 성인 2명+어린이. 확인번호: 8RAL2XVM',tip:'체크아웃은 5/2 10:00 이전. 숙박세 현장 결제 필요 (인원 수 기준)'},
-      {time:'17:30',type:'sight',title:'쿠로몬 시장 (黒門市場) 탐방',desc:'오사카의 부엌. 신선한 해산물·과일·일본 식료품. 즉석 참치·굴·크림새우 현장 시식',tip:'평일 저녁은 마감 점포 있음. 현금 준비 권장 (일부 점포 카드 안 됨)'},
-      {time:'19:00',type:'sight',title:'도톤보리 · 에비스바시 산책 · 리버 크루즈',desc:'글리코 사인·카니도라쿠 게 간판. 도톤보리 리버 크루즈 20분 약 1,000엔 — 처음 오사카라면 강력 추천. 조이패스 이용 가능',tip:'점등 후 야경이 최고. 저녁 7시 이후 방문 권장'},
-      {time:'20:30',type:'food',title:'저녁 — 아메무라 샤인 스키야키 or 치야키 장어덮밥',desc:'아메무라 샤인 스키야키: 도톤보리 도보 5분, 한국인 직원, 산처럼 쌓인 고기 인생 맛집 | 치야키 우나기 호젠지: 인생 장어덮밥, 다다미방, 도톤보리 근처',tip:'두 곳 모두 인스타 릴스 추천 맛집. 스키야키는 저녁 전용(17시~)'},
+      {time:'16:00',type:'move',title:'KIX 입국 수속',desc:'입국 카드 기내 작성 완료. 지문 인식 후 수하물 수취. 이코카 카드 발급',tip:'Visit Japan Web QR 준비 완료. https://www.vjw.digital.go.jp/main/#/vjwpco001'},
+      {time:'17:00',type:'move',title:'난카이 라피트 → 난바역 도착',desc:'트립닷컴에서 성인 2인권 구매완료. 난바까지 약 38분',tip:'5세 미만 무료, 단 좌석 필요하면 어린이 탑승권은 현장에서 별도 구매'},
+      {time:'17:20',type:'hotel',title:'더 원파이브 오사카 남바 쿠로몬 체크인',desc:'체크인 15:00~00:00. 프리미어룸(금연) · 싱글 침대 2개 · 성인 2명+어린이. 확인번호: 8RAL2XVM',tip:'체크아웃은 5/2 10:00 이전. 숙박세 현장 결제 필요 (인원 수 기준)'},
+      {time:'18:00',type:'food',title:'저녁 - Kouroan 코우로안 난바 (오마카세)',desc:'4/29 18:00 tablelog(일본어)로 예약 완료',tip:'미방문 시 인당 4천엔 취소수수료'},
+      {time:'19:00',type:'sight',title:'Gramercy New York Takashimaya Osaka Store (케이크 구매)',desc:'딸기 케이스 추천, 레터링도 가능',tip:'다카시마야 백화점 지하 1층'},
+      {time:'20:30',type:'shop',title:'돈키호테 쇼핑',desc:'간단한 쇼핑 (참고: USJ에서는 음료/음식물 반입 금지)',tip:'윤켈 구매'},
     ]
   },
   d2:{
@@ -729,17 +728,19 @@ const SEED_SCHEDULE = {
 };
 
 const SEED_RESTAURANTS = [
-  {id:'r1',name:'이치란 라멘 (一蘭) 도톤보리점',emoji:'🍜',day:'D1',area:'도톤보리',tags:['1인석 라멘','돈코츠','24시간'],menu:'돈코츠 라멘 — 칸막이 1인석 독특한 경험. 진한 국물+가는 면',desc:'오사카 대표 라멘 맛집. 개인 칸막이석에서 집중해서 먹는 독특한 문화. 돈코츠 국물이 진하고 깊은 맛.',hours:'24시간 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀+大阪',review:'칸막이 1인석 경험 자체가 인상적. 국물 진한데 깔끔함. 일본 라멘의 정수.',reel:true,featured:true,visited:false},
-  {id:'r2',name:'구쿠루 타코야키 (くくる) 도톤보리',emoji:'🐙',day:'D1',area:'도톤보리',tags:['타코야키','오사카 명물','즉석'],menu:'문어 가득 바삭한 타코야키 8개 세트 — 도톤보리 명물',desc:'도톤보리 대표 타코야키 가게. 문어가 크고 겉은 바삭 속은 촉촉. 8개 750엔 내외.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=くくる+道頓堀+大阪',review:'문어가 진짜 큼. 겉 바삭 속 촉촉. 도톤보리 왔으면 필수.',reel:true,featured:true,visited:false},
-  {id:'r3',name:'킨류 라멘 (金龍ラーメン)',emoji:'🍜',day:'D1',area:'도톤보리',tags:['24시간','돈코츠','가성비'],menu:'진한 돈코츠 라멘 650엔 — 24시간 야식 라멘 맛집',desc:'도톤보리 길가에 서서 먹는 스탠딩 라멘. 650엔으로 진한 돈코츠 라멘 한 그릇. 새벽에도 줄 서는 명소.',hours:'24시간',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀+大阪',review:'650엔이 말이 됩니까. 야식 라멘으로 진짜 짱.',reel:false,featured:true,visited:false},
-  {id:'r4',name:'쿠시카츠 다루마 (串カツだるま) 신세카이 본점',emoji:'🍢',day:'D3',area:'신세카이',tags:['쿠시카츠','2번 금지','오사카 소울푸드'],menu:'바삭 꼬치 튀김 — 소스 2번 찍기 엄격 금지. 한 꼬치 120~200엔',desc:'오사카 쿠시카츠 원조. 각종 재료 꼬치 튀김을 공용 소스에 한 번만 찍어 먹는 규칙. 캐주얼하고 맛있음.',hours:'11:00~22:30 (연중무휴)',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+新世界+大阪',review:'소스 2번 금지 룰이 유명한데 한 번만 찍어도 충분히 맛있음. 오사카 오면 필수 코스.',reel:true,featured:true,visited:false},
-  {id:'r5',name:'쿠로몬 시장 (黒門市場) 마그로 전문점',emoji:'🐟',day:'D1/D4',area:'쿠로몬',tags:['신선 참치','즉석 시식','시장'],menu:'신선 참치·굴·새우 즉석 시식 — 오사카의 부엌',desc:'호텔 바로 옆 쿠로몬 시장. 신선한 해산물을 즉석에서 먹을 수 있음. 참치 한 점 500엔대. 굴도 매우 신선.',hours:'09:00~18:00 (점포마다 상이)',mapUrl:'https://www.google.com/maps/search/?q=黒門市場+大阪',review:'참치 마그로 즉석 시식이 진짜 신선. 호텔 옆이라 아침에 가볍게 들르기 딱.',reel:true,featured:true,visited:false},
-  {id:'r6',name:'USJ 슈퍼 닌텐도 월드 레스토랑',emoji:'🍄',day:'D2',area:'USJ 내부',tags:['USJ','닌텐도','마리오'],menu:'마리오 버섯수프 · 파워업 밴드 점심 세트',desc:'슈퍼 닌텐도 월드 내 레스토랑. 마리오 캐릭터 테마 음식. 앱 사전 예약 권장. 아이 최고 행복.',hours:'USJ 영업시간 내',mapUrl:'https://www.google.com/maps/search/?q=Super+Nintendo+World+Restaurant+USJ',review:'음식보다 분위기에 돈 내는 거지만 아이들 반응 보면 충분히 가치 있음.',reel:false,featured:true,visited:false},
-  {id:'r7',name:'텐노지 오코노미야키',emoji:'🥞',day:'D3',area:'텐노지',tags:['오코노미야키','오사카 소울푸드','가성비'],menu:'오사카식 두꺼운 오코노미야키 + 돼지고기 — 텐노지 현지 단골',desc:'오코노미야키는 오사카 소울푸드. 텐노지 주변 현지 오코노미야키 가게. 철판 위에서 직접 굽는 것도 재밌음.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=天王寺+お好み焼き+大阪',review:'오사카식 두꺼운 오코노미야키가 진짜. 현지 맛집 분위기 느껴짐.',reel:false,featured:false,visited:false},
-  {id:'r8',name:'도톤보리 카니도라쿠 (かに道楽)',emoji:'🦀',day:'D1',area:'도톤보리',tags:['게 요리','고급','오사카 명물'],menu:'게 코스 요리 — 도톤보리 명물 대형 게 간판 레스토랑',desc:'도톤보리의 상징 거대 게 간판. 게 코스 요리 전문. 1인 3,000~10,000엔대. 특별한 날 추천.',hours:'11:00~22:00',mapUrl:'https://www.google.com/maps/search/?q=かに道楽+道頓堀+大阪',review:'게 코스 먹다 보면 뭔가 다른 맛인지 구분 안 되는데 분위기가 최고.',reel:false,featured:false,visited:false},
-  {id:'r9',name:'아메무라 샤인 식당 (Shine) 스키야키',emoji:'🥩',day:'D1',area:'아메리카무라/도톤보리',tags:['스키야키','인스타 릴스 추천','한국인 직원'],menu:'산처럼 쌓인 고기+달콤한 소스+계란 노른자 스키야키 시그니처',desc:'도톤보리 도보 5분 아메리카무라 인근 스키야키 전문점. 한국인 직원 있어 소통 편함. 사케 추천도 받을 수 있음. 분위기부터 마지막까지 압도적 만족.',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=Shine+restaurant+sukiyaki+아메리카무라+大阪',review:'인생 스키야키 맛집. 산처럼 쌓인 고기에 계란 노른자 섞으면 진짜 다른 세계. 한국인 직원 있어서 사케 추천도 받음.',reel:true,featured:true,visited:false},
-  {id:'r10',name:'치야키 우나기 호젠지 야마카즈 (장어덮밥)',emoji:'🐍',day:'D1',area:'도톤보리/호젠지',tags:['장어덮밥','인스타 릴스 추천','다다미방'],menu:'장어덮밥 (우나동) · 계란 장어덮밥 — 통통 부드러운 장어+적당한 소스',desc:'도톤보리 근처 호젠지 골목 위치. 찾기 쉬움. 1층 테이블석, 2~3층 신발 벗고 들어가는 다다미방. 장어 통통하고 부드러움. 소스 간 적절. 인생 장어덮밥.',hours:'11:30~14:30 · 17:00~21:00 (화요일 휴무)',mapUrl:'https://www.google.com/maps/search/?q=호젠지+야마카즈+장어+道頓堀+大阪',review:'인생 장어덮밥이라 할 만큼 통통하고 부드러움. 다다미방 분위기도 정통 일본 느낌.',reel:true,featured:true,visited:false},
-  {id:'r11',name:'오유키 (お雪) 스시 — 신세카이 45년 노포',emoji:'🍣',day:'D3',area:'신세카이',tags:['스시','인스타 릴스 추천','45년 노포','현금만'],menu:'장어 반마리 1,500엔 · 스시 세트 1,000엔 — SNS 유명 스시집 못지 않은 숨은 보석',desc:'45년간 부부가 직접 요리·서빙. 작고 아늑한 공간. 장어 반마리 1,500엔, 스시 세트 1,000엔으로 믿기지 않는 가성비. 식사 중 깜짝 노래 서비스. 현금만 가능.',hours:'11:00~20:00 (비정기 휴무)',mapUrl:'https://www.google.com/maps/search/?q=お雪+스시+新世界+大阪',review:'45년 부부 노포. 스시 세트 1,000엔이 말이 되나요?? 중간에 깜짝 노래까지. 신세카이 숨은 찐 맛집.',reel:true,featured:true,visited:false},
+  {id:'r1',name:'Shanghai cuisine RONTAN',emoji:'🥟',day:'D1',area:'도톤보리/난바',tags:['샤오롱바오','예약 가능','현장 웨이팅'],menu:'육즙이 물풍선처럼 터지는 그릴 샤오롱바오 (생젠만터우)',desc:'상하이식 구운 소롱포 전문. 카운터 19석. 돼지고기+젤라틴 육즙이 핵심. 국물 먼저 빨아먹고 먹는 법 있음.',hours:'11:30~22:00 · 수요일 휴무',mapUrl:'https://www.google.com/maps/search/?q=一蘭+道頓堀+大阪',review:'겉은 바삭 안은 육즙 폭발. 한입 베어물면 뜨거운 국물이 팡 터져나와 화상주의 😂',reel:true,featured:true,visited:false},
+  {id:'r2',name:'후쿠타로 (福太郎) 난바점',emoji:'🍜',day:'D1',area:'도톤보리/난바',tags:['오코노미야키','웨이팅 있음'],menu:'오코노미야키 · 야키소바 · 네기야키',desc:'도톤보리 골목의 오코노미야키 명점. 아이 친화적. 한국어 메뉴 있음. 넓은 철판 테이블석.',hours:'17:00~00:00',mapUrl:'https://www.google.com/maps/search/?q=くくる+道頓堀+大阪',review:'첫날 저녁으로 딱! 철판 앞에 앉아서 직접 보며 먹는 오코노미야키 맛이 진짜였어요.',reel:false,featured:false,visited:false},
+  {id:'r3',name:'Amato Maeda Namba-Walk',emoji:'🎋',day:'D1',area:'도톤보리/난바',tags:['디저트','줄 없음'],menu:'단짠 쫀득한 미타라시 당고',desc:'난바워크 지하상가. 쫄깃한 당고에 달콤 짭짤한 미타라시 소스. 아이 간식으로 최적.',hours:'10:00~21:00',mapUrl:'https://www.google.com/maps/search/?q=金龍ラーメン+道頓堀+大阪',review:'',reel:true,featured:false,visited:false},
+  {id:'r4',name:'OSAKA Kiichi',emoji:'🍖',day:'D2',area:'도톤보리/난바',tags:['와규 야키니쿠','예약 권장','인기 맛집'],menu:'아코디언처럼 늘어나는 A5 와규 스테이크',desc:'도톤보리 강변 인근. A5 쿠로게 와규 전문. 얇게 썰어 철판 위에서 구우면 늘어나는 비주얼로 SNS 화제.',hours:'17:00~23:30',mapUrl:'https://www.google.com/maps/search/?q=串カツだるま+新世界+大阪',review:'와규가 진짜 늘어납니다 😱 철판에 올려놓으면 아코디언처럼 쭉 늘어나는 게 신기해서 영상 계속 찍었어요.',reel:true,featured:true,visited:false},
+  {id:'r5',name:'카모진 (鴨人)',emoji:'🦆',day:'D2',area:'도톤보리/난바',tags:['야키토리','웨이팅'],menu:'오리 야키토리 · 오리 껍질 꼬치 강추',desc:'오리 전문 야키토리. 오리 껍질 꼬치가 시그니처 — 기름지지 않고 바삭.',hours:'17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=黒門市場+大阪',review:'오리 껍질 꼬치가 진짜 생각지도 못한 맛. 느끼하지 않고 고소하게 바삭 구워져서 하이볼이랑 무한 조합.',reel:true,featured:false,visited:false},
+  {id:'r6',name:'이치란 라멘 도톤보리점',emoji:'🍜',day:'D2',area:'도톤보리/난바',tags:['돈코츠 라멘','24시간'],menu:'특제 돈코츠 라멘 · 개인 칸막이석',desc:'USJ 지친 날 — 빠르고 확실한 선택. 칸막이 1인석 구조라 아이 동반도 편함. 24시간 영업.',hours:'24시간 영업',mapUrl:'https://www.google.com/maps/search/?q=Super+Nintendo+World+Restaurant+USJ',review:'',reel:false,featured:false,visited:false},
+  {id:'r7',name:'Gion Tsujiri · Daimaru Shinsaibashi',emoji:'🍵',day:'D3',area:'신사이바시',tags:['말차 파르페','웨이팅'],menu:'말차 러버를 위한 궁극의 파르페 — 오사카 지점 한정 메뉴',desc:'교토 기온 츠지리의 오사카 지점. 다이마루 신사이바시 내 위치. 진한 말차 소프트아이스크림 + 말차 젤리 + 팥 + 양갱 층층이.',hours:'10:00~20:00 (백화점 영업시간 따름)',mapUrl:'https://www.google.com/maps/search/?q=天王寺+お好み焼き+大阪',review:'오사카 한정 메뉴가 진짜 레전드. 말차 쓴맛이 확실하게 살아있어서 달달한 팥이랑 밸런스가 완벽해요.',reel:true,featured:true,visited:false},
+  {id:'r8',name:'居酒屋 月盗',emoji:'🥚',day:'D3',area:'신사이바시',tags:['이자카야','예약 권장'],menu:'점심 한정 1,000엔 계란말이 정식 — 주황색 노른자가 흘러나오는 비주얼',desc:'점심 한정 타마고야키 정식이 SNS 폭발. 황금빛 노른자가 반숙으로 흘러나오는 비주얼이 핵심.',hours:'점심: 11:30~14:00 · 저녁: 17:00~23:00',mapUrl:'https://www.google.com/maps/search/?q=かに道楽+道頓堀+大阪',review:'1000엔에 이 비주얼이 말이 돼? 계란말이 잘라보면 노른자가 주르르륵...',reel:true,featured:true,visited:false},
+  {id:'r9',name:'아마노자쿠 (甘の雫)',emoji:'🍦',day:'D3',area:'신사이바시',tags:['크레페 디저트','SNS 핫플'],menu:'쫀득한 크레페 반죽에 커스터드 브륄레를 올린 반칙 맛',desc:'얇고 쫀득한 크레페 위에 토치로 구운 커스터드 크림. 캐러멜화된 겉면의 바삭함 + 크림의 부드러움.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=Shine+restaurant+sukiyaki+아메리카무라+大阪',review:'크레페라고 쉽게 봤다가 한입 먹고 눈이 번쩍 😳 브륄레 부분이 바삭하고 안은 커스터드가 진해요.',reel:true,featured:false,visited:false},
+  {id:'r10',name:'쿠시카츠 다루마 신세카이 본점',emoji:'🍢',day:'D5',area:'신세카이/텐노지',tags:['쿠시카츠','웨이팅'],menu:'오사카 명물 쿠시카츠 꼬치튀김 · 소스 더블딥 금지!',desc:'1929년 창업 신세카이 본점. 쿠시카츠 1꼬치 100~200엔대. 소고기·새우·아스파라거스·치즈 등 30종 이상.',hours:'11:00~22:30',mapUrl:'https://www.google.com/maps/search/?q=호젠지+야마카즈+장어+道頓堀+大阪',review:'아이한테 미리 소스 두 번 찍으면 안 된다고 알려주니까 규칙 잘 지키면서 맛있게 먹었어요.',reel:false,featured:false,visited:false},
+  {id:'r11',name:'무기토멘스케 (麦と麺助)',emoji:'🍜',day:'D7',area:'우메다/나카츠',tags:['라멘','미쉐린 빕 구르망','예약 불가','웨이팅 필수'],menu:'특제 쇼유 라멘 · 교지도리 치킨 브로스 · 와규 완탕',desc:'2024 미쉐린 빕 구르망. 나카츠역 도보 4분. 교지도리 닭육수 + 와규 완탕 조합. 13석 카운터. 오픈 1시간 전 40명 줄.',hours:'월·수~금 11:00~15:30 · 토일 11:00~16:00 · 화 휴무 · 현금만',mapUrl:'https://www.google.com/maps/search/?q=お雪+스시+新世界+大阪',review:'줄 서서 먹은 보람이 10000% 있는 곳. 닭국물인데 이렇게 깊은 맛이 날 수 있나 싶을 정도.',reel:true,featured:true,visited:false},
+  {id:'r12',name:'나라 카키노하 스시 총본점',emoji:'🍱',day:'D7',area:'나라',tags:['나라 향토 스시','예약 없이 가능'],menu:'감잎에 싼 전통 초밥 · 나라 명물',desc:'나라의 전통 초밥. 감잎으로 싸서 1~2일 숙성. 연어·고등어·도미. 아이도 먹기 좋은 깔끔한 맛.',hours:'11:00~20:00',mapUrl:'https://www.google.com/maps/search/?q=%E6%9F%BF%E3%81%AE%E8%91%89%E3%81%9A%E3%81%97+%E7%B7%8F%E6%9C%AC%E5%AE%B6+%E5%A5%88%E8%89%AF',review:'나라 오면 꼭 먹어야 하는 것. 감잎 향이 은은하게 배어있어 독특해요.',reel:false,featured:false,visited:false},
+  {id:'r13',name:'오코노미야키 미즈노 도톤보리',emoji:'🍡',day:'D7',area:'도톤보리/난바',tags:['오코노미야키','웨이팅'],menu:'마지막 날 특별 오코노미야키 · 야마이모 야키',desc:'70년 이상 노포. 미쉐린 가이드 수록. 밀가루 없이 100% 참마만 사용한 야마이모 야키 시그니처.',hours:'11:00~21:30 · 연중무휴',mapUrl:'https://www.google.com/maps/search/?q=%E7%BE%8E%E6%B4%A5%E3%81%AE+%E9%81%93%E9%A0%93%E5%A0%80',review:'70년 노포의 맛이 뭔지 알았어요. 야마이모 야키는 밀가루 없는데 이렇게 촉촉하고 구수할 수가.',reel:false,featured:false,visited:false},
 ];
 
 const SEED_BUDGET = {
@@ -747,10 +748,10 @@ const SEED_BUDGET = {
   usdRate: 1380,        // 원/$ (저장 당시 환율)
   rateUpdated: null,    // 마지막 실시간 업데이트 시각
   preset: [
-    {id:'b1',category:'항공',name:'에어부산 BX-174/171 왕복 (3인) ICN↔KIX',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'PNR: KHQ2TM · 기내10KG+위탁15KG · 환불불가 · Traveloka 1348936277',paid:false},
-    {id:'b2',category:'숙소',name:'더 원파이브 오사카 남바 쿠로몬 3박 (4/29~5/2)',currency:'USD',amountOrig:348.68,amountKrw:481178,rateAtSave:1380,notes:'프리미어룸(금연) · 확인번호 8RAL2XVM · 결제완료',paid:true},
-    {id:'b3',category:'입장료',name:'USJ 입장권 (성인+아이)',currency:'JPY',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'성인 8,800엔·아동 5,800엔. USJ 공식 사이트 사전 구매',paid:false},
-    {id:'b4',category:'교통',name:'난카이 라피트 왕복 (성인 1인)',currency:'JPY',amountOrig:2760,amountKrw:26220,rateAtSave:9.5,notes:'성인 1,380엔 x 왕복 2회',paid:false},
+    {id:'b1',category:'항공',name:'에어부산 BX-174/171 왕복 (3인) ICN↔KIX',currency:'KRW',amountOrig:597001,amountKrw:597001,rateAtSave:null,notes:'PNR: KHQ2TM · 기내10KG+위탁15KG · 환불불가 · Traveloka 1348936277',paid:true},
+    {id:'b2',category:'숙소',name:'더 원파이브 오사카 남바 쿠로몬 3박 (4/29~5/2)',currency:'KRW',amountOrig:519881,amountKrw:519881,rateAtSave:null,notes:'프리미어룸(금연) · 확인번호 8RAL2XVM · 결제완료',paid:true},
+    {id:'b3',category:'입장료',name:'USJ 입장권 (성인2+아이1)',currency:'KRW',amountOrig:403600,amountKrw:403600,rateAtSave:null,notes:'성인 8,800엔·아동 5,800엔. USJ 공식 사이트 사전 구매',paid:false},
+    {id:'b4',category:'교통',name:'간사이 > 난바 라피트',currency:'USD',amountOrig:10.51,amountKrw:15586,rateAtSave:1483,notes:'어린이 탑승권은 현장에서 별도 구매 필요 (5세 미만은 무료인데 좌석 필요시 발권 필요)',paid:false},
     {id:'b5',category:'교통',name:'이코카 카드 발급 (3인)',currency:'JPY',amountOrig:6000,amountKrw:57000,rateAtSave:9.5,notes:'1인당 2,000엔 (1,500엔 충전+500엔 보증금) x 3인',paid:false},
     {id:'b6',category:'교통',name:'JR 유메사키선 USJ 왕복 (3인)',currency:'JPY',amountOrig:1080,amountKrw:10260,rateAtSave:9.5,notes:'편도 약 180엔 x 왕복 x 3인',paid:false},
     {id:'b7',category:'기타',name:'해외여행자보험 (3인)',currency:'KRW',amountOrig:0,amountKrw:0,rateAtSave:null,notes:'출발 전 가입',paid:false},
@@ -815,7 +816,7 @@ const SEED_CHECKLIST = [
 // ──────────────────────────────────────────────
 let state = {};
 
-const DATA_VERSION = 12; // D3 오전 오사카성 추가
+const DATA_VERSION = 13; // 브라우저 편집 내용 저장 (D1 일정·경비·식당 전체)
 
 // 구글 지도 URL에서 좌표 추출 (@lat,lng 패턴)
 function extractCoordsFromUrl(url) {
@@ -865,6 +866,12 @@ function loadState() {
         if (!state.version || state.version < 12) {
           // D3 오전 오사카성 추가
           state.schedule.d3 = JSON.parse(JSON.stringify(SEED_SCHEDULE.d3));
+        }
+        if (!state.version || state.version < 13) {
+          // 브라우저 편집 내용 전체 반영
+          state.schedule = JSON.parse(JSON.stringify(SEED_SCHEDULE));
+          state.budget.preset = JSON.parse(JSON.stringify(SEED_BUDGET.preset));
+          state.restaurants = JSON.parse(JSON.stringify(SEED_RESTAURANTS));
         }
         state.version = DATA_VERSION;
         saveState();
