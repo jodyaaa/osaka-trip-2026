@@ -338,6 +338,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 <nav class="nav">
   <div class="nav-inner" id="navInner"></div>
+  <span id="syncStatus" style="font-size:14px;padding:0 10px;opacity:.7;cursor:default;flex-shrink:0;" title=""></span>
 </nav>
 
 <div class="hero">
@@ -818,6 +819,65 @@ let state = {};
 
 const DATA_VERSION = 13; // 브라우저 편집 내용 저장 (D1 일정·경비·식당 전체)
 
+// ──────────────────────────────────────────────
+// 서버 동기화 (Render)
+// ──────────────────────────────────────────────
+const SERVER_URL = 'https://osaka-trip-server.onrender.com';
+let _syncTimer = null;
+let _syncStatus = 'idle'; // idle | syncing | ok | error
+
+function setSyncStatus(s) {
+  _syncStatus = s;
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  const map = { idle:'', syncing:'🔄', ok:'☁️', error:'⚠️' };
+  const tip = { idle:'', syncing:'저장 중…', ok:'서버 동기화됨', error:'서버 저장 실패 (로컬 저장됨)' };
+  el.textContent = map[s] || '';
+  el.title = tip[s] || '';
+}
+
+function syncToServer() {
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(async () => {
+    setSyncStatus('syncing');
+    try {
+      const res = await fetch(`${SERVER_URL}/state`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      });
+      setSyncStatus(res.ok ? 'ok' : 'error');
+    } catch(e) {
+      setSyncStatus('error');
+    }
+  }, 800); // 800ms 디바운스
+}
+
+async function loadFromServer() {
+  try {
+    const res = await fetch(`${SERVER_URL}/state`);
+    if (!res.ok) return;
+    const serverState = await res.json();
+    if (!serverState) return;
+    // 서버 버전이 같거나 최신이면 서버 데이터 사용
+    if (!state.version || (serverState.version && serverState.version >= state.version)) {
+      state = serverState;
+      // 마이그레이션 필요시 처리
+      if (state.version < DATA_VERSION) {
+        loadState(); // 마이그레이션 재실행
+        return;
+      }
+      localStorage.setItem('osaka2026', JSON.stringify(state));
+      buildNav();
+      renderMain();
+      updateFab(activeTab);
+      setSyncStatus('ok');
+    }
+  } catch(e) {
+    // 서버 오프라인 시 무시 (로컬 데이터 사용)
+  }
+}
+
 // 구글 지도 URL에서 좌표 추출 (@lat,lng 패턴)
 function extractCoordsFromUrl(url) {
   if (!url) return null;
@@ -928,6 +988,7 @@ function resetToSeed() {
 
 function saveState() {
   localStorage.setItem('osaka2026', JSON.stringify(state));
+  syncToServer();
 }
 
 // ──────────────────────────────────────────────
@@ -1949,6 +2010,8 @@ loadState();
 buildNav();
 renderMain();
 updateFab('overview');
+// 서버에서 최신 데이터 로드 (비동기, UI 렌더 후)
+loadFromServer();
 // 앱 시작 시 실시간 환율 자동 조회 (마지막 업데이트가 1시간 이상 지났으면)
 (function() {
   const last = state.budget.rateUpdated ? new Date(state.budget.rateUpdated) : null;
