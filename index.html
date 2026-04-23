@@ -867,6 +867,7 @@ async function loadFromServer() {
         loadState(); // 마이그레이션 재실행
         return;
       }
+      sortAllScheduleItems();
       localStorage.setItem('osaka2026', JSON.stringify(state));
       buildNav();
       renderMain();
@@ -986,7 +987,19 @@ function resetToSeed() {
   saveState();
 }
 
+function sortAllScheduleItems() {
+  const toMins = t => {
+    if (!t) return 9999;
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + (m || 0);
+  };
+  Object.values(state.schedule || {}).forEach(day => {
+    if (Array.isArray(day.items)) day.items.sort((a, b) => toMins(a.time) - toMins(b.time));
+  });
+}
+
 function saveState() {
+  sortAllScheduleItems();
   localStorage.setItem('osaka2026', JSON.stringify(state));
   syncToServer();
 }
